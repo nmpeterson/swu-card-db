@@ -1,0 +1,20 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# macOS stuff
+.DS_Store
+
+# SQLite database (create with data/create_db.py)
+data/db.sqlite3
+
+# Card/aspect images (download with data/fetch_card_images.py)
+app/static/images/cards/
+app/static/images/aspects/
