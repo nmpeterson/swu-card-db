@@ -1,7 +1,7 @@
 {% for card in cards %}
 <li>
     <a href="../cards/{{card.id}}">
-        <span>{{card.id}} - {{card.name}}{% if card.subtitle is string %} - {{card.subtitle}}{% endif %}</span>
+        <span>{{card.id}} — {{card.name}}{% if card.subtitle is not none %}: {{card.subtitle}}{% endif %}</span>
     </a>
 </li>
 {% endfor %}
