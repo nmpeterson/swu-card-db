@@ -3,10 +3,10 @@
 {% block content %}
 <h2>{% if card.unique is true %}⟡{% endif %}{{card.name}}</h2>
 {% if card.subtitle is not none %}<h3>{{card.subtitle}}</h3>{% endif %}
-<img src="{{ url_for('static', path='/images/cards/' + card.set + '/' + card.number + '.png') }}" alt="{{card.name}}"
+<img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}" alt="{{card.name}}"
     height="386" />
 {% if card.double_sided is true %}
-<img src="{{ url_for('static', path='/images/cards/' + card.set + '/' + card.number + '-back.png') }}"
+<img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }}"
     alt="{{card.name}} back" height="386" />
 {% endif %}
 <p>{{card.id}}</p>

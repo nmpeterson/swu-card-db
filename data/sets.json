@@ -1,0 +1,17 @@
+[
+    {
+        "id": "SOR",
+        "number": 1,
+        "name": "Spark of Rebellion"
+    },
+    {
+        "id": "SHD",
+        "number": 2,
+        "name": "Shadows of the Galaxy"
+    },
+    {
+        "id": "TWI",
+        "number": 3,
+        "name": "Twilight of the Republic"
+    }
+]

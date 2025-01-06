@@ -21,8 +21,9 @@ async def home(request: Request):
 
 
 @app.get("/sets/{set_id}", response_class=HTMLResponse)
-async def get_set(request: Request, set_id: str):
-    return templates.TemplateResponse(request=request, name="set.html", context={"set_id": set_id})
+async def get_set(request: Request, set_id: str, db: Session = Depends(get_db)):
+    swu_set = db.query(SWUSet).filter(SWUSet.id == set_id).first()
+    return templates.TemplateResponse(request=request, name="set.html", context={"set": swu_set})
 
 
 @app.get("/cards/{card_id}", response_class=HTMLResponse)
@@ -34,7 +35,7 @@ async def get_card(request: Request, card_id: str, db: Session = Depends(get_db)
             .filter(
                 SWUCard.id != card.id,
                 SWUCard.name == card.name,
-                SWUCard.type == card.type,
+                SWUCard.card_type == card.card_type,
                 SWUCard.subtitle == card.subtitle,
             )
             .all()
@@ -42,7 +43,8 @@ async def get_card(request: Request, card_id: str, db: Session = Depends(get_db)
         return templates.TemplateResponse(
             request=request, name="card.html", context={"card": card, "variants": variants}
         )
-    except IndexError:
+    except Exception:
+        # TODO: Implement 404 page
         return JSONResponse(content={"error": "Card not found"}, status_code=404)
 
 
@@ -50,15 +52,10 @@ async def get_card(request: Request, card_id: str, db: Session = Depends(get_db)
 async def set_list(
     request: Request, db: Session = Depends(get_db), hx_request: Annotated[Union[str, None], Header()] = None
 ):
-    SETS = [
-        SWUSet(id="SOR", name="Spark of Rebellion"),
-        SWUSet(id="SHD", name="Shadows of the Galaxy"),
-        SWUSet(id="TWI", name="Twilight of the Republic"),
-        # SWUSet(id="JTL", name="Jump to Lightspeed"),
-    ]
+    sets = db.query(SWUSet).order_by(SWUSet.number).all()
     if hx_request:
-        return templates.TemplateResponse(request=request, name="set_list.html", context={"sets": SETS})
-    return JSONResponse(content=jsonable_encoder(SETS))
+        return templates.TemplateResponse(request=request, name="set_list.html", context={"sets": sets})
+    return JSONResponse(content=jsonable_encoder(sets))
 
 
 @app.get("/card_list/{set_id}", response_class=HTMLResponse)
@@ -69,7 +66,10 @@ async def card_list(
     hx_request: Annotated[Union[str, None], Header()] = None,
 ):
     cards = (
-        db.query(SWUCard).filter(SWUCard.set == set_id, SWUCard.variant_type == "Normal").order_by(SWUCard.number).all()
+        db.query(SWUCard)
+        .filter(SWUCard.set_id == set_id, SWUCard.variant_type == "Normal")
+        .order_by(SWUCard.number)
+        .all()
     )
     if hx_request:
         return templates.TemplateResponse(request=request, name="card_list.html", context={"cards": cards})

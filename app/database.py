@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from sqlalchemy import Boolean, ForeignKey, Integer, create_engine, Column, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
@@ -6,8 +5,8 @@ from sqlalchemy.orm import sessionmaker, relationship
 
 DATABASE = "data/db.sqlite3"
 SQLALCHEMY_DATABASE_URL = f"sqlite:///{DATABASE}"
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -20,23 +19,24 @@ def get_db():
         db.close()
 
 
-@dataclass(frozen=True, kw_only=True)
-class SWUSet:
-    id: str
-    name: str
+class SWUSet(Base):
+    __tablename__ = "sets"
+    id = Column(String, primary_key=True)
+    number = Column(Integer)
+    name = Column(String)
 
 
 class SWUCard(Base):
     __tablename__ = "cards"
     id = Column(String, primary_key=True)
-    set = Column(String)
+    set_id = Column(String)
     number = Column(String)
     name = Column(String)
     subtitle = Column(String)
     unique = Column(Boolean)
     rarity = Column(String)
     variant_type = Column(String)
-    type = Column(String)
+    card_type = Column(String)
     cost = Column(String)
     power = Column(String)
     hp = Column(String)

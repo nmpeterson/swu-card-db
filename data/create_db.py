@@ -7,6 +7,7 @@ DATA_DIR = os.path.dirname(__file__)
 
 
 def main():
+    # Load card data
     try:
         all_cards = json.load(open(os.path.join(DATA_DIR, "all_cards.json"), "rb"))
     except FileNotFoundError as e:
@@ -47,6 +48,12 @@ def main():
             arena_rows.append((card_id, arena))
     print("Parsed card data into rows for insertion into database")
 
+    # Load set data
+    sets = json.load(open(os.path.join(DATA_DIR, "sets.json"), "rb"))
+    print(f"Loaded {len(sets):,} sets' data into memory")
+    set_rows = [(s["id"], s["number"], s["name"]) for s in sets]
+    print("Parsed set data into rows for insertion into database")
+
     db = os.path.join(DATA_DIR, "db.sqlite3")
     if os.path.exists(db):
         print(f"Deleting existing database {db}")
@@ -54,19 +61,33 @@ def main():
     with sqlite3.connect(db) as con:
         print(f"Initialized database {db}")
         cur = con.cursor()
+
+        print(f"Creating sets table ({len(sets):,} rows)")
+        cur.execute(
+            """
+            CREATE TABLE sets (
+                "id" TEXT PRIMARY KEY,
+                "number" INTEGER NOT NULL,
+                "name" TEXT NOT NULL
+            )
+            """
+        )
+        cur.executemany("""INSERT INTO sets VALUES(?,?,?)""", set_rows)
+        con.commit()
+
         print(f"Creating cards table ({len(card_rows):,} rows)")
         cur.execute(
             """
             CREATE TABLE cards (
                 "id" TEXT PRIMARY KEY,
-                "set" TEXT NOT NULL,
+                "set_id" TEXT NOT NULL,
                 "number" TEXT NOT NULL,
                 "name" TEXT NOT NULL,
                 "subtitle" TEXT,
                 "unique" INTEGER NOT NULL,
                 "rarity" TEXT NOT NULL,
                 "variant_type" TEXT NOT NULL,
-                "type" TEXT NOT NULL,
+                "card_type" TEXT NOT NULL,
                 "cost" TEXT,
                 "power" TEXT,
                 "hp" TEXT,
@@ -74,7 +95,8 @@ def main():
                 "double_sided" INTEGER NOT NULL,
                 "epic_action" TEXT,
                 "back_text" TEXT,
-                "artist" TEXT NOT NULL
+                "artist" TEXT NOT NULL,
+                FOREIGN KEY ("set_id") REFERENCES sets("id")
             )
             """
         )
