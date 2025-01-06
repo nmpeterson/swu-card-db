@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Star Wars Unlimited Card Database - Set {{set_id}}</title>
-    <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
-    <script src="{{ url_for('static', path='/js/htmx.min.js') }}"></script>
-</head>
-
-<body>
-    <h1>Star Wars Unlimited Card Database</h1>
-    <h2>Set: {{set_id}}</h2>
-    <p>Select a card to see its info:</p>
-    <ul id="card-list" hx-get="/card_list/{{set_id}}" hx-swap="innerHTML" hx-trigger="load"></ul>
-</body>
-
-</html>
+{% extends "base.html" %}
+{% block title %}Set: {{set_id}} — {{ super() }}{% endblock %}
+{% block content %}
+<h2>Set: {{set_id}}</h2>
+<p>Select a card to see its info:</p>
+<ul id="card-list" hx-get="/card_list/{{set_id}}" hx-swap="innerHTML" hx-trigger="load"></ul>
+{% endblock %}

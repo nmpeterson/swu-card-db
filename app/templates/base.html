@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SWU Card Database{% endblock %}</title>
+    <link href="{{ url_for('static', path='/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet"> -->
+    <script src="{{ url_for('static', path='/js/htmx.min.js') }}"></script>
+    {% endblock %}
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" id="header">
+            {% block header %}
+            <div class="col">
+                <a href="/">
+                    <h1 class="display-1">SWU Card Database</h1>
+                </a>
+            </div>
+            {% endblock %}
+        </div>
+        <div class="row">
+            <div class="col" id="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        <div class="row" id="footer">
+            {% block footer %}
+            <div class="col">
+                &copy; Copyright 2025 Noel Peterson
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+</body>
+
+</html>
