@@ -15,6 +15,5 @@ wheels/
 # SQLite database (create with data/create_db.py)
 data/db.sqlite3
 
-# Card/aspect images (download with data/fetch_card_images.py)
+# Card images (download with data/fetch_card_images.py)
 app/static/images/cards/
-app/static/images/aspects/
