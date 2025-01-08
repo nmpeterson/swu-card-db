@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
-from .database import get_db, SWUSet, SWUCard
+from .database import get_db, SWUSet, SWUCard, SWUCardArena, SWUCardAspect, SWUCardTrait
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -73,10 +73,20 @@ async def get_cards(
     cards = db.query(SWUCard)
     if set_id := request.query_params.get("set_id"):
         cards = cards.filter(SWUCard.set_id == set_id)
+    if name := request.query_params.get("name"):
+        cards = cards.filter(SWUCard.name.icontains(name))
     if variant_type := request.query_params.get("variant_type"):
         cards = cards.filter(SWUCard.variant_type == variant_type)
     if card_type := request.query_params.get("card_type"):
         cards = cards.filter(SWUCard.card_type == card_type)
+    if rarity := request.query_params.get("rarity"):
+        cards = cards.filter(SWUCard.rarity == rarity)
+    if arena := request.query_params.get("arena"):
+        cards = cards.join(SWUCardArena).filter(SWUCard.arenas.any(SWUCardArena.arena == arena))
+    if aspect := request.query_params.get("aspect"):
+        cards = cards.join(SWUCardAspect).filter(SWUCard.aspects.any(SWUCardAspect.aspect == aspect))
+    if trait := request.query_params.get("trait"):
+        cards = cards.join(SWUCardTrait).filter(SWUCard.traits.any(SWUCardTrait.trait == trait))
     cards = cards.join(SWUCard.card_set).order_by(SWUSet.number, SWUCard.id).all()
     if hx_request:
         return templates.TemplateResponse(request=request, name="card_list.html", context={"cards": cards})
