@@ -1,12 +1,10 @@
-from sqlalchemy import Boolean, ForeignKey, Integer, create_engine, Column, String
+from sqlalchemy import ForeignKey, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
-
+from sqlalchemy.orm import sessionmaker, Mapped, mapped_column, relationship
 
 DATABASE = "data/db.sqlite3"
-SQLALCHEMY_DATABASE_URL = f"sqlite:///{DATABASE}"
 
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(f"sqlite:///{DATABASE}", connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -21,55 +19,55 @@ def get_db():
 
 class SWUSet(Base):
     __tablename__ = "sets"
-    id = Column(String, primary_key=True)
-    number = Column(Integer)
-    name = Column(String)
+    id: Mapped[str] = mapped_column(primary_key=True)
+    number: Mapped[int] = mapped_column()
+    name: Mapped[str] = mapped_column()
+    cards: Mapped[list["SWUCard"]] = relationship(back_populates="card_set", order_by="SWUCard.id")
 
 
 class SWUCard(Base):
     __tablename__ = "cards"
-    id = Column(String, primary_key=True)
-    set_id = Column(String)
-    number = Column(String)
-    name = Column(String)
-    subtitle = Column(String)
-    unique = Column(Boolean)
-    rarity = Column(String)
-    variant_type = Column(String)
-    card_type = Column(String)
-    cost = Column(String)
-    power = Column(String)
-    hp = Column(String)
-    front_text = Column(String)
-    double_sided = Column(Boolean)
-    epic_action = Column(String)
-    back_text = Column(String)
-    artist = Column(String)
-    arenas = relationship("SWUCardArena", back_populates="card")
-    aspects = relationship("SWUCardAspect", back_populates="card")
-    traits = relationship("SWUCardTrait", back_populates="card")
+    id: Mapped[str] = mapped_column(primary_key=True)
+    set_id: Mapped[str] = mapped_column(ForeignKey("sets.id"))
+    number: Mapped[str] = mapped_column()
+    name: Mapped[str] = mapped_column()
+    subtitle: Mapped[str | None] = mapped_column()
+    unique: Mapped[bool] = mapped_column()
+    rarity: Mapped[str] = mapped_column()
+    variant_type: Mapped[str] = mapped_column()
+    card_type: Mapped[str] = mapped_column()
+    cost: Mapped[str | None] = mapped_column()
+    power: Mapped[str | None] = mapped_column()
+    hp: Mapped[str | None] = mapped_column()
+    front_text: Mapped[str | None] = mapped_column()
+    double_sided: Mapped[bool] = mapped_column()
+    epic_action: Mapped[str | None] = mapped_column()
+    back_text: Mapped[str | None] = mapped_column()
+    artist: Mapped[str] = mapped_column()
+    arenas: Mapped[list["SWUCardArena"]] = relationship()
+    aspects: Mapped[list["SWUCardAspect"]] = relationship(order_by="SWUCardAspect.sort_order")
+    traits: Mapped[list["SWUCardTrait"]] = relationship()
+    card_set: Mapped["SWUSet"] = relationship(back_populates="cards")
 
 
 class SWUCardArena(Base):
     __tablename__ = "card_arenas"
-    id = Column(Integer, primary_key=True)
-    card_id = Column(String, ForeignKey("cards.id"))
-    arena = Column(String)
-    card = relationship("SWUCard", back_populates="arenas")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    card_id: Mapped[str] = mapped_column(ForeignKey("cards.id"))
+    arena: Mapped[str | None] = mapped_column()
 
 
 class SWUCardAspect(Base):
     __tablename__ = "card_aspects"
-    id = Column(Integer, primary_key=True)
-    card_id = Column(String, ForeignKey("cards.id"))
-    aspect = Column(String)
-    double = Column(Boolean)
-    card = relationship("SWUCard", back_populates="aspects")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    card_id: Mapped[str] = mapped_column(ForeignKey("cards.id"))
+    aspect: Mapped[str | None] = mapped_column()
+    sort_order: Mapped[int] = mapped_column()
+    double: Mapped[bool] = mapped_column()
 
 
 class SWUCardTrait(Base):
     __tablename__ = "card_traits"
-    id = Column(Integer, primary_key=True)
-    card_id = Column(String, ForeignKey("cards.id"))
-    trait = Column(String)
-    card = relationship("SWUCard", back_populates="traits")
+    id: Mapped[int] = mapped_column(primary_key=True)
+    card_id: Mapped[str] = mapped_column(ForeignKey("cards.id"))
+    trait: Mapped[str | None] = mapped_column()
