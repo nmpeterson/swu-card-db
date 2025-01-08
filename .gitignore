@@ -10,7 +10,7 @@ wheels/
 .venv
 
 # macOS stuff
-*/.DS_Store
+.DS_Store
 
 # SQLite database (create with data/create_db.py)
 data/db.sqlite3
