@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Set: {{set_id}} — {{ super() }}{% endblock %}
 {% block content %}
-<h2>Set: {{set.name}} ({{set.id}})</h2>
+<h2>{{set.name}} ({{set.id}})</h2>
 <p>Select a card to see its info:</p>
-<ul id="card-list" hx-get="/card_list/{{set.id}}" hx-swap="innerHTML" hx-trigger="load"></ul>
+<ul id="card-list" hx-get="/card_list?set_id={{set.id}}&variant_type=Normal" hx-swap="innerHTML" hx-trigger="load"></ul>
 {% endblock %}

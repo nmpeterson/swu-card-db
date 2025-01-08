@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     {% block head %}
@@ -7,33 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}SWU Card Database{% endblock %}</title>
     <link href="{{ url_for('static', path='/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet"> -->
+    <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', path='/js/htmx.min.js') }}"></script>
     {% endblock %}
 </head>
 
 <body>
-    <div class="container min-vh-100 d-flex flex-column">
-        <nav class="navbar">
-            <div class="container-fluid" id="header">
+    <div class="w-100 min-vh-100 p-0 d-flex flex-column">
+        <nav class="w-100 p-3 navbar bg-body-tertiary">
+            <div id="header" class="container p-0">
                 {% block header %}
-                <a href="/">
-                    <h1>SWU Card Database</h1>
+                <a class="navbar-brand" href="/">
+                    <img src="{{ url_for('static', path='/images/swu_logo_white.png') }}" alt="Star Wars Unlimited Logo"
+                        height="40" class="me-3" />
+                    SWU Card Database
                 </a>
                 {% endblock %}
             </div>
         </nav>
-        <div class="row flex-grow-1">
-            <div class="col" id="content">
+        <div class="w-100 p-3 flex-grow-1">
+            <div id="content" class="container p-0">
                 {% block content %}{% endblock %}
             </div>
         </div>
-        <div class="row" id="footer">
-            {% block footer %}
-            <div class="col">
+        <div class="w-100 p-3 bg-body-tertiary">
+            <div id="footer" class="container p-0">
+                {% block footer %}
                 Copyright &copy; 2025 Noel Peterson
+                {% endblock %}
             </div>
-            {% endblock %}
         </div>
     </div>
 </body>
