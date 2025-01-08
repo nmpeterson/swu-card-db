@@ -5,6 +5,16 @@ import sqlite3
 
 DATA_DIR = os.path.dirname(__file__)
 
+ASPECT_SORT_ORDER = {
+    "Vigilance": 1,
+    "Command": 2,
+    "Aggression": 3,
+    "Cunning": 4,
+    "Villainy": 5,
+    "Heroism": 6,
+    None: 7,
+}
+
 
 def main():
     # Load card data
@@ -41,7 +51,7 @@ def main():
             )
         )
         for aspect, n in Counter(card.get("Aspects", [None])).items():
-            aspect_rows.append((card_id, aspect, int(n > 1)))
+            aspect_rows.append((card_id, aspect, ASPECT_SORT_ORDER[aspect], int(n > 1)))
         for trait in card.get("Traits", [None]):
             trait_rows.append((card_id, trait))
         for arena in card.get("Arenas", [None]):
@@ -110,12 +120,15 @@ def main():
                 "id" INTEGER PRIMARY KEY AUTOINCREMENT,
                 "card_id" TEXT NOT NULL,
                 "aspect" TEXT,
+                "sort_order" INTEGER NOT NULL,
                 "double" INTEGER NOT NULL,
                 FOREIGN KEY ("card_id") REFERENCES cards("id")
             )
             """
         )
-        cur.executemany("""INSERT INTO card_aspects ("card_id", "aspect", "double") VALUES(?,?,?)""", aspect_rows)
+        cur.executemany(
+            """INSERT INTO card_aspects ("card_id", "aspect", "sort_order", "double") VALUES(?,?,?,?)""", aspect_rows
+        )
         con.commit()
 
         print(f"Creating card_traits table ({len(trait_rows):,} rows)")
