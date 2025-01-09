@@ -1,3 +1,19 @@
+:root {
+    /* Aspect colors */
+    --aspect-color-vigilance: #6694ce;
+    --aspect-color-command: #41ad49;
+    --aspect-color-aggression: #d2232a;
+    --aspect-color-cunning: #fdb933;
+    --aspect-color-villainy: #040004;
+    --aspect-color-heroism: #c6c1a0;
+
+    /* Set colors */
+    --set-color-sor: #e10600;
+    --set-color-shd: #3b3fb6;
+    --set-color-twi: #7c2529;
+    --set-color-jtl: #f2a900;
+}
+
 a {
     text-decoration: none;
 }
