@@ -2,13 +2,13 @@ import logging
 from typing import Annotated
 
 from fastapi import FastAPI, Request, Depends, Header
-from fastapi.encoders import jsonable_encoder
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from .database import get_db, SWUSet, SWUCard, SWUCardArena, SWUCardAspect, SWUCardTrait
+from .models import SetModel, CardModel
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -52,7 +52,7 @@ async def get_card(request: Request, card_id: str, db: Session = Depends(get_db)
         return JSONResponse(content={"error": "Card not found"}, status_code=404)
 
 
-@app.get("/set_list", response_class=HTMLResponse)
+@app.get("/set_list", response_model=list[SetModel])
 async def get_sets(
     request: Request,
     db: Session = Depends(get_db),
@@ -61,10 +61,10 @@ async def get_sets(
     sets = db.query(SWUSet).order_by(SWUSet.number).all()
     if hx_request:
         return templates.TemplateResponse(request=request, name="set_list.html", context={"sets": sets})
-    return JSONResponse(content=jsonable_encoder(sets))
+    return sets
 
 
-@app.get("/card_list", response_class=HTMLResponse)
+@app.get("/card_list", response_model=list[CardModel])
 async def get_cards(
     request: Request,
     db: Session = Depends(get_db),
@@ -81,6 +81,8 @@ async def get_cards(
         cards = cards.filter(SWUCard.card_type == card_type)
     if rarity := request.query_params.get("rarity"):
         cards = cards.filter(SWUCard.rarity == rarity)
+    if artist := request.query_params.get("artist"):
+        cards = cards.filter(SWUCard.artist == artist)
     if arena := request.query_params.get("arena"):
         cards = cards.join(SWUCardArena).filter(SWUCard.arenas.any(SWUCardArena.arena == arena))
     if aspect := request.query_params.get("aspect"):
@@ -90,4 +92,4 @@ async def get_cards(
     cards = cards.join(SWUCard.card_set).order_by(SWUSet.number, SWUCard.id).all()
     if hx_request:
         return templates.TemplateResponse(request=request, name="card_list.html", context={"cards": cards})
-    return JSONResponse(content=jsonable_encoder(cards))
+    return cards
