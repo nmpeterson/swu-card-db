@@ -1,35 +1,40 @@
 {% extends "base.html" %}
+
 {% block title %}Card: {{card.id}} — {{ super() }}{% endblock %}
+
 {% block content %}
 <h2>{% if card.unique is true %}⟡{% endif %}{{card.name}}</h2>
 {% if card.subtitle is not none %}<h3>{{card.subtitle}}</h3>{% endif %}
 <h4>{{card.card_set.name}}</h4>
-<img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}" alt="{{card.name}}"
-    height="386" />
-{% if card.double_sided is true %}
-<img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }}"
-    alt="{{card.name}} back" height="386" />
-{% endif %}
+<div id="card-image">
+    <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}"
+        alt="{{card.name}}" height="386" />
+    {% if card.double_sided is true %}
+    <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }}"
+        alt="{{card.name}} back" height="386" />
+    {% endif %}
+</div>
 <p>{{card.id}}</p>
 <p>Aspects:</p>
 {% for aspect in card.aspects %}
 {% if aspect.aspect is not none %}
 <img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
     width="50" />
-{% else %}
-<span>N/A</span>
-{% endif %}
 {% if aspect.double is true %}
 <img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
     width="50" />
 {% endif %}
+{% else %}
+<span>N/A</span>
+{% endif %}
 {% endfor %}
-<p>Arenas:</p>
-<ul>{% for arena in card.arenas %}<li>{{arena.arena}}</li>{% endfor %}</ul>
-<p>Traits:</p>
-<ul>{% for trait in card.traits %}<li>{{trait.trait}}</li>{% endfor %}</ul>
+<p>Arena:{% for arena in card.arenas %}<span class="badge text-bg-light ms-1">{{arena.arena}}</span>{% endfor %}
+</p>
+<p>Traits:{% for trait in card.traits %}<span class="badge text-bg-light ms-1">{{trait.trait}}</span>{% endfor %}
+</p>
 <p>Variants:</p>
-<ul>{% for variant in variants %}
+<ul>
+    {% for variant in variants %}
     <li><a href="{{variant.id}}">{{variant.id}} ({{variant.variant_type}})</a></li>
     {% endfor %}
 </ul>

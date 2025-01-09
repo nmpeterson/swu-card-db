@@ -1,7 +1,19 @@
 {% for card in cards %}
 <li>
     <a href="../cards/{{card.id}}">
-        <span>{{card.id}} — {{card.name}}{% if card.subtitle is not none %}: {{card.subtitle}}{% endif %}</span>
+        <span>
+            {{card.id}} — {{card.name}}{% if card.subtitle is not none %}: {{card.subtitle}}{% endif %}
+            {% for aspect in card.aspects %}
+            {% if aspect.aspect is not none %}
+            <img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
+                width="20" />
+            {% if aspect.double is true %}
+            <img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
+                width="20" />
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </span>
     </a>
 </li>
 {% endfor %}

@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Set: {{set_id}} — {{ super() }}{% endblock %}
 {% block content %}
-<h2>{{set.name}} ({{set.id}})</h2>
-<p>Select a card to see its info:</p>
-<ul id="card-list" hx-get="/card_list?set_id={{set.id}}&variant_type=Normal" hx-swap="innerHTML" hx-trigger="load"></ul>
+<div class="row">
+    <div class="col p-0 mb-3">
+        <img src="{{ url_for('static', path='/images/sets/' + set.id + '_logo.png') }}" alt="{{set.name}}" width="300">
+    </div>
+</div>
+<div class="row">
+    <div class="col p-0">
+        <ul id="card-list" hx-get="/card_list?set_id={{set.id}}&variant_type=Normal" hx-swap="innerHTML"
+            hx-trigger="load"></ul>
+    </div>
+</div>
 {% endblock %}
