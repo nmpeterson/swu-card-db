@@ -1,19 +1,24 @@
 {% for card in cards %}
-<li>
+<li class="card-list-item">
     <a href="../cards/{{card.id}}">
-        <span>
-            {{card.id}} — {{card.name}}{% if card.subtitle is not none %}: {{card.subtitle}}{% endif %}
+        <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">{{card.id}}</span>
+        <span class="fs-4 aspect-pips me-1">
             {% for aspect in card.aspects %}
             {% if aspect.aspect is not none %}
-            <img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
-                width="20" />
+            <span class="align-middle aspect-pip-{{aspect.aspect|lower()}}">⬢</span>
             {% if aspect.double is true %}
-            <img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
-                width="20" />
+            <span class="align-middle aspect-pip-{{aspect.aspect|lower()}}">⬢</span>
             {% endif %}
             {% endif %}
             {% endfor %}
         </span>
+        <span class="align-middle fw-normal">{% if card.unique is true %}⟡{% endif %}{{card.name}}</span>
+        {% if card.subtitle is not none %}
+        <span class="align-middle fw-lighter">— {{card.subtitle}}</span>
+        {% endif %}
+        <span class="badge text-bg-dark opacity-50 fw-semibold">{{card.card_type}}</span>
+        <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}" alt="{{card.rarity}}"
+            height="14" class="align-middle" />
     </a>
 </li>
 {% endfor %}

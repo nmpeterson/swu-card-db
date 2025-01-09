@@ -17,3 +17,44 @@
 a {
     text-decoration: none;
 }
+
+ul {
+    list-style: none inside;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Aspect pips */
+.aspect-pips {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.5);
+}
+
+.aspect-pip-vigilance,
+a.aspect-pip-vigilance {
+    color: var(--aspect-color-vigilance);
+}
+
+.aspect-pip-command,
+a.aspect-pip-command {
+    color: var(--aspect-color-command);
+}
+
+.aspect-pip-aggression,
+a.aspect-pip-aggression {
+    color: var(--aspect-color-aggression);
+}
+
+.aspect-pip-cunning,
+a.aspect-pip-cunning {
+    color: var(--aspect-color-cunning);
+}
+
+.aspect-pip-villainy,
+a.aspect-pip-villainy {
+    color: var(--aspect-color-villainy);
+}
+
+.aspect-pip-heroism,
+a.aspect-pip-heroism {
+    color: var(--aspect-color-heroism);
+}

@@ -1,5 +1,11 @@
 {% extends "base.html" %}
+
 {% block content %}
-<p>Select a set to see its cards:</p>
-<ul id="set-list" hx-get="/set_list" hx-swap="innerHTML" hx-trigger="load"></ul>
+<div class="row">
+    <div class="col p-0">
+        <p>This site contains information about each card in the trading card game <strong>Star Wars Unlimited</strong>.
+            Select a set to browse its cards.</p>
+        <ul id="set-list" hx-get="/set_list" hx-swap="innerHTML" hx-trigger="load"></ul>
+    </div>
+</div>
 {% endblock %}
