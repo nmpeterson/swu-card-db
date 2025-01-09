@@ -1,8 +1,8 @@
 import logging
 from typing import Annotated
 
-from fastapi import FastAPI, Request, Depends, Header
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi import FastAPI, HTTPException, Request, Depends, Header
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
@@ -23,33 +23,31 @@ async def home(request: Request):
 
 
 @app.get("/sets/{set_id}", response_class=HTMLResponse)
-async def get_set(request: Request, set_id: str, db: Session = Depends(get_db)):
+async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_db)):
     swu_set = db.query(SWUSet).filter(SWUSet.id == set_id).first()
+    if not swu_set:
+        raise HTTPException(status_code=404, detail=f"Set '{set_id}' not found")
     return templates.TemplateResponse(request=request, name="set.html", context={"set": swu_set})
 
 
 @app.get("/cards/{card_id}", response_class=HTMLResponse)
-async def get_card(request: Request, card_id: str, db: Session = Depends(get_db)):
-    try:
-        card = db.query(SWUCard).filter(SWUCard.id == card_id).first()
-        variants = (
-            db.query(SWUCard)
-            .filter(
-                SWUCard.id != card.id,
-                SWUCard.name == card.name,
-                SWUCard.card_type == card.card_type,
-                SWUCard.subtitle == card.subtitle,
-            )
-            .join(SWUCard.card_set)
-            .order_by(SWUSet.number, SWUCard.id)
-            .all()
+async def get_card_page(request: Request, card_id: str, db: Session = Depends(get_db)):
+    card = db.query(SWUCard).filter(SWUCard.id == card_id).first()
+    if not card:
+        raise HTTPException(status_code=404, detail=f"Card '{card_id}' not found")
+    variants = (
+        db.query(SWUCard)
+        .filter(
+            SWUCard.id != card.id,
+            SWUCard.name == card.name,
+            SWUCard.card_type == card.card_type,
+            SWUCard.subtitle == card.subtitle,
         )
-        return templates.TemplateResponse(
-            request=request, name="card.html", context={"card": card, "variants": variants}
-        )
-    except Exception:
-        # TODO: Implement 404 page
-        return JSONResponse(content={"error": "Card not found"}, status_code=404)
+        .join(SWUCard.card_set)
+        .order_by(SWUSet.number, SWUCard.id)
+        .all()
+    )
+    return templates.TemplateResponse(request=request, name="card.html", context={"card": card, "variants": variants})
 
 
 @app.get("/set_list", response_model=list[SetModel])
@@ -93,3 +91,8 @@ async def get_cards(
     if hx_request:
         return templates.TemplateResponse(request=request, name="card_list.html", context={"cards": cards})
     return cards
+
+
+@app.exception_handler(404)
+async def not_found_exception_handler(request: Request, exc: HTTPException):
+    return templates.TemplateResponse(request=request, name="404.html", context={})
