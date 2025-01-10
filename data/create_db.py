@@ -23,12 +23,21 @@ def main():
     except FileNotFoundError as e:
         raise RuntimeError("Could not find all_cards.json. Please run fetch_card_data.py to create it.") from e
     print(f"Loaded {len(all_cards):,} cards' data into memory")
+
+    # Load manual corrections
+    try:
+        corrections = json.load(open(os.path.join(DATA_DIR, "corrections.json"), "rb"))
+    except FileNotFoundError:
+        corrections = {}
+
     card_rows = []
     aspect_rows = []
     trait_rows = []
     arena_rows = []
     for card in all_cards:
         card_id = f"{card['Set']}-{card['Number']}"
+        if card_id in corrections:
+            card.update(corrections[card_id])
         card_rows.append(
             (
                 card_id,
