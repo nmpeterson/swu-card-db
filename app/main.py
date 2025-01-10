@@ -14,11 +14,11 @@ logging.basicConfig(level=logging.DEBUG)
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
-templates = Jinja2Templates(directory="app/templates")
+templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_blocks=True)
 
 
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
+async def root(request: Request):
     return templates.TemplateResponse(request=request, name="index.html", context={})
 
 
@@ -38,7 +38,7 @@ async def get_card_page(request: Request, card_id: str, db: Session = Depends(ge
     variants = (
         db.query(SWUCard)
         .filter(
-            SWUCard.id != card.id,
+            # SWUCard.id != card.id,
             SWUCard.name == card.name,
             SWUCard.card_type == card.card_type,
             SWUCard.subtitle == card.subtitle,
