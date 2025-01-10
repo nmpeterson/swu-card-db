@@ -23,6 +23,10 @@ ul {
     color: rgba(255, 255, 255, 0.5);
 }
 
+li.selected {
+    list-style: '⬦' outside;
+}
+
 /* Aspect pips */
 .aspect-pips {
     -webkit-text-stroke-width: 1px;
@@ -57,4 +61,10 @@ a.aspect-pip-villainy {
 .aspect-pip-heroism,
 a.aspect-pip-heroism {
     color: var(--aspect-color-heroism);
+}
+
+/* Rarity pips */
+.rarity-pip {
+    height: 1rem;
+    width: auto;
 }

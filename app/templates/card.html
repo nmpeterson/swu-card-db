@@ -5,23 +5,60 @@
 {% block content %}
 <div class="row">
     <div class="col">
-        <div class="card" style="width: 24rem;">
-            <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}"
-                class="card-img-top" alt="{{card.name}} front">
-            <div class="card-body">
-                <h5 class="card-title">{% if card.unique is true %}⟡{% endif %}{{card.name}}</h5>
-                {% if card.subtitle is not none %}
-                <h6 class="card-subtitle mb-2 text-body-secondary">{{card.subtitle}}</h6>
-                {% endif %}
-                {% if card.front_text is not none %}
-                <p class="card-text">{{ card.front_text }}</p>
-                {% endif %}
+        {% if card.double_sided is true %}
+        <div class="card rounded-4">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}"
+                        class="img-fluid" alt="{{card.name}} card front">
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">{% if card.unique is true %}✧{% endif %}{{card.name}}</h5>
+                        {% if card.subtitle is not none %}
+                        <h6 class="card-subtitle mb-2 text-body-secondary">{{card.subtitle}}</h6>
+                        {% endif %}
+                        {% if card.front_text is not none %}
+                        <p class="card-text">{{ card.front_text }}</p>
+                        {% endif %}
+                        {% if card.epic_action is not none %}
+                        <p class="card-text">{{ card.epic_action }}</p>
+                        {% endif %}
+                        {% if card.back_text is not none %}
+                        <p class="card-text">{{ card.back_text }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }}"
+                        class="img-fluid" alt="{{card.name}} card back">
+                </div>
             </div>
-            {% if card.double_sided is true %}
-            <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }}"
-                class="card-img-bottom" alt="{{card.name}} back">
-            {% endif %}
         </div>
+        {% else %}
+        <div class="card rounded-4">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}"
+                        class="img-fluid" alt="{{card.name}} card front">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{% if card.unique is true %}✧{% endif %}{{card.name}}</h5>
+                        {% if card.subtitle is not none %}
+                        <h6 class="card-subtitle mb-2 text-body-secondary">{{card.subtitle}}</h6>
+                        {% endif %}
+                        {% if card.front_text is not none %}
+                        <p class="card-text">{{ card.front_text }}</p>
+                        {% endif %}
+                        {% if card.epic_action is not none %}
+                        <p class="card-text">{{ card.epic_action }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 <div class="row mt-3">
@@ -29,7 +66,11 @@
         <h4>Variants:</h4>
         <ul>
             {% for variant in variants %}
+            {% if variant.id == card.id %}
+            <li class="selected">{{variant.id}} ({{variant.variant_type}})</li>
+            {% else %}
             <li><a href="{{variant.id}}">{{variant.id}} ({{variant.variant_type}})</a></li>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>
@@ -39,10 +80,10 @@
 <h4>{{card.card_set.name}}</h4>
 <div id="card-image">
     <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}"
-        alt="{{card.name}}" height="386" />
+        alt="{{card.name}}" height="386">
     {% if card.double_sided is true %}
     <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }}"
-        alt="{{card.name}} back" height="386" />
+        alt="{{card.name}} back" height="386">
     {% endif %}
 </div>
 <p>{{card.id}}</p>
@@ -50,10 +91,10 @@
 {% for aspect in card.aspects %}
 {% if aspect.aspect is not none %}
 <img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
-    width="50" />
+    width="50">
 {% if aspect.double is true %}
 <img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
-    width="50" />
+    width="50">
 {% endif %}
 {% else %}
 <span>N/A</span>
@@ -62,5 +103,5 @@
 <p>Arena:{% for arena in card.arenas %}<span class="badge text-bg-light ms-1">{{arena.arena}}</span>{% endfor %}
 </p>
 <p>Traits:{% for trait in card.traits %}<span class="badge text-bg-light ms-1">{{trait.trait}}</span>{% endfor %}
-</p>-->
+</p> -->
 {% endblock %}
