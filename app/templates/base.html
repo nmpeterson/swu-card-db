@@ -8,26 +8,58 @@
     <title>{% block title %}SWU Card Database{% endblock %}</title>
     <link href="{{ url_for('static', path='/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', path='/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url_for('static', path='/js/htmx.min.js') }}"></script>
     {% endblock %}
 </head>
 
 <body>
     <div class="w-100 min-vh-100 p-0 d-flex flex-column">
-        <nav class="w-100 p-3 navbar navbar-expand-md sticky-top bg-body-tertiary border-bottom">
+        <nav class="w-100 p-3 navbar navbar-expand-lg sticky-top bg-body-tertiary border-bottom">
             <div id="header" class="container p-0">
                 {% block header %}
+                <a class="navbar-brand" href="/">
+                    <img src="{{ url_for('static', path='/images/swu_logo_white.png') }}" alt="Star Wars Unlimited Logo"
+                        height="40" class="me-4">
+                    <span id="app-title" class="h2 fw-semibold align-middle">SWU Card
+                        Database</span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
                     aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarToggler">
-                    <a class="navbar-brand" href="/">
-                        <img src="{{ url_for('static', path='/images/swu_logo_white.png') }}"
-                            alt="Star Wars Unlimited Logo" height="40" class="me-4">
-                        <span id="app-title" class="h2 fw-semibold align-middle">SWU Card
-                            Database</span>
-                    </a>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Sets
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="/sets/SOR">
+                                        <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SOR</span>
+                                        <span class="align-middle fw-normal">Spark of Rebellion</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/sets/SHD">
+                                        <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SHD</span>
+                                        <span class="align-middle fw-normal">Shadows of the Galaxy</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="/sets/TWI">
+                                        <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SOR</span>
+                                        <span class="align-middle fw-normal">Twilight of the Republic</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/search">Advanced Search</a>
+                        </li>
+                    </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="Search for a card"
                             aria-label="Search">
