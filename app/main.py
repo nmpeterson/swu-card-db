@@ -9,7 +9,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 
 from .database import get_db, SWUSet, SWUCard, SWUCardArena, SWUCardAspect, SWUCardTrait
-from .models import SetModel, CardModel
+from .models import SetModel, CardListModel
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -18,15 +18,42 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_blocks=True)
 
 
+# Get select options for advanced search form from database ONCE
+session = get_db()
+db = session.__next__()
+advanced_search_options = {
+    "set_id_options": [s.id for s in db.query(SWUSet.id, SWUSet.number).order_by(SWUSet.number).all()],
+    "arena_options": [
+        a.arena for a in db.query(SWUCardArena.arena).distinct().order_by(SWUCardArena.arena).all() if a.arena
+    ],
+    "aspect_options": [
+        a.aspect for a in db.query(SWUCardAspect.aspect).distinct().order_by(SWUCardAspect.aspect).all() if a.aspect
+    ],
+    "trait_options": [
+        t.trait for t in db.query(SWUCardTrait.trait).distinct().order_by(SWUCardTrait.trait).all() if t.trait
+    ],
+    "card_type_options": [
+        c.card_type for c in db.query(SWUCard.card_type).distinct().order_by(SWUCard.card_type).all()
+    ],
+    "rarity_options": [c.rarity for c in db.query(SWUCard.rarity).distinct().order_by(SWUCard.rarity).all()],
+    "artist_options": [c.artist for c in db.query(SWUCard.artist).distinct().order_by(SWUCard.artist).all()],
+    "variant_type_options": [
+        c.variant_type for c in db.query(SWUCard.variant_type).distinct().order_by(SWUCard.variant_type).all()
+    ],
+}
+session.close()
+
+
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse(request=request, name="index.html", context={})
 
 
 @app.get("/search", response_class=HTMLResponse)
-async def search(request: Request):
-    query_string = urllib.parse.urlencode(request.query_params)
-    return templates.TemplateResponse(request=request, name="search.html", context={"query_string": query_string})
+async def search(request: Request, db: Session = Depends(get_db)):
+    search_context = {"query_string": urllib.parse.urlencode(request.query_params), **advanced_search_options}
+    logging.debug((f"{search_context=}"))
+    return templates.TemplateResponse(request=request, name="search.html", context=search_context)
 
 
 @app.get("/sets/{set_id}", response_class=HTMLResponse)
@@ -69,7 +96,7 @@ async def get_sets(
     return sets
 
 
-@app.get("/card_list", response_model=list[CardModel])
+@app.get("/card_list", response_model=list[CardListModel])
 async def get_cards(
     request: Request,
     db: Session = Depends(get_db),
