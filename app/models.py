@@ -20,7 +20,8 @@ class TraitModel(BaseModel):
     trait: str | None
 
 
-class CardModel(BaseModel):
+class CardListModel(BaseModel):
+    """Minimal subset of card properties for creating lists."""
     id: str
     set_id: str
     number: str
@@ -30,6 +31,11 @@ class CardModel(BaseModel):
     rarity: str
     variant_type: str
     card_type: str
+    aspects: list[AspectModel]
+
+
+class CardModel(CardListModel):
+    """Full card model with all fields."""
     cost: str | None
     power: str | None
     hp: str | None
@@ -39,5 +45,4 @@ class CardModel(BaseModel):
     back_text: str | None
     artist: str
     arenas: list[ArenaModel]
-    aspects: list[AspectModel]
     traits: list[TraitModel]
