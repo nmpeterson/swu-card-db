@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Search — {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col p-0 mb-2">
+        <div class="alert alert-warning" role="alert">
+            Add search form here
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col p-0">
+        <ul id="card-list" hx-get="/card_list?{{query_string}}" hx-swap="innerHTML" hx-trigger="load"></ul>
+    </div>
+</div>
+{% endblock %}

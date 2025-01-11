@@ -1,4 +1,5 @@
 import logging
+import urllib.parse
 from typing import Annotated
 
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
@@ -20,6 +21,12 @@ templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse(request=request, name="index.html", context={})
+
+
+@app.get("/search", response_class=HTMLResponse)
+async def search(request: Request):
+    query_string = urllib.parse.urlencode(request.query_params)
+    return templates.TemplateResponse(request=request, name="search.html", context={"query_string": query_string})
 
 
 @app.get("/sets/{set_id}", response_class=HTMLResponse)
