@@ -168,6 +168,19 @@ def main():
         cur.executemany("""INSERT INTO card_arenas ("card_id", "arena") VALUES(?,?)""", arena_rows)
         con.commit()
 
+        print("Adding indices")
+        cur.execute("""CREATE INDEX set_id_index ON sets (id)""")
+        cur.execute("""CREATE INDEX set_search_index ON cards (number, name)""")
+        cur.execute("""CREATE INDEX card_id_index ON cards (id)""")
+        cur.execute("""CREATE INDEX card_search_index ON cards (set_id, variant_type, card_type, rarity, artist)""")
+        cur.execute("""CREATE INDEX aspect_card_id_index ON card_aspects (card_id)""")
+        cur.execute("""CREATE INDEX aspect_search_index ON card_aspects (aspect, sort_order)""")
+        cur.execute("""CREATE INDEX trait_card_id_index ON card_traits (card_id)""")
+        cur.execute("""CREATE INDEX trait_search_index ON card_traits (trait)""")
+        cur.execute("""CREATE INDEX arena_card_id_index ON card_arenas (card_id)""")
+        cur.execute("""CREATE INDEX arena_search_index ON card_arenas (arena)""")
+        con.commit()
+
 
 if __name__ == "__main__":
     main()
