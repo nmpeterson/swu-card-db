@@ -5,11 +5,9 @@
         <span class="fs-4 aspect-pips me-1">
             {% for aspect in card.aspects %}
             {% if aspect.aspect is not none %}
-            <span class="align-middle aspect-pip-{{aspect.aspect|lower()}}"
-                aria-description="{{aspect.aspect}} aspect">⬢</span>
+            <span class="align-middle aspect-pip-{{aspect.aspect}}" aria-description="{{aspect.aspect}} aspect">⬢</span>
             {% if aspect.double is true %}
-            <span class="align-middle aspect-pip-{{aspect.aspect|lower()}}"
-                aria-description="{{aspect.aspect}} aspect">⬢</span>
+            <span class="align-middle aspect-pip-{{aspect.aspect}}" aria-description="{{aspect.aspect}} aspect">⬢</span>
             {% endif %}
             {% endif %}
             {% endfor %}
@@ -19,7 +17,7 @@
         <span class="align-middle fw-lighter">— {{card.subtitle}}</span>
         {% endif %}
         <span class="badge text-bg-dark opacity-50 fw-semibold">{{card.card_type}}</span>
-        <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}" alt="{{card.rarity}}"
+        <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}" alt="{{card.rarity}} rarity"
             class="align-middle rarity-pip">
     </a>
 </li>

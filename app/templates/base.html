@@ -14,14 +14,26 @@
 
 <body>
     <div class="w-100 min-vh-100 p-0 d-flex flex-column">
-        <nav class="w-100 p-3 navbar sticky-top bg-body-tertiary">
+        <nav class="w-100 p-3 navbar navbar-expand-md sticky-top bg-body-tertiary border-bottom">
             <div id="header" class="container p-0">
                 {% block header %}
-                <a class="navbar-brand" href="/">
-                    <img src="{{ url_for('static', path='/images/swu_logo_white.png') }}" alt="Star Wars Unlimited Logo"
-                        height="40" class="me-4">
-                    <span class="display-6 align-middle">SWU Card Database</span>
-                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+                    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggler">
+                    <a class="navbar-brand" href="/">
+                        <img src="{{ url_for('static', path='/images/swu_logo_white.png') }}"
+                            alt="Star Wars Unlimited Logo" height="40" class="me-4">
+                        <span id="app-title" class="h2 fw-semibold align-middle">SWU Card
+                            Database</span>
+                    </a>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search for a card"
+                            aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
                 {% endblock %}
             </div>
         </nav>
@@ -30,7 +42,7 @@
                 {% block content %}{% endblock %}
             </div>
         </div>
-        <div class="w-100 p-3 bg-body-tertiary">
+        <div class="w-100 p-3 bg-body-tertiary border-top">
             <div id="footer" class="container p-0">
                 {% block footer %}
                 Copyright &copy; 2025 Noel Peterson

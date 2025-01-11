@@ -1,17 +1,17 @@
 :root {
     /* Aspect colors */
-    --aspect-color-vigilance: #6694ce;
-    --aspect-color-command: #41ad49;
-    --aspect-color-aggression: #d2232a;
-    --aspect-color-cunning: #fdb933;
-    --aspect-color-villainy: #040004;
-    --aspect-color-heroism: #c6c1a0;
+    --aspect-color-vigilance: 102, 148, 206;
+    --aspect-color-command: 65, 173, 73;
+    --aspect-color-aggression: 210, 35, 42;
+    --aspect-color-cunning: 253, 185, 51;
+    --aspect-color-villainy: 4, 0, 4;
+    --aspect-color-heroism: 198, 193, 160;
 
     /* Set colors */
-    --set-color-sor: #e10600;
-    --set-color-shd: #3b3fb6;
-    --set-color-twi: #7c2529;
-    --set-color-jtl: #f2a900;
+    --set-color-sor: 225, 6, 0;
+    --set-color-shd: 59, 63, 182;
+    --set-color-twi: 124, 37, 41;
+    --set-color-jtl: 242, 169, 0;
 }
 
 a {
@@ -27,44 +27,84 @@ li.selected {
     list-style: '⬦' outside;
 }
 
+/* Card layout */
+/* .swu-card {
+    p
+} */
+
+.card-aspect-Vigilance {
+    border-color: rgb(var(--aspect-color-vigilance));
+    background-color: rgba(var(--aspect-color-vigilance), 0.1);
+}
+
+.card-aspect-Command {
+    border-color: rgb(var(--aspect-color-command));
+    background-color: rgba(var(--aspect-color-command), 0.1);
+}
+
+.card-aspect-Aggression {
+    border-color: rgb(var(--aspect-color-aggression));
+    background-color: rgba(var(--aspect-color-aggression), 0.1);
+}
+
+.card-aspect-Cunning {
+    border-color: rgb(var(--aspect-color-cunning));
+    background-color: rgba(var(--aspect-color-cunning), 0.1);
+}
+
+.card-aspect-Villainy {
+    border-color: rgb(var(--aspect-color-villainy));
+    background-color: rgba(var(--aspect-color-villainy), 0.1);
+}
+
+.card-aspect-Heroism {
+    border-color: rgb(var(--aspect-color-heroism));
+    background-color: rgba(var(--aspect-color-heroism), 0.1);
+}
+
 /* Aspect pips */
 .aspect-pips {
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: rgba(255, 255, 255, 0.5);
 }
 
-.aspect-pip-vigilance,
-a.aspect-pip-vigilance {
-    color: var(--aspect-color-vigilance);
+.aspect-pip-Vigilance,
+a.aspect-pip-Vigilance {
+    color: rgb(var(--aspect-color-vigilance));
 }
 
-.aspect-pip-command,
-a.aspect-pip-command {
-    color: var(--aspect-color-command);
+.aspect-pip-Command,
+a.aspect-pip-Command {
+    color: rgb(var(--aspect-color-command));
 }
 
-.aspect-pip-aggression,
-a.aspect-pip-aggression {
-    color: var(--aspect-color-aggression);
+.aspect-pip-Aggression,
+a.aspect-pip-Aggression {
+    color: rgb(var(--aspect-color-aggression));
 }
 
-.aspect-pip-cunning,
-a.aspect-pip-cunning {
-    color: var(--aspect-color-cunning);
+.aspect-pip-Cunning,
+a.aspect-pip-Cunning {
+    color: rgb(var(--aspect-color-cunning));
 }
 
-.aspect-pip-villainy,
-a.aspect-pip-villainy {
-    color: var(--aspect-color-villainy);
+.aspect-pip-Villainy,
+a.aspect-pip-Villainy {
+    color: rgb(var(--aspect-color-villainy));
 }
 
-.aspect-pip-heroism,
-a.aspect-pip-heroism {
-    color: var(--aspect-color-heroism);
+.aspect-pip-Heroism,
+a.aspect-pip-Heroism {
+    color: rgb(var(--aspect-color-heroism));
 }
 
-/* Rarity pips */
-.rarity-pip {
+/* Image pips */
+img.rarity-pip {
     height: 1rem;
+    width: auto;
+}
+
+img.aspect-pip {
+    height: 1.25rem;
     width: auto;
 }
