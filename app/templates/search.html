@@ -5,13 +5,128 @@
 {% block content %}
 <div class="row">
     <div class="col p-0 mb-2">
-        <div class="alert alert-warning" role="alert">
+        <!-- <div class="alert alert-warning" role="alert">
             Add search form here
-        </div>
+        </div> -->
+        <form class="row g-3" role="search">
+            <div class="col-12">
+                <label for="name-input" class="form-label">Card name</label>
+                <input class="form-control me-2" type="search" placeholder="Enter whole or partial card name"
+                    aria-label="Search" id="name-input" name="name" value="{{ request.query_params.get('name', '') }}">
+            </div>
+            <div class="col-3">
+                <label for="aspect-select" class="form-label">Aspect</label>
+                <select class="form-select" aria-label="Aspect selector" id="aspect-select" name="aspect">
+                    <option value=""></option>
+                    {% for aspect in aspect_options %}
+                    {% if aspect == request.query_params.get('aspect') %}
+                    <option value="{{aspect}}" selected>{{aspect}}</option>
+                    {% else %}
+                    <option value="{{aspect}}">{{aspect}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="card-type-select" class="form-label">Card type</label>
+                <select class="form-select" aria-label="Card type selector" id="card-type-select" name="card_type">
+                    <option value=""></option>
+                    {% for card_type in card_type_options %}
+                    {% if card_type == request.query_params.get('card_type') %}
+                    <option value="{{card_type}}" selected>{{card_type}}</option>
+                    {% else %}
+                    <option value="{{card_type}}">{{card_type}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="trait-select" class="form-label">Trait</label>
+                <select class="form-select" aria-label="Trait selector" id="trait-select" name="trait">
+                    <option value=""></option>
+                    {% for trait in trait_options %}
+                    {% if trait == request.query_params.get('trait') %}
+                    <option value="{{trait}}" selected>{{trait}}</option>
+                    {% else %}
+                    <option value="{{trait}}">{{trait}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="arena-select" class="form-label">Arena</label>
+                <select class="form-select" aria-label="Arena selector" id="arena-select" name="arena">
+                    <option value=""></option>
+                    {% for arena in arena_options %}
+                    {% if arena == request.query_params.get('arena') %}
+                    <option value="{{arena}}" selected>{{arena}}</option>
+                    {% else %}
+                    <option value="{{arena}}">{{arena}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="set-id-select" class="form-label">Set</label>
+                <select class="form-select" aria-label="Set selector" id="set-select" name="set_id">
+                    <option value=""></option>
+                    {% for set_id in set_id_options %}
+                    {% if set_id == request.query_params.get('set_id') %}
+                    <option value="{{set_id}}" selected>{{set_id}}</option>
+                    {% else %}
+                    <option value="{{set_id}}">{{set_id}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="artist-select" class="form-label">Artist</label>
+                <select class="form-select" aria-label="Rarity selector" id="artist-select" name="artist">
+                    <option value=""></option>
+                    {% for artist in artist_options %}
+                    {% if artist == request.query_params.get('artist') %}
+                    <option value="{{artist}}" selected>{{artist}}</option>
+                    {% else %}
+                    <option value="{{artist}}">{{artist}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="rarity-select" class="form-label">Rarity</label>
+                <select class="form-select" aria-label="Rarity selector" id="rarity-select" name="rarity">
+                    <option value=""></option>
+                    {% for rarity in rarity_options %}
+                    {% if rarity == request.query_params.get('rarity') %}
+                    <option value="{{rarity}}" selected>{{rarity}}</option>
+                    {% else %}
+                    <option value="{{rarity}}">{{rarity}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-3">
+                <label for="variant-type-select" class="form-label">Variant type</label>
+                <select class="form-select" aria-label="Variant type selector" id="variant-type-select"
+                    name="variant_type">
+                    <option value=""></option>
+                    {% for variant_type in variant_type_options %}
+                    {% if variant_type == request.query_params.get('variant_type', 'Normal') %}
+                    <option value="{{variant_type}}" selected>{{variant_type}}</option>
+                    {% else %}
+                    <option value="{{variant_type}}">{{variant_type}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </div>
+        </form>
     </div>
 </div>
 {% if query_string|length %}
-<div class="row">
+<div class="row pt-3">
     <div class="col p-0">
         <h2>Search Results</h2>
         <ul id="card-list" hx-get="/card_list?{{query_string}}" hx-swap="innerHTML" hx-trigger="load"></ul>
