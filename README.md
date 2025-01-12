@@ -1,3 +1,3 @@
-# swu-htmx
+# swu-card-db
 
-A web app that uses htmx to display data from a Star Wars Unlimited database.
+A Star Wars Unlimited card database web app built on FastAPI, SQLAlchemy, Jinja2 and htmx.

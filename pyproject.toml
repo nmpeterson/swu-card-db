@@ -1,13 +1,17 @@
 [project]
-name = "swu-htmx"
+name = "swu-card-db"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Star Wars Unlimited card database web app built on FastAPI, SQLAlchemy, Jinja2 and htmx."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.115.6",
     "jinja2>=3.1.5",
-    "requests",
     "sqlalchemy>=2.0.36",
     "uvicorn>=0.34.0",
+]
+
+[dependency-groups]
+dev = [
+    "requests>=2.32.3",
 ]

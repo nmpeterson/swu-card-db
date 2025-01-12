@@ -243,25 +243,31 @@ wheels = [
 ]
 
 [[package]]
-name = "swu-htmx"
+name = "swu-card-db"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "fastapi" },
     { name = "jinja2" },
-    { name = "requests" },
     { name = "sqlalchemy" },
     { name = "uvicorn" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "requests" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "fastapi", specifier = ">=0.115.6" },
     { name = "jinja2", specifier = ">=3.1.5" },
-    { name = "requests" },
     { name = "sqlalchemy", specifier = ">=2.0.36" },
     { name = "uvicorn", specifier = ">=0.34.0" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "requests", specifier = ">=2.32.3" }]
 
 [[package]]
 name = "typing-extensions"
