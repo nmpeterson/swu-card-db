@@ -41,6 +41,7 @@ advanced_search_options = {
         c.variant_type for c in db.query(SWUCard.variant_type).distinct().order_by(SWUCard.variant_type).all()
     ],
 }
+del db
 session.close()
 
 
@@ -52,7 +53,6 @@ async def root(request: Request):
 @app.get("/search", response_class=HTMLResponse)
 async def search(request: Request, db: Session = Depends(get_db)):
     search_context = {"query_string": urllib.parse.urlencode(request.query_params), **advanced_search_options}
-    logging.debug((f"{search_context=}"))
     return templates.TemplateResponse(request=request, name="search.html", context=search_context)
 
 
@@ -107,7 +107,7 @@ async def get_cards(
         cards = cards.filter(SWUCard.set_id == set_id)
     if name := request.query_params.get("name"):
         cards = cards.filter(SWUCard.name.icontains(name))
-    if variant_type := request.query_params.get("variant_type"):
+    if variant_type := request.query_params.get("variant_type", "Normal"):  # Default: normals only
         cards = cards.filter(SWUCard.variant_type == variant_type)
     if card_type := request.query_params.get("card_type"):
         cards = cards.filter(SWUCard.card_type == card_type)
