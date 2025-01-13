@@ -7,10 +7,36 @@
     <div class="col">
         <div class="card rounded-4 border-2 p-3 swu-card card-aspect-{{card.aspects[0].aspect}}">
             <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}"
-                        class="img-fluid" alt="{{card.name}} card front">
+                {% if card.double_sided is true %}
+                <div id="card-image" class="col-md-4 carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active"
+                            style="background-image:url({{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }});">
+                        </div>
+                        <div class="carousel-item"
+                            style="background-image:url({{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }});">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#card-image"
+                        data-bs-slide="prev">
+                        <span class="fs-3 text-white" aria-hidden="true">❮</span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#card-image"
+                        data-bs-slide="next">
+                        <span class="fs-3 text-white" aria-hidden="true">❯</span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
+                {% else %}
+                <div id="card-image" class="col-md-4 carousel slide">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active"
+                            style="background-image:url({{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }});">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">{% if card.unique is true %}✧{% endif %}{{card.name}}</h5>
