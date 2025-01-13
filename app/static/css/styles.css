@@ -75,6 +75,10 @@ li.selected {
     -webkit-text-stroke-color: rgba(255, 255, 255, 0.5);
 }
 
+.aspect-pips>span {
+    vertical-align: middle;
+}
+
 .aspect-pip-Vigilance,
 a.aspect-pip-Vigilance {
     color: rgb(var(--aspect-color-vigilance));
@@ -106,12 +110,14 @@ a.aspect-pip-Heroism {
 }
 
 /* Image pips */
-img.rarity-pip {
+.rarity-pip {
+    vertical-align: middle;
     height: 1rem;
     width: auto;
 }
 
-img.aspect-pip {
-    height: 1.25rem;
-    width: auto;
+.variant-pip {
+    vertical-align: middle;
+    height: 1rem;
+    width: 1rem;
 }
