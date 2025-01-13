@@ -20,7 +20,7 @@
                 {% block header %}
                 <a class="navbar-brand" href="/">
                     <img src="{{ url_for('static', path='/images/swu_logo_white.png') }}" alt="Star Wars Unlimited Logo"
-                        height="40" class="me-4">
+                        class="me-4 app-logo">
                     <span id="app-title" class="h2 fw-semibold align-middle">SWU Card Database</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
@@ -60,9 +60,13 @@
                         </li>
                     </ul>
                     <form class="d-flex" role="search" action="/search">
-                        <input class="form-control me-2" type="search" placeholder="Search for a card"
-                            aria-label="Search" id="nav-search" name="name">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                        <input type="search" placeholder="Search cards by name" aria-label="Search"
+                            class="form-control me-2" id="nav-search-input" name="name">
+                        <button class="btn btn-outline-secondary icon-link" id="nav-search-submit" type="submit">
+                            <svg id="nav-search-icon" fill="currentColor">
+                                <use href="{{ url_for('static', path='/images/bootstrap_icons/search.svg') }}#search" />
+                            </svg>
+                        </button>
                     </form>
                 </div>
                 {% endblock %}

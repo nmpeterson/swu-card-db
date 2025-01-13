@@ -27,11 +27,18 @@ li.selected {
     list-style: '⬦' outside;
 }
 
-/* Card layout */
-/* .swu-card {
-    p
-} */
+/* App layout */
+.app-logo {
+    height: 3rem;
+    width: auto;
+}
 
+#nav-search-icon {
+    height: 1rem;
+    width: 1rem;
+}
+
+/* Card layout */
 .card-aspect-Vigilance {
     border-color: rgb(var(--aspect-color-vigilance));
     background-color: rgba(var(--aspect-color-vigilance), 0.1);
