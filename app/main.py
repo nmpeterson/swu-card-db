@@ -107,7 +107,7 @@ async def get_cards(
         cards = cards.filter(SWUCard.set_id == set_id)
     if name := request.query_params.get("name"):
         cards = cards.filter(SWUCard.name.icontains(name))
-    if variant_type := request.query_params.get("variant_type", "Normal"):  # Default: normals only
+    if variant_type := request.query_params.get("variant_type"):
         cards = cards.filter(SWUCard.variant_type == variant_type)
     if card_type := request.query_params.get("card_type"):
         cards = cards.filter(SWUCard.card_type == card_type)
