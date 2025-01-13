@@ -25,8 +25,8 @@
                 </select>
             </div>
             <div class="col-3">
-                <label for="card-type-select" class="form-label">Card type</label>
-                <select class="form-select" aria-label="Card type selector" id="card-type-select" name="card_type">
+                <label for="card-type-select" class="form-label">Type</label>
+                <select class="form-select" aria-label="Type selector" id="card-type-select" name="card_type">
                     <option value=""></option>
                     {% for card_type in card_type_options %}
                     {% if card_type == request.query_params.get('card_type') %}
@@ -117,7 +117,7 @@
                 </select>
             </div>
             <div class="col-12">
-                <button class="btn btn-primary" type="submit">Search</button>
+                <button class="btn btn-primary w-100" type="submit">Search</button>
             </div>
         </form>
     </div>
@@ -126,7 +126,13 @@
 <div class="row pt-3">
     <div class="col p-0">
         <h2>Search Results</h2>
-        <ul id="card-list" hx-get="/card_list?{{query_string}}" hx-swap="innerHTML" hx-trigger="load"></ul>
+        <ul id="card-list" hx-get="/card_list?{{query_string}}" hx-swap="innerHTML" hx-trigger="load">
+            <li>
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </li>
+        </ul>
     </div>
 </div>
 {% endif %}
