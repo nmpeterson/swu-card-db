@@ -8,7 +8,7 @@
         <div class="card rounded-4 border-2 p-3 swu-card card-aspect-{{card.aspects[0].aspect}}">
             <div class="row g-0">
                 {% if card.double_sided is true %}
-                <div id="card-image" class="col-md-4 carousel slide">
+                <div id="card-image" class="col-lg-5 carousel slide">
                     <div class="carousel-inner">
                         <div class="carousel-item active" aria-description="Front of card image"
                             style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png')}});">
@@ -29,7 +29,7 @@
                     </button>
                 </div>
                 {% else %}
-                <div id="card-image" class="col-md-4 carousel slide">
+                <div id="card-image" class="col-lg-5 carousel slide">
                     <div class="carousel-inner">
                         <div class="carousel-item active"
                             style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png') }});">
@@ -37,25 +37,93 @@
                     </div>
                 </div>
                 {% endif %}
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h3 class="card-title">{% if card.unique is true %}✧{% endif %}{{card.name}}</h3>
-                        {% if card.subtitle is not none %}
-                        <h4 class="card-subtitle mb-2 text-body-secondary">{{card.subtitle}}</h4>
-                        {% endif %}
-                        <hr>
-                        {% if card.front_text is not none %}
-                        <h5>Card Text:</h5>
-                        <p class="card-text">{{ card.front_text }}</p>
-                        {% endif %}
-                        {% if card.epic_action is not none %}
-                        <p class="card-text">{{ card.epic_action }}</p>
-                        {% endif %}
-                        {% if card.back_text is not none %}
-                        <hr>
-                        <h5>Back Text:</h5>
-                        <p class="card-text">{{ card.back_text }}</p>
-                        {% endif %}
+                <div class="col-lg-7">
+                    <div id="card-summary" class="card-body h-100 py-2">
+                        <div id="card-summary-cost" class="d-flex justify-content-start">
+                            {% if card.cost is not none and card.cost != '0' %}
+                            <span class="badge fs-3 mb-auto" aria-description="Cost">{{card.cost}}</span>
+                            {% endif %}
+                        </div>
+                        <div id="card-summary-title" class="py-auto d-flex justify-content-between">
+                            <div class="my-auto">
+                                <h3 class="card-title">{% if card.unique is true %}✧{% endif %}{{card.name}}</h3>
+                                {% if card.subtitle is not none %}
+                                <h4 class="card-subtitle text-body-secondary">{{card.subtitle}}</h4>
+                                {% endif %}
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                {% for aspect in card.aspects %}
+                                {% if aspect.aspect is not none %}
+                                <img class="aspect-img"
+                                    src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}"
+                                    alt="{{aspect.aspect}}">
+                                {% if aspect.double is true %}
+                                <img class="aspect-img"
+                                    src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}"
+                                    alt="{{aspect.aspect}}">
+                                {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div id="card-summary-power" class="d-flex justify-content-start">
+                            {% if card.power is not none and card.power != '0' %}
+                            <span class="badge fs-3 mt-auto" aria-description="Power">
+                                {% if card.card_type == "Upgrade" %}+{% endif %}{{card.power}}
+                            </span>
+                            {% endif %}
+                        </div>
+                        <div id="card-summary-attributes" class="d-flex flex-column justify-content-start">
+                            {% if card.arenas[0].arena is not none %}
+                            <div>
+                                {% for arena in card.arenas %}
+                                <span class="badge ms-1
+                                    {% if arena.arena == 'Ground' %}text-bg-light{% else %}text-bg-dark{% endif %}">
+                                    {{arena.arena}}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            {% if card.traits[0].trait is not none %}
+                            <div>
+                                {% for trait in card.traits %}
+                                <span class="badge text-bg-secondary ms-1">
+                                    <a href="/search?trait={{trait.trait}}">{{trait.trait}}</a>
+                                </span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div id="card-summary-hp" class="d-flex justify-content-end">
+                            {% if card.hp is not none and card.hp != '0' %}
+                            <span class="badge fs-3 mt-auto" aria-description="HP">
+                                {% if card.card_type == "Upgrade" %}+{% endif %}{{card.hp}}
+                            </span>
+                            {% endif %}
+                        </div>
+                        <div id="card-summary-text" class="pt-3 pb-3">
+                            {% if card.front_text is not none %}
+                            <h5>Card Text</h5>
+                            <p class="card-text">{{card.front_text}}</p>
+                            {% endif %}
+                            {% if card.epic_action is not none %}
+                            <div class="alert alert-warning">
+                                <p class="card-text">{{card.epic_action}}</p>
+                            </div>
+                            {% endif %}
+                            {% if card.back_text is not none %}
+                            <h5>Back Text</h5>
+                            <p class="card-text">{{card.back_text}}</p>
+                            {% endif %}
+                        </div>
+                        <div id="card-summary-artist" class="text-body-tertiary fw-lighter">
+                            Artist: <a href="/search?artist={{card.artist}}">{{card.artist}}</a>
+                        </div>
+                        <div id="card-summary-id"
+                            class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
+                            <span class="pe-2">{{card.id}}</span>
+                            <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}"
+                                alt="{{card.rarity}} rarity" class="rarity-pip">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,23 +144,4 @@
         </ul>
     </div>
 </div>
-<!-- 
-<p>{{card.id}}</p>
-<p>Aspects:</p>
-{% for aspect in card.aspects %}
-{% if aspect.aspect is not none %}
-<img src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}" alt="{{aspect.aspect}}"
-    width="50">
-{% if aspect.double is true %}
-<img src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}" alt="{{aspect.aspect}}"
-    width="50">
-{% endif %}
-{% else %}
-<span>N/A</span>
-{% endif %}
-{% endfor %}
-<p>Arena:{% for arena in card.arenas %}<span class="badge text-bg-light ms-1">{{arena.arena}}</span>{% endfor %}
-</p>
-<p>Traits:{% for trait in card.traits %}<span class="badge text-bg-light ms-1">{{trait.trait}}</span>{% endfor %}
-</p> -->
 {% endblock %}

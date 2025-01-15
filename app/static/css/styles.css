@@ -91,6 +91,59 @@ li.selected {
     align-items: start;
 }
 
+#card-summary {
+    display: grid;
+    grid-gap: 0.5rem;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto 1fr auto;
+}
+
+#card-summary-title {
+    grid-column: span 2;
+}
+
+#card-summary-text {
+    grid-column: span 3;
+}
+
+#card-summary-artist {
+    grid-column: span 2;
+}
+
+#card-summary-id {
+    justify-content: right;
+}
+
+#card-summary-title .aspect-img {
+    width: 3rem;
+    height: 3rem;
+}
+
+#card-summary-attributes a {
+    color: rgb(255, 255, 255);
+}
+
+#card-summary-cost .badge {
+    background-color: rgb(var(--aspect-color-cunning));
+}
+
+#card-summary-hp .badge {
+    background-color: rgb(var(--aspect-color-vigilance));
+}
+
+#card-summary-power .badge {
+    background-color: rgb(var(--aspect-color-aggression));
+}
+
+#card-summary-cost .badge,
+#card-summary-power .badge,
+#card-summary-hp .badge {
+    color: rgb(255, 255, 255);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgba(0, 0, 0, 0.5);
+    font-weight: 900;
+}
+
 
 /* Aspect pips */
 .aspect-pips {
