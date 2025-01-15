@@ -10,11 +10,11 @@
                 {% if card.double_sided is true %}
                 <div id="card-image" class="col-md-4 carousel slide">
                     <div class="carousel-inner">
-                        <div class="carousel-item active"
-                            style="background-image:url({{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }});">
+                        <div class="carousel-item active" aria-description="Front of card image"
+                            style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png')}});">
                         </div>
-                        <div class="carousel-item"
-                            style="background-image:url({{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }});">
+                        <div class="carousel-item" aria-description="Back of card image"
+                            style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'-back.png')}});">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#card-image"
@@ -32,22 +32,29 @@
                 <div id="card-image" class="col-md-4 carousel slide">
                     <div class="carousel-inner">
                         <div class="carousel-item active"
-                            style="background-image:url({{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }});">
+                            style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png') }});">
                         </div>
                     </div>
                 </div>
                 {% endif %}
                 <div class="col-md-8">
                     <div class="card-body">
-                        <h5 class="card-title">{% if card.unique is true %}✧{% endif %}{{card.name}}</h5>
+                        <h3 class="card-title">{% if card.unique is true %}✧{% endif %}{{card.name}}</h3>
                         {% if card.subtitle is not none %}
-                        <h6 class="card-subtitle mb-2 text-body-secondary">{{card.subtitle}}</h6>
+                        <h4 class="card-subtitle mb-2 text-body-secondary">{{card.subtitle}}</h4>
                         {% endif %}
+                        <hr>
                         {% if card.front_text is not none %}
+                        <h5>Card Text:</h5>
                         <p class="card-text">{{ card.front_text }}</p>
                         {% endif %}
                         {% if card.epic_action is not none %}
                         <p class="card-text">{{ card.epic_action }}</p>
+                        {% endif %}
+                        {% if card.back_text is not none %}
+                        <hr>
+                        <h5>Back Text:</h5>
+                        <p class="card-text">{{ card.back_text }}</p>
                         {% endif %}
                     </div>
                 </div>
@@ -69,25 +76,15 @@
         </ul>
     </div>
 </div>
-<!-- <h2>{% if card.unique is true %}⟡{% endif %}{{card.name}}</h2>
-{% if card.subtitle is not none %}<h3>{{card.subtitle}}</h3>{% endif %}
-<h4>{{card.card_set.name}}</h4>
-<div id="card-image">
-    <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '.png') }}"
-        alt="{{card.name}}" height="386">
-    {% if card.double_sided is true %}
-    <img src="{{ url_for('static', path='/images/cards/' + card.set_id + '/' + card.number + '-back.png') }}"
-        alt="{{card.name}} back" height="386">
-    {% endif %}
-</div>
+<!-- 
 <p>{{card.id}}</p>
 <p>Aspects:</p>
 {% for aspect in card.aspects %}
 {% if aspect.aspect is not none %}
-<img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
+<img src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}" alt="{{aspect.aspect}}"
     width="50">
 {% if aspect.double is true %}
-<img src="{{ url_for('static', path='/images/aspects/' + aspect.aspect + '.png') }}" alt="{{aspect.aspect}}"
+<img src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}" alt="{{aspect.aspect}}"
     width="50">
 {% endif %}
 {% else %}
