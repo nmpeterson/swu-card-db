@@ -15,11 +15,11 @@
                 <label for="aspect-select" class="form-label">Aspect</label>
                 <select class="form-select" aria-label="Aspect selector" id="aspect-select" name="aspect">
                     <option value=""></option>
-                    {% for aspect in aspect_options %}
-                    {% if aspect == request.query_params.get('aspect') %}
-                    <option value="{{aspect}}" selected>{{aspect}}</option>
+                    {% for a in aspect_options %}
+                    {% if a['aspect'] == request.query_params.get('aspect') %}
+                    <option value="{{a['aspect']}}" selected>{{a['aspect']}} ({{a['color']}})</option>
                     {% else %}
-                    <option value="{{aspect}}">{{aspect}}</option>
+                    <option value="{{a['aspect']}}">{{a['aspect']}} ({{a['color']}})</option>
                     {% endif %}
                     {% endfor %}
                 </select>

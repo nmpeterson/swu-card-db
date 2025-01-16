@@ -15,6 +15,15 @@ ASPECT_SORT_ORDER = {
     None: 7,
 }
 
+ASPECT_COLORS = {
+    "Vigilance": "blue",
+    "Command": "green",
+    "Aggression": "red",
+    "Cunning": "yellow",
+    "Villainy": "black",
+    "Heroism": "white",
+}
+
 
 def main():
     # Load card data
@@ -60,7 +69,7 @@ def main():
             )
         )
         for aspect, n in Counter(card.get("Aspects", [None])).items():
-            aspect_rows.append((card_id, aspect, ASPECT_SORT_ORDER[aspect], int(n > 1)))
+            aspect_rows.append((card_id, aspect, ASPECT_COLORS.get(aspect), ASPECT_SORT_ORDER[aspect], int(n > 1)))
         for trait in card.get("Traits", [None]):
             trait_rows.append((card_id, trait))
         for arena in card.get("Arenas", [None]):
@@ -119,7 +128,7 @@ def main():
             )
             """
         )
-        cur.executemany(f"""INSERT INTO cards VALUES({','.join('?' * 17)})""", card_rows)
+        cur.executemany(f"""INSERT INTO cards VALUES({",".join("?" * len(card_rows[0]))})""", card_rows)
         con.commit()
 
         print(f"Creating card_aspects table ({len(aspect_rows):,} rows)")
@@ -129,6 +138,7 @@ def main():
                 "id" INTEGER PRIMARY KEY AUTOINCREMENT,
                 "card_id" TEXT NOT NULL,
                 "aspect" TEXT,
+                "color" TEXT,
                 "sort_order" INTEGER NOT NULL,
                 "double" INTEGER NOT NULL,
                 FOREIGN KEY ("card_id") REFERENCES cards("id")
@@ -136,7 +146,8 @@ def main():
             """
         )
         cur.executemany(
-            """INSERT INTO card_aspects ("card_id", "aspect", "sort_order", "double") VALUES(?,?,?,?)""", aspect_rows
+            """INSERT INTO card_aspects ("card_id", "aspect", "color", "sort_order", "double") VALUES(?,?,?,?,?)""",
+            aspect_rows,
         )
         con.commit()
 

@@ -62,6 +62,7 @@ class SWUCardAspect(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     card_id: Mapped[str] = mapped_column(ForeignKey("cards.id"))
     aspect: Mapped[str | None] = mapped_column()
+    color: Mapped[str | None] = mapped_column()
     sort_order: Mapped[int] = mapped_column()
     double: Mapped[bool] = mapped_column()
 

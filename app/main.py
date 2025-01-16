@@ -27,7 +27,12 @@ advanced_search_options = {
         a.arena for a in db.query(SWUCardArena.arena).distinct().order_by(SWUCardArena.arena).all() if a.arena
     ],
     "aspect_options": [
-        a.aspect for a in db.query(SWUCardAspect.aspect).distinct().order_by(SWUCardAspect.aspect).all() if a.aspect
+        {"aspect": a.aspect, "color": a.color}
+        for a in db.query(SWUCardAspect.aspect, SWUCardAspect.color, SWUCardAspect.sort_order)
+        .distinct()
+        .order_by(SWUCardAspect.sort_order)
+        .all()
+        if a.aspect
     ],
     "trait_options": [
         t.trait for t in db.query(SWUCardTrait.trait).distinct().order_by(SWUCardTrait.trait).all() if t.trait

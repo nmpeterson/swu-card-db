@@ -13,6 +13,7 @@ class ArenaModel(BaseModel):
 
 class AspectModel(BaseModel):
     aspect: str | None
+    color: str | None
     double: bool
 
 
@@ -22,6 +23,7 @@ class TraitModel(BaseModel):
 
 class CardListModel(BaseModel):
     """Minimal subset of card properties for creating lists."""
+
     id: str
     set_id: str
     number: str
@@ -36,6 +38,7 @@ class CardListModel(BaseModel):
 
 class CardModel(CardListModel):
     """Full card model with all fields."""
+
     cost: str | None
     power: str | None
     hp: str | None
