@@ -1,237 +1,242 @@
 :root {
-    /* General colors */
-    --black: 0, 0, 0;
-    --white: 255, 255, 255;
+  /* General colors */
+  --black: 0, 0, 0;
+  --white: 255, 255, 255;
 
-    /* Aspect colors */
-    --aspect-color-vigilance: 102, 148, 206;
-    --aspect-color-command: 65, 173, 73;
-    --aspect-color-aggression: 210, 35, 42;
-    --aspect-color-cunning: 253, 185, 51;
-    --aspect-color-villainy: 4, 0, 4;
-    --aspect-color-heroism: 198, 193, 160;
+  /* Aspect colors */
+  --aspect-color-vigilance: 102, 148, 206;
+  --aspect-color-command: 65, 173, 73;
+  --aspect-color-aggression: 210, 35, 42;
+  --aspect-color-cunning: 253, 185, 51;
+  --aspect-color-villainy: 4, 0, 4;
+  --aspect-color-heroism: 198, 193, 160;
 
-    /* Set colors */
-    --set-color-sor: 225, 6, 0;
-    --set-color-shd: 59, 63, 182;
-    --set-color-twi: 124, 37, 41;
-    --set-color-jtl: 242, 169, 0;
+  /* Set colors */
+  --set-color-sor: 225, 6, 0;
+  --set-color-shd: 59, 63, 182;
+  --set-color-twi: 124, 37, 41;
+  --set-color-jtl: 242, 169, 0;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 ul {
-    list-style: none inside;
-    color: rgba(var(--white), 0.5);
+  list-style: none inside;
+  color: rgba(var(--white), 0.5);
 }
 
 li.selected {
-    list-style: '⬦' outside;
+  list-style: '⬦' outside;
 }
 
 /* App layout */
 .app-logo {
-    height: 3rem;
-    width: auto;
+  height: 3rem;
+  width: auto;
 }
 
 #nav-search-icon {
-    height: 1rem;
-    width: 1rem;
+  height: 1rem;
+  width: 1rem;
+}
+
+#footer p {
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
 }
 
 /* Card layout */
 div.card-aspect-Vigilance {
-    border-color: rgb(var(--aspect-color-vigilance));
-    background-color: rgba(var(--aspect-color-vigilance), 0.1);
+  border-color: rgb(var(--aspect-color-vigilance));
+  background-color: rgba(var(--aspect-color-vigilance), 0.1);
 }
 
 div.card-aspect-Command {
-    border-color: rgb(var(--aspect-color-command));
-    background-color: rgba(var(--aspect-color-command), 0.1);
+  border-color: rgb(var(--aspect-color-command));
+  background-color: rgba(var(--aspect-color-command), 0.1);
 }
 
 div.card-aspect-Aggression {
-    border-color: rgb(var(--aspect-color-aggression));
-    background-color: rgba(var(--aspect-color-aggression), 0.1);
+  border-color: rgb(var(--aspect-color-aggression));
+  background-color: rgba(var(--aspect-color-aggression), 0.1);
 }
 
 div.card-aspect-Cunning {
-    border-color: rgb(var(--aspect-color-cunning));
-    background-color: rgba(var(--aspect-color-cunning), 0.1);
+  border-color: rgb(var(--aspect-color-cunning));
+  background-color: rgba(var(--aspect-color-cunning), 0.1);
 }
 
 div.card-aspect-Villainy {
-    border-color: rgb(var(--aspect-color-villainy));
-    background-color: rgba(var(--aspect-color-villainy), 0.1);
+  border-color: rgb(var(--aspect-color-villainy));
+  background-color: rgba(var(--aspect-color-villainy), 0.1);
 }
 
 div.card-aspect-Heroism {
-    border-color: rgb(var(--aspect-color-heroism));
-    background-color: rgba(var(--aspect-color-heroism), 0.1);
+  border-color: rgb(var(--aspect-color-heroism));
+  background-color: rgba(var(--aspect-color-heroism), 0.1);
 }
 
 span.card-aspect-Vigilance {
-    color: rgb(var(--white));
-    background-color: rgb(var(--aspect-color-vigilance));
+  color: rgb(var(--white));
+  background-color: rgb(var(--aspect-color-vigilance));
 }
 
 span.card-aspect-Command {
-    color: rgb(var(--white));
-    background-color: rgb(var(--aspect-color-command));
+  color: rgb(var(--white));
+  background-color: rgb(var(--aspect-color-command));
 }
 
 span.card-aspect-Aggression {
-    color: rgb(var(--white));
-    background-color: rgb(var(--aspect-color-aggression));
+  color: rgb(var(--white));
+  background-color: rgb(var(--aspect-color-aggression));
 }
 
 span.card-aspect-Cunning {
-    color: rgb(var(--black));
-    background-color: rgb(var(--aspect-color-cunning));
+  color: rgb(var(--black));
+  background-color: rgb(var(--aspect-color-cunning));
 }
 
 span.card-aspect-Villainy {
-    color: rgb(var(--white));
-    background-color: rgb(var(--aspect-color-villainy));
+  color: rgb(var(--white));
+  background-color: rgb(var(--aspect-color-villainy));
 }
 
 span.card-aspect-Heroism {
-    color: rgb(var(--black));
-    background-color: rgb(var(--aspect-color-heroism));
+  color: rgb(var(--black));
+  background-color: rgb(var(--aspect-color-heroism));
 }
 
 span.card-aspect-None {
-    color: rgb(var(--black));
-    background-color: rgb(var(--bs-secondary-rgb));
+  color: rgb(var(--black));
+  background-color: rgb(var(--bs-secondary-rgb));
 }
 
 .carousel-inner {
-    position: relative;
-    width: 100%;
-    padding-top: 100%;
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
 }
 
 .carousel-inner>.carousel-item {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .carousel-control-prev,
 .carousel-control-next {
-    align-items: start;
+  align-items: start;
 }
 
 #card-summary {
-    display: grid;
-    grid-gap: 0.5rem;
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto auto 1fr auto;
+  display: grid;
+  grid-gap: 0.5rem;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto auto 1fr auto;
 }
 
 #card-summary-title {
-    grid-column: span 2;
+  grid-column: span 2;
 }
 
 #card-summary-text {
-    grid-column: span 3;
+  grid-column: span 3;
 }
 
 #card-summary-artist {
-    grid-column: span 2;
+  grid-column: span 2;
 }
 
 #card-summary-id {
-    justify-content: right;
+  justify-content: right;
 }
 
 #card-summary-title .aspect-img {
-    width: 3rem;
-    height: 3rem;
+  width: 3rem;
+  height: 3rem;
 }
 
 #card-summary-attributes a {
-    color: rgba(var(--white), 0.9);
+  color: rgba(var(--white), 0.9);
 }
 
 #card-summary-cost .badge {
-    background-color: rgb(var(--aspect-color-cunning));
+  background-color: rgb(var(--aspect-color-cunning));
 }
 
 #card-summary-hp .badge {
-    background-color: rgb(var(--aspect-color-vigilance));
+  background-color: rgb(var(--aspect-color-vigilance));
 }
 
 #card-summary-power .badge {
-    background-color: rgb(var(--aspect-color-aggression));
+  background-color: rgb(var(--aspect-color-aggression));
 }
 
 #card-summary-cost .badge,
 #card-summary-power .badge,
 #card-summary-hp .badge {
-    font-weight: 900;
-    color: rgb(var(--white));
-    text-shadow: 0 0 0.25rem rgba(var(--black), 0.25);
+  font-weight: 900;
+  color: rgb(var(--white));
+  text-shadow: 0 0 0.25rem rgba(var(--black), 0.25);
 }
 
 
 /* Aspect pips */
 .aspect-pips {
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: rgba(var(--white), 0.5);
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(var(--white), 0.5);
 }
 
 .aspect-pips>span {
-    vertical-align: middle;
+  vertical-align: middle;
 }
 
 .aspect-pip-Vigilance,
 a.aspect-pip-Vigilance {
-    color: rgb(var(--aspect-color-vigilance));
+  color: rgb(var(--aspect-color-vigilance));
 }
 
 .aspect-pip-Command,
 a.aspect-pip-Command {
-    color: rgb(var(--aspect-color-command));
+  color: rgb(var(--aspect-color-command));
 }
 
 .aspect-pip-Aggression,
 a.aspect-pip-Aggression {
-    color: rgb(var(--aspect-color-aggression));
+  color: rgb(var(--aspect-color-aggression));
 }
 
 .aspect-pip-Cunning,
 a.aspect-pip-Cunning {
-    color: rgb(var(--aspect-color-cunning));
+  color: rgb(var(--aspect-color-cunning));
 }
 
 .aspect-pip-Villainy,
 a.aspect-pip-Villainy {
-    color: rgb(var(--aspect-color-villainy));
+  color: rgb(var(--aspect-color-villainy));
 }
 
 .aspect-pip-Heroism,
 a.aspect-pip-Heroism {
-    color: rgb(var(--aspect-color-heroism));
+  color: rgb(var(--aspect-color-heroism));
 }
 
 /* Image pips */
 .rarity-pip {
-    vertical-align: middle;
-    height: 1rem;
-    width: auto;
+  vertical-align: middle;
+  height: 1rem;
+  width: auto;
 }
 
 .variant-pip {
-    vertical-align: middle;
-    height: 1rem;
-    width: 1rem;
+  vertical-align: middle;
+  height: 1rem;
+  width: 1rem;
 }

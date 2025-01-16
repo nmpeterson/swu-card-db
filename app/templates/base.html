@@ -2,89 +2,101 @@
 <html lang="en" data-bs-theme="dark">
 
 <head>
-    {% block head %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}SWU Card Database{% endblock %}</title>
-    <link href="{{ url_for('static', path='/css/bootstrap.5.3.3.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
-    <script src="{{ url_for('static', path='/js/bootstrap.5.3.3.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', path='/js/htmx.2.0.4.min.js') }}"></script>
-    {% endblock %}
+  {% block head %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}SWU Card Database{% endblock %}</title>
+  <link href="{{ url_for('static', path='/css/bootstrap.5.3.3.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
+  <script src="{{ url_for('static', path='/js/bootstrap.5.3.3.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', path='/js/htmx.2.0.4.min.js') }}"></script>
+  {% endblock %}
 </head>
 
 <body>
-    <div class="w-100 min-vh-100 p-0 d-flex flex-column">
-        <nav class="w-100 p-3 navbar navbar-expand-lg sticky-top bg-body-tertiary border-bottom">
-            <div id="header" class="container p-0">
-                {% block header %}
-                <a class="navbar-brand" href="/">
-                    <img src="{{ url_for('static', path='/images/swu_logo_white.png') }}" alt="Star Wars Unlimited Logo"
-                        class="me-4 app-logo">
-                    <span id="app-title" class="h2 fw-semibold align-middle">SWU Card Database</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
-                    aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarToggler">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Sets
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="/sets/SOR">
-                                        <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SOR</span>
-                                        <span class="align-middle fw-normal">Spark of Rebellion</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/sets/SHD">
-                                        <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SHD</span>
-                                        <span class="align-middle fw-normal">Shadows of the Galaxy</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="/sets/TWI">
-                                        <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SOR</span>
-                                        <span class="align-middle fw-normal">Twilight of the Republic</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/search">Advanced Search</a>
-                        </li>
-                    </ul>
-                    <form class="d-flex" role="search" action="/search">
-                        <input type="search" placeholder="Search cards by name" aria-label="Search"
-                            class="form-control me-2" id="nav-search-input" name="name">
-                        <button class="btn btn-outline-secondary icon-link" id="nav-search-submit" type="submit">
-                            <svg id="nav-search-icon" fill="currentColor">
-                                <use href="{{ url_for('static', path='/images/bootstrap_icons/search.svg') }}#search" />
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-                {% endblock %}
-            </div>
-        </nav>
-        <div class="w-100 p-3 flex-grow-1">
-            <div id="content" class="container p-0">
-                {% block content %}{% endblock %}
-            </div>
+  <div class="w-100 min-vh-100 p-0 d-flex flex-column">
+    <nav class="w-100 p-3 navbar navbar-expand-lg sticky-top bg-body-tertiary border-bottom">
+      <div id="header" class="container p-0">
+        {% block header %}
+        <a class="navbar-brand" href="/">
+          <img src="{{ url_for('static', path='/images/swu_logo_white.png') }}" alt="Star Wars Unlimited Logo"
+            class="me-4 app-logo">
+          <span id="app-title" class="h2 fw-semibold align-middle">SWU Card Database</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
+          aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarToggler">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Sets
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="/sets/SOR">
+                    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SOR</span>
+                    <span class="align-middle fw-normal">Spark of Rebellion</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/sets/SHD">
+                    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SHD</span>
+                    <span class="align-middle fw-normal">Shadows of the Galaxy</span>
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/sets/TWI">
+                    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SOR</span>
+                    <span class="align-middle fw-normal">Twilight of the Republic</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/search">Advanced Search</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search" action="/search">
+            <input type="search" placeholder="Search cards by name" aria-label="Search" class="form-control me-2"
+              id="nav-search-input" name="name">
+            <button class="btn btn-outline-secondary icon-link" id="nav-search-submit" type="submit">
+              <svg id="nav-search-icon" fill="currentColor">
+                <use href="{{ url_for('static', path='/images/bootstrap_icons/search.svg') }}#search" />
+              </svg>
+            </button>
+          </form>
         </div>
-        <div class="w-100 p-3 bg-body-tertiary border-top">
-            <div id="footer" class="container p-0">
-                {% block footer %}
-                Copyright &copy; 2025 Noel Peterson
-                {% endblock %}
-            </div>
-        </div>
+        {% endblock %}
+      </div>
+    </nav>
+    <div class="w-100 p-3 flex-grow-1">
+      <div id="content" class="container p-0">
+        {% block content %}{% endblock %}
+      </div>
     </div>
+    <div class="w-100 p-3 bg-body-tertiary border-top">
+      <div id="footer" class="container p-0 d-flex">
+        {% block footer %}
+        <div class="text-secondary">
+          <p>This is an unofficial fan site, and is not affiliated with Disney/Lucasfilm or
+            Fantasy Flight Games. Star Wars characters, cards, logos, and art are property of Lucasfilm Ltd. and/or
+            Fantasy Flight Publishing, Inc.</p>
+          <p>Website code and design &copy; 2025 Noel Peterson. <a href="https://github.com/nmpeterson/swu-card-db"
+              target="_blank">View source code on GitHub.</a></p>
+        </div>
+        <div class="ps-3">
+          <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
+            data-name="bmc-button" data-slug="nmpeterson" data-color="#5F7FFF" data-emoji="☕" data-font="Cookie"
+            data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff"
+            data-coffee-color="#FFDD00"></script>
+        </div>
+        {% endblock %}
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

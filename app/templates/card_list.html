@@ -1,29 +1,29 @@
 {% for card in cards %}
 <li class="card-list-item">
-    <a href="../cards/{{card.id}}">
-        <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">{{card.id}}</span>
-        <span class="fs-4 aspect-pips me-1">
-            {% for aspect in card.aspects %}
-            {% if aspect.aspect is not none %}
-            <span class="aspect-pip-{{aspect.aspect}}" aria-description="{{aspect.aspect}} aspect">⬢</span>
-            {% if aspect.double is true %}
-            <span class="aspect-pip-{{aspect.aspect}}" aria-description="{{aspect.aspect}} aspect">⬢</span>
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-        </span>
-        <span class="align-middle fw-normal">{% if card.unique is true %}✧{% endif %}{{card.name}}</span>
-        {% if card.subtitle is not none %}
-        <span class="align-middle fw-lighter">— {{card.subtitle}}</span>
-        {% endif %}
-        {% if card.variant_type != 'Normal' %}
-        <span class="badge text-bg-dark opacity-50 fw-semibold p-1">
-            {{card.variant_type}}
-        </span>
-        {% endif %}
-        <span class="badge text-bg-dark opacity-50 fw-semibold p-1">{{card.card_type}}</span>
-        <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}" alt="{{card.rarity}} rarity"
-            class="rarity-pip">
-    </a>
+  <a href="../cards/{{card.id}}">
+    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">{{card.id}}</span>
+    <span class="fs-4 aspect-pips me-1">
+      {% for aspect in card.aspects %}
+      {% if aspect.aspect is not none %}
+      <span class="aspect-pip-{{aspect.aspect}}" aria-description="{{aspect.aspect}} aspect">⬢</span>
+      {% if aspect.double is true %}
+      <span class="aspect-pip-{{aspect.aspect}}" aria-description="{{aspect.aspect}} aspect">⬢</span>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+    </span>
+    <span class="align-middle fw-normal">{% if card.unique is true %}✧{% endif %}{{card.name}}</span>
+    {% if card.subtitle is not none %}
+    <span class="align-middle fw-lighter">— {{card.subtitle}}</span>
+    {% endif %}
+    {% if card.variant_type != 'Normal' %}
+    <span class="badge text-bg-dark opacity-50 fw-semibold p-1">
+      {{card.variant_type}}
+    </span>
+    {% endif %}
+    <span class="badge text-bg-dark opacity-50 fw-semibold p-1">{{card.card_type}}</span>
+    <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}" alt="{{card.rarity}} rarity"
+      class="rarity-pip">
+  </a>
 </li>
 {% endfor %}

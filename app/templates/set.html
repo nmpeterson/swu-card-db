@@ -4,20 +4,19 @@
 
 {% block content %}
 <div class="row">
-    <div class="col p-0 mb-2">
-        <img src="{{ url_for('static', path='/images/sets/' + set.id + '_logo.png') }}" alt="{{set.name}}" width="300">
-    </div>
+  <div class="col p-0 mb-2">
+    <img src="{{ url_for('static', path='/images/sets/' + set.id + '_logo.png') }}" alt="{{set.name}}" width="300">
+  </div>
 </div>
 <div class="row">
-    <div class="col p-0">
-        <ul id="card-list" hx-get="/card_list?set_id={{set.id}}&variant_type=Normal" hx-swap="innerHTML"
-            hx-trigger="load">
-            <li>
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </li>
-        </ul>
-    </div>
+  <div class="col p-0">
+    <ul id="card-list" hx-get="/card_list?set_id={{set.id}}&variant_type=Normal" hx-swap="innerHTML" hx-trigger="load">
+      <li>
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
 {% endblock %}

@@ -4,153 +4,149 @@
 
 {% block content %}
 <div class="row">
-    <div class="col">
-        <div class="card rounded-4 border-2 p-3 swu-card card-aspect-{{card.aspects[0].aspect}}">
-            <div class="row g-0">
-                {% if card.double_sided is true %}
-                <div id="card-image" class="col-lg-5 carousel slide">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" aria-description="Front of card image"
-                            style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png')}});">
-                        </div>
-                        <div class="carousel-item" aria-description="Back of card image"
-                            style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'-back.png')}});">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#card-image"
-                        data-bs-slide="prev">
-                        <span class="fs-3 text-white" aria-hidden="true">❮</span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#card-image"
-                        data-bs-slide="next">
-                        <span class="fs-3 text-white" aria-hidden="true">❯</span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-                {% else %}
-                <div id="card-image" class="col-lg-5 carousel slide">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active"
-                            style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png') }});">
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-                <div class="col-lg-7">
-                    <div id="card-summary" class="card-body h-100 py-2">
-                        <div id="card-summary-cost" class="d-flex justify-content-start">
-                            {% if card.cost is not none %}
-                            <span class="badge fs-3 mb-auto w-100" aria-description="Cost">{{card.cost}}</span>
-                            {% endif %}
-                        </div>
-                        <div id="card-summary-title" class="py-auto d-flex justify-content-between">
-                            <div class="my-auto">
-                                <h3 class="card-title text-white mb-1">
-                                    {% if card.unique is true %}✧{% endif %}{{card.name}}
-                                </h3>
-                                {% if card.subtitle is not none %}
-                                <h4 class="card-subtitle h5 fw-lighter text-body-secondary">{{card.subtitle}}</h4>
-                                {% endif %}
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                {% for aspect in card.aspects %}
-                                {% if aspect.aspect is not none %}
-                                <a href="/search?aspect={{aspect.aspect}}">
-                                    <img class="aspect-img"
-                                        src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}"
-                                        alt="{{aspect.aspect}}">
-                                    {% if aspect.double is true %}
-                                    <img class="aspect-img"
-                                        src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}"
-                                        alt="{{aspect.aspect}}">
-                                    {% endif %}
-                                </a>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div id="card-summary-power" class="d-flex justify-content-start">
-                            {% if card.power is not none %}
-                            <span class="badge fs-3 mt-auto w-100" aria-description="Power">
-                                {% if card.card_type == "Upgrade" %}+{% endif %}{{card.power}}
-                            </span>
-                            {% endif %}
-                        </div>
-                        <div id="card-summary-attributes" class="d-flex flex-column justify-content-start">
-                            <div>
-                                <span class="badge fw-semibold card-aspect-{{card.aspects[0].aspect}}">
-                                    {{card.card_type|upper}}
-                                </span>
-                                </span>
-                                {% if card.arenas[0].arena is not none %}
-                                {% for arena in card.arenas %}
-                                <span class="badge fw-semibold
-                                    {% if arena.arena == 'Ground' %}text-bg-light{% else %}text-bg-dark{% endif %}">
-                                    {{arena.arena|upper}}
-                                </span>
-                                {% endfor %}
-                                {% endif %}
-                            </div>
-                            {% if card.traits[0].trait is not none %}
-                            <div>
-                                {% for trait in card.traits %}
-                                <span class="badge fw-normal text-bg-secondary">
-                                    <a href="/search?trait={{trait.trait}}">{{trait.trait}}</a>
-                                </span>
-                                {% endfor %}
-                            </div>
-                            {% endif %}
-                        </div>
-                        <div id="card-summary-hp" class="d-flex justify-content-end">
-                            {% if card.hp is not none %}
-                            <span class="badge fs-3 mt-auto" aria-description="HP">
-                                {% if card.card_type == "Upgrade" %}+{% endif %}{{card.hp}}
-                            </span>
-                            {% endif %}
-                        </div>
-                        <div id="card-summary-text" class="pt-3 pb-3">
-                            {% if card.front_text is not none %}
-                            <h5 class="fw-lighter">Card Text</h5>
-                            <p class="card-text">{{card.front_text}}</p>
-                            {% endif %}
-                            {% if card.epic_action is not none %}
-                            <div class="alert alert-warning">
-                                <p class="card-text">{{card.epic_action}}</p>
-                            </div>
-                            {% endif %}
-                            {% if card.back_text is not none %}
-                            <h5 class="fw-lighter">Back Text</h5>
-                            <p class="card-text">{{card.back_text}}</p>
-                            {% endif %}
-                        </div>
-                        <div id="card-summary-artist" class="text-body-tertiary fw-lighter">
-                            Artist: <a href="/search?artist={{card.artist}}">{{card.artist}}</a>
-                        </div>
-                        <div id="card-summary-id"
-                            class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
-                            <span class="pe-2">{{card.id}}</span>
-                            <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}"
-                                alt="{{card.rarity}} rarity" class="rarity-pip">
-                        </div>
-                    </div>
-                </div>
+  <div class="col">
+    <div class="card rounded-4 border-2 p-3 swu-card card-aspect-{{card.aspects[0].aspect}}">
+      <div class="row g-0">
+        {% if card.double_sided is true %}
+        <div id="card-image" class="col-lg-5 carousel slide">
+          <div class="carousel-inner">
+            <div class="carousel-item active" aria-description="Front of card image"
+              style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png')}});">
             </div>
+            <div class="carousel-item" aria-description="Back of card image"
+              style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'-back.png')}});">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#card-image" data-bs-slide="prev">
+            <span class="fs-3 text-white" aria-hidden="true">❮</span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#card-image" data-bs-slide="next">
+            <span class="fs-3 text-white" aria-hidden="true">❯</span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
+        {% else %}
+        <div id="card-image" class="col-lg-5 carousel slide">
+          <div class="carousel-inner">
+            <div class="carousel-item active"
+              style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png') }});">
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="col-lg-7">
+          <div id="card-summary" class="card-body h-100 py-2">
+            <div id="card-summary-cost" class="d-flex justify-content-start">
+              {% if card.cost is not none %}
+              <span class="badge fs-3 mb-auto w-100" aria-description="Cost">{{card.cost}}</span>
+              {% endif %}
+            </div>
+            <div id="card-summary-title" class="py-auto d-flex justify-content-between">
+              <div class="my-auto">
+                <h3 class="card-title text-white mb-1">
+                  {% if card.unique is true %}✧{% endif %}{{card.name}}
+                </h3>
+                {% if card.subtitle is not none %}
+                <h4 class="card-subtitle h5 fw-lighter text-body-secondary">{{card.subtitle}}</h4>
+                {% endif %}
+              </div>
+              <div class="d-flex justify-content-end">
+                {% for aspect in card.aspects %}
+                {% if aspect.aspect is not none %}
+                <a href="/search?aspect={{aspect.aspect}}">
+                  <img class="aspect-img" src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}"
+                    alt="{{aspect.aspect}}">
+                  {% if aspect.double is true %}
+                  <img class="aspect-img" src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}"
+                    alt="{{aspect.aspect}}">
+                  {% endif %}
+                </a>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <div id="card-summary-power" class="d-flex justify-content-start">
+              {% if card.power is not none %}
+              <span class="badge fs-3 mt-auto w-100" aria-description="Power">
+                {% if card.card_type == "Upgrade" %}+{% endif %}{{card.power}}
+              </span>
+              {% endif %}
+            </div>
+            <div id="card-summary-attributes" class="d-flex flex-column justify-content-start">
+              <div>
+                <span class="badge fw-semibold card-aspect-{{card.aspects[0].aspect}}">
+                  {{card.card_type|upper}}
+                </span>
+                </span>
+                {% if card.arenas[0].arena is not none %}
+                {% for arena in card.arenas %}
+                <span class="badge fw-semibold
+                                    {% if arena.arena == 'Ground' %}text-bg-light{% else %}text-bg-dark{% endif %}">
+                  {{arena.arena|upper}}
+                </span>
+                {% endfor %}
+                {% endif %}
+              </div>
+              {% if card.traits[0].trait is not none %}
+              <div>
+                {% for trait in card.traits %}
+                <span class="badge fw-normal text-bg-secondary">
+                  <a href="/search?trait={{trait.trait}}">{{trait.trait}}</a>
+                </span>
+                {% endfor %}
+              </div>
+              {% endif %}
+            </div>
+            <div id="card-summary-hp" class="d-flex justify-content-end">
+              {% if card.hp is not none %}
+              <span class="badge fs-3 mt-auto" aria-description="HP">
+                {% if card.card_type == "Upgrade" %}+{% endif %}{{card.hp}}
+              </span>
+              {% endif %}
+            </div>
+            <div id="card-summary-text" class="pt-3 pb-3">
+              {% if card.front_text is not none %}
+              <h5 class="fw-lighter">Card Text</h5>
+              <p class="card-text">{{card.front_text}}</p>
+              {% endif %}
+              {% if card.epic_action is not none %}
+              <div class="alert alert-warning">
+                <p class="card-text">{{card.epic_action}}</p>
+              </div>
+              {% endif %}
+              {% if card.back_text is not none %}
+              <h5 class="fw-lighter">Back Text</h5>
+              <p class="card-text">{{card.back_text}}</p>
+              {% endif %}
+            </div>
+            <div id="card-summary-artist" class="text-body-tertiary fw-lighter">
+              Artist: <a href="/search?artist={{card.artist}}">{{card.artist}}</a>
+            </div>
+            <div id="card-summary-id"
+              class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
+              <span class="pe-2">{{card.id}}</span>
+              <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}"
+                alt="{{card.rarity}} rarity" class="rarity-pip">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <div class="row mt-3">
-    <div class="col">
-        <h4>Variants:</h4>
-        <ul>
-            {% for variant in variants %}
-            {% if variant.id == card.id %}
-            <li class="selected">{{variant.id}} ({{variant.variant_type}})</li>
-            {% else %}
-            <li><a href="{{variant.id}}">{{variant.id}} ({{variant.variant_type}})</a></li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-    </div>
+  <div class="col">
+    <h4>Variants:</h4>
+    <ul>
+      {% for variant in variants %}
+      {% if variant.id == card.id %}
+      <li class="selected">{{variant.id}} ({{variant.variant_type}})</li>
+      {% else %}
+      <li><a href="{{variant.id}}">{{variant.id}} ({{variant.variant_type}})</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 {% endblock %}
