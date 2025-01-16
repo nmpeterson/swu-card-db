@@ -1,4 +1,8 @@
 :root {
+    /* General colors */
+    --black: 0, 0, 0;
+    --white: 255, 255, 255;
+
     /* Aspect colors */
     --aspect-color-vigilance: 102, 148, 206;
     --aspect-color-command: 65, 173, 73;
@@ -20,7 +24,7 @@ a {
 
 ul {
     list-style: none inside;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(var(--white), 0.5);
 }
 
 li.selected {
@@ -39,34 +43,69 @@ li.selected {
 }
 
 /* Card layout */
-.card-aspect-Vigilance {
+div.card-aspect-Vigilance {
     border-color: rgb(var(--aspect-color-vigilance));
     background-color: rgba(var(--aspect-color-vigilance), 0.1);
 }
 
-.card-aspect-Command {
+div.card-aspect-Command {
     border-color: rgb(var(--aspect-color-command));
     background-color: rgba(var(--aspect-color-command), 0.1);
 }
 
-.card-aspect-Aggression {
+div.card-aspect-Aggression {
     border-color: rgb(var(--aspect-color-aggression));
     background-color: rgba(var(--aspect-color-aggression), 0.1);
 }
 
-.card-aspect-Cunning {
+div.card-aspect-Cunning {
     border-color: rgb(var(--aspect-color-cunning));
     background-color: rgba(var(--aspect-color-cunning), 0.1);
 }
 
-.card-aspect-Villainy {
+div.card-aspect-Villainy {
     border-color: rgb(var(--aspect-color-villainy));
     background-color: rgba(var(--aspect-color-villainy), 0.1);
 }
 
-.card-aspect-Heroism {
+div.card-aspect-Heroism {
     border-color: rgb(var(--aspect-color-heroism));
     background-color: rgba(var(--aspect-color-heroism), 0.1);
+}
+
+span.card-aspect-Vigilance {
+    color: rgb(var(--white));
+    background-color: rgb(var(--aspect-color-vigilance));
+}
+
+span.card-aspect-Command {
+    color: rgb(var(--white));
+    background-color: rgb(var(--aspect-color-command));
+}
+
+span.card-aspect-Aggression {
+    color: rgb(var(--white));
+    background-color: rgb(var(--aspect-color-aggression));
+}
+
+span.card-aspect-Cunning {
+    color: rgb(var(--black));
+    background-color: rgb(var(--aspect-color-cunning));
+}
+
+span.card-aspect-Villainy {
+    color: rgb(var(--white));
+    background-color: rgb(var(--aspect-color-villainy));
+}
+
+span.card-aspect-Heroism {
+    color: rgb(var(--black));
+    background-color: rgb(var(--aspect-color-heroism));
+}
+
+span.card-aspect-None {
+    color: rgb(var(--black));
+    background-color: rgb(var(--bs-secondary-rgb));
 }
 
 .carousel-inner {
@@ -120,7 +159,7 @@ li.selected {
 }
 
 #card-summary-attributes a {
-    color: rgb(255, 255, 255);
+    color: rgba(var(--white), 0.9);
 }
 
 #card-summary-cost .badge {
@@ -138,17 +177,16 @@ li.selected {
 #card-summary-cost .badge,
 #card-summary-power .badge,
 #card-summary-hp .badge {
-    color: rgb(255, 255, 255);
-    -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: rgba(0, 0, 0, 0.5);
     font-weight: 900;
+    color: rgb(var(--white));
+    text-shadow: 0 0 0.25rem rgba(var(--black), 0.25);
 }
 
 
 /* Aspect pips */
 .aspect-pips {
     -webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: rgba(255, 255, 255, 0.5);
+    -webkit-text-stroke-color: rgba(var(--white), 0.5);
 }
 
 .aspect-pips>span {
