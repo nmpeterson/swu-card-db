@@ -22,8 +22,8 @@
     </span>
     {% endif %}
     <span class="badge text-bg-dark opacity-50 fw-semibold p-1">{{card.card_type}}</span>
-    <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}" alt="{{card.rarity}} rarity"
-      class="rarity-pip">
+    <img src="{{ https_url_for(request, 'static', path='/images/rarity/' + card.rarity + '.png') }}"
+      alt="{{card.rarity}} rarity" class="rarity-pip">
   </a>
 </li>
 {% endfor %}

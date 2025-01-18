@@ -1,6 +1,6 @@
 import logging
 import urllib.parse
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.responses import HTMLResponse
@@ -16,6 +16,14 @@ logging.basicConfig(level=logging.DEBUG)
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_blocks=True)
+
+
+def https_url_for(request: Request, name: str, **path_params: Any) -> str:
+    http_url = request.url_for(name, **path_params)
+    return str(http_url).replace("http://", "https://", 1)
+
+
+templates.env.globals["https_url_for"] = https_url_for
 
 
 # Get select options for advanced search form from database ONCE

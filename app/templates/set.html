@@ -5,7 +5,8 @@
 {% block content %}
 <div class="row">
   <div class="col p-0 mb-2">
-    <img src="{{ url_for('static', path='/images/sets/' + set.id + '_logo.png') }}" alt="{{set.name}}" width="300">
+    <img src="{{ https_url_for(request, 'static', path='/images/sets/' + set.id + '_logo.png') }}" alt="{{set.name}}"
+      width="300">
   </div>
 </div>
 <div class="row">

@@ -11,10 +11,10 @@
         <div id="card-image" class="col-lg-5 carousel slide">
           <div class="carousel-inner">
             <div class="carousel-item active" aria-description="Front of card image"
-              style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png')}});">
+              style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'.png')}});">
             </div>
             <div class="carousel-item" aria-description="Back of card image"
-              style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'-back.png')}});">
+              style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'-back.png')}});">
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#card-image" data-bs-slide="prev">
@@ -30,7 +30,7 @@
         <div id="card-image" class="col-lg-5 carousel slide">
           <div class="carousel-inner">
             <div class="carousel-item active"
-              style="background-image:url({{ url_for('static', path='/images/cards/'+card.set_id+'/'+card.number+'.png') }});">
+              style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'.png') }});">
             </div>
           </div>
         </div>
@@ -55,10 +55,12 @@
                 {% for aspect in card.aspects %}
                 {% if aspect.aspect is not none %}
                 <a href="/search?aspect={{aspect.aspect}}">
-                  <img class="aspect-img" src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}"
+                  <img class="aspect-img"
+                    src="{{ https_url_for(request, 'static', path='/images/aspects/'+aspect.aspect+'.png') }}"
                     alt="{{aspect.aspect}}">
                   {% if aspect.double is true %}
-                  <img class="aspect-img" src="{{ url_for('static', path='/images/aspects/'+aspect.aspect+'.png') }}"
+                  <img class="aspect-img"
+                    src="{{ https_url_for(request, 'static', path='/images/aspects/'+aspect.aspect+'.png') }}"
                     alt="{{aspect.aspect}}">
                   {% endif %}
                 </a>
@@ -126,7 +128,7 @@
             <div id="card-summary-id"
               class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
               <span class="pe-2">{{card.id}}</span>
-              <img src="{{ url_for('static', path='/images/rarity/' + card.rarity + '.png') }}"
+              <img src="{{ https_url_for(request, 'static', path='/images/rarity/' + card.rarity + '.png') }}"
                 alt="{{card.rarity}} rarity" class="rarity-pip">
             </div>
           </div>
