@@ -11,6 +11,8 @@
             "module": "uvicorn",
             "args": [
                 "app.main:app",
+                "--ssl-certfile=./certs/localhost+2.pem",
+                "--ssl-keyfile=./certs/localhost+2-key.pem",
                 "--reload"
             ],
             "jinja": true
