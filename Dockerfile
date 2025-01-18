@@ -1,13 +1,13 @@
-FROM python:3.13
+FROM python:3.13-slim
 
-WORKDIR /code
+RUN mkdir /build
 
-COPY ./requirements.txt /code/requirements.txt
+WORKDIR /build
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+COPY . .
 
-COPY ./app /code/app
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ./data/db.sqlite3 /code/data/db.sqlite3
+EXPOSE 8080
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80", "--workers", "4"]
+ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "4"]
