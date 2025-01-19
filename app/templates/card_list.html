@@ -1,7 +1,6 @@
 {% for card in cards %}
 <li class="card-list-item">
   <a href="../cards/{{card.id}}">
-    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">{{card.id}}</span>
     <span class="fs-4 aspect-pips me-1">
       {% for aspect in card.aspects %}
       {% if aspect.aspect is not none %}
@@ -16,14 +15,15 @@
     {% if card.subtitle is not none %}
     <span class="align-middle fw-lighter">— {{card.subtitle}}</span>
     {% endif %}
+    <img src="{{ https_url_for(request, 'static', path='/images/rarity/' + card.rarity + '.png') }}"
+      alt="{{card.rarity}} rarity" class="rarity-pip ms-1">
     {% if card.variant_type != 'Normal' %}
-    <span class="badge text-bg-dark opacity-50 fw-semibold p-1">
+    <span class="badge">
       {{card.variant_type}}
     </span>
     {% endif %}
-    <span class="badge text-bg-dark opacity-50 fw-semibold p-1">{{card.card_type}}</span>
-    <img src="{{ https_url_for(request, 'static', path='/images/rarity/' + card.rarity + '.png') }}"
-      alt="{{card.rarity}} rarity" class="rarity-pip">
+    <span class="badge">{{card.card_type}}</span>
+    <span class="badge fw-normal font-monospace">{{card.id}}</span>
   </a>
 </li>
 {% endfor %}

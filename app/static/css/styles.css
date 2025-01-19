@@ -187,6 +187,23 @@ span.card-aspect-None {
   text-shadow: 0 0 0.25rem rgba(var(--black), 0.25);
 }
 
+/* Card list layout */
+ul#card-list {
+  padding-left: 0rem;
+}
+
+.card-list-item {
+  padding: 0.25rem 0rem;
+}
+
+.card-list-item .badge {
+  padding: 0.25rem;
+  /* Replicate classes text-bg-dark, opacity-50, fw-semibold */
+  color: rgba(var(--white), 0.5) !important;
+  background-color: rgba(var(--bs-dark-rgb), 0.5) !important;
+  font-weight: 600;
+}
+
 
 /* Aspect pips */
 .aspect-pips {
@@ -233,10 +250,4 @@ a.aspect-pip-Heroism {
   vertical-align: middle;
   height: 1rem;
   width: auto;
-}
-
-.variant-pip {
-  vertical-align: middle;
-  height: 1rem;
-  width: 1rem;
 }

@@ -26,11 +26,14 @@ def https_url_for(request: Request, name: str, **path_params: Any) -> str:
 templates.env.globals["https_url_for"] = https_url_for
 
 
-# Get select options for advanced search form from database ONCE
+# Get common database query results ONCE for template context
 session = get_db()
 db = session.__next__()
+
+all_sets = db.query(SWUSet).order_by(SWUSet.number).all()
+
 advanced_search_options = {
-    "set_id_options": [s.id for s in db.query(SWUSet.id, SWUSet.number).order_by(SWUSet.number).all()],
+    "set_options": [{"id": s.id, "name": s.name} for s in all_sets],
     "arena_options": [
         a.arena for a in db.query(SWUCardArena.arena).distinct().order_by(SWUCardArena.arena).all() if a.arena
     ],
@@ -54,8 +57,11 @@ advanced_search_options = {
         c.variant_type for c in db.query(SWUCard.variant_type).distinct().order_by(SWUCard.variant_type).all()
     ],
 }
+
 del db
 session.close()
+
+templates.env.globals["all_sets"] = all_sets
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -103,10 +109,9 @@ async def get_sets(
     db: Session = Depends(get_db),
     hx_request: Annotated[str | None, Header()] = None,
 ):
-    sets = db.query(SWUSet).order_by(SWUSet.number).all()
     if hx_request:
-        return templates.TemplateResponse(request=request, name="set_list.html", context={"sets": sets})
-    return sets
+        return templates.TemplateResponse(request=request, name="set_list.html")
+    return all_sets
 
 
 @app.get("/card_list", response_model=list[CardListModel])

@@ -20,8 +20,8 @@
         {% block header %}
         <a class="navbar-brand" href="/">
           <img src="{{ https_url_for(request, 'static', path='/images/SWU_logo_white.png') }}"
-            alt="Star Wars Unlimited Logo" class="me-4 app-logo">
-          <span id="app-title" class="h2 fw-semibold align-middle">SWU Card Database</span>
+            alt="Star Wars Unlimited Logo" class="me-3 app-logo">
+          <span id="app-title" class="h3 fw-semibold align-middle">Card Database
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
           aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,24 +35,14 @@
                 Sets
               </a>
               <ul class="dropdown-menu">
+                {% for set in all_sets %}
                 <li>
-                  <a class="dropdown-item" href="/sets/SOR">
-                    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SOR</span>
-                    <span class="align-middle fw-normal">Spark of Rebellion</span>
+                  <a class="dropdown-item" href="/sets/{{set.id}}">
+                    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">{{set.id}}</span>
+                    <span class="align-middle fw-normal">{{set.name}}</span>
                   </a>
                 </li>
-                <li>
-                  <a class="dropdown-item" href="/sets/SHD">
-                    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SHD</span>
-                    <span class="align-middle fw-normal">Shadows of the Galaxy</span>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="/sets/TWI">
-                    <span class="badge text-bg-dark opacity-50 fw-normal font-monospace">SOR</span>
-                    <span class="align-middle fw-normal">Twilight of the Republic</span>
-                  </a>
-                </li>
+                {% endfor %}
               </ul>
             </li>
             <li class="nav-item">
@@ -83,15 +73,13 @@
         <div class="text-secondary">
           <p>This is an unofficial fan site, and is not affiliated with Disney/Lucasfilm or
             Fantasy Flight Games. Star Wars characters, cards, logos, and art are property of Lucasfilm Ltd. and/or
-            Fantasy Flight Publishing, Inc.</p>
-          <p>Website code and design &copy; 2025 Noel Peterson. <a href="https://github.com/nmpeterson/swu-card-db"
-              target="_blank">View source code on GitHub.</a></p>
-        </div>
-        <div class="ps-3">
-          <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js"
-            data-name="bmc-button" data-slug="nmpeterson" data-color="#5F7FFF" data-emoji="☕" data-font="Cookie"
-            data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#ffffff"
-            data-coffee-color="#FFDD00"></script>
+            Fantasy Flight Publishing, Inc.
+            Website <a href="https://github.com/nmpeterson/swu-card-db" target="_blank">code</a> and design © 2025
+            Noel Peterson.
+          </p>
+          <p>
+            <a href="https://www.buymeacoffee.com/nmpeterson" target="_blank">Buy me a coffee ☕</a>
+          </p>
         </div>
         {% endblock %}
       </div>
