@@ -78,7 +78,7 @@
         <div id="card-summary-attributes" class="d-flex flex-column justify-content-start">
           <div>
             <span class="badge fw-semibold card-aspect-{{card.aspects[0].aspect}}">
-              <a href="/search?card_type={{card.card_type}}">{{card.card_type|upper}}</a>
+              {{card.card_type|upper}}
             </span>
             </span>
             {% if card.arenas[0].arena is not none %}
