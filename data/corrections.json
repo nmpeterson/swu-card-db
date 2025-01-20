@@ -1,14 +1,296 @@
 {
-    "SOR-096": {
-        "Aspects": [
-            "Command",
-            "Heroism"
-        ]
-    },
-    "SOR-360": {
-        "Aspects": [
-            "Command",
-            "Heroism"
-        ]
-    }
+  "SOR-020": {
+    "Artist": "Sebastián Guidobono"
+  },
+  "SOR-096": {
+    "Aspects": [
+      "Command",
+      "Heroism"
+    ]
+  },
+  "SOR-360": {
+    "Aspects": [
+      "Command",
+      "Heroism"
+    ]
+  },
+  "SHD-004": {
+    "Artist": "David Buisan"
+  },
+  "SHD-012": {
+    "Artist": "David Buisan"
+  },
+  "SHD-021": {
+    "Artist": "Rocío Espín"
+  },
+  "SHD-038": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SHD-056": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SHD-119": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SHD-174": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SHD-263": {
+    "Artist": "Amélie Hutt"
+  },
+  "SHD-264": {
+    "Artist": "David Buisan"
+  },
+  "SHD-265": {
+    "Artist": "David Buisan"
+  },
+  "SHD-266": {
+    "Artist": "Amélie Hutt"
+  },
+  "SHD-267": {
+    "Artist": "Renaud Scheidt"
+  },
+  "SHD-268": {
+    "Artist": "Afif Khaled"
+  },
+  "SHD-269": {
+    "Artist": "Renaud Scheidt"
+  },
+  "SHD-270": {
+    "Artist": "Marc Escachx"
+  },
+  "SHD-271": {
+    "Artist": "Amélie Hutt"
+  },
+  "SHD-272": {
+    "Artist": "Amad Mir"
+  },
+  "SHD-273": {
+    "Artist": "Erik Ly"
+  },
+  "SHD-274": {
+    "Artist": "Eric Hibbeler"
+  },
+  "SHD-275": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "SHD-276": {
+    "Artist": "Lenka Šimečková"
+  },
+  "SHD-277": {
+    "Artist": "Mona Finden"
+  },
+  "SHD-278": {
+    "Artist": "Robynn Frauhn"
+  },
+  "SHD-279": {
+    "Artist": "David Buisan"
+  },
+  "SHD-280": {
+    "Artist": "Amad Mir"
+  },
+  "SOR-286": {
+    "Artist": "Sebastián Guidobono"
+  },
+  "SHD-299": {
+    "Artist": "Rocío Espín"
+  },
+  "SHD-315": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SHD-331": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SHD-388": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SHD-443": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-004": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-035": {
+    "Artist": "David Buisán"
+  },
+  "TWI-045": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-077": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-091": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-117": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-122": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-124": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-131": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-133": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-140": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-158": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-159": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-177": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-186": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-197": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-219": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-229": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-230": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-241": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-247": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-249": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-251": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-258": {
+    "Artist": "Sebastián Guidobono"
+  },
+  "TWI-259": {
+    "Artist": "Luke Harrington"
+  },
+  "TWI-260": {
+    "Artist": "Afif Khaled"
+  },
+  "TWI-261": {
+    "Artist": "Luke Harrington"
+  },
+  "TWI-262": {
+    "Artist": "Ario Murti"
+  },
+  "TWI-263": {
+    "Artist": "Marc Escachx"
+  },
+  "TWI-264": {
+    "Artist": "Afif Khaled"
+  },
+  "TWI-265": {
+    "Artist": "Amélie Hutt"
+  },
+  "TWI-266": {
+    "Artist": "Amélie Hutt"
+  },
+  "TWI-267": {
+    "Artist": "Sebastián Guidobono"
+  },
+  "TWI-268": {
+    "Artist": "Ann Maulina"
+  },
+  "TWI-269": {
+    "Artist": "David Buisan"
+  },
+  "TWI-270": {
+    "Artist": "David Buisan"
+  },
+  "TWI-271": {
+    "Artist": "Guillaume Ospital"
+  },
+  "TWI-272": {
+    "Artist": "Sebastián Guidobono"
+  },
+  "TWI-273": {
+    "Artist": "Kyle Petchock"
+  },
+  "TWI-274": {
+    "Artist": "Mona Finden"
+  },
+  "TWI-275": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-279": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-308": {
+    "Artist": "David Buisán"
+  },
+  "TWI-318": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-350": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-363": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-387": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-392": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-399": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-401": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-408": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-425": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-426": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-443": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-451": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-462": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-484": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-493": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-502": {
+    "Artist": "Ario Anindito"
+  },
+  "TWI-508": {
+    "Artist": "Eslam Aboshady"
+  },
+  "TWI-509": {
+    "Artist": "Sandra Chlewińska"
+  },
+  "TWI-511": {
+    "Artist": "Eslam Aboshady"
+  }
 }
