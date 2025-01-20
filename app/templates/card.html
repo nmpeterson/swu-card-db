@@ -112,7 +112,7 @@
           <h5 class="fw-lighter">Card Text</h5>
           {% set front_text_lines = card.front_text.split('\n') %}
           {% for line in front_text_lines %}
-          <p class="card-text">{{line}}</p>
+          <p class="card-text">{{line.replace('{Exhaust}', '➦')}}</p>
           {% endfor %}
           {% endif %}
           {% if card.epic_action is not none %}
@@ -124,7 +124,7 @@
           <h5 class="fw-lighter">Back Text</h5>
           {% set back_text_lines = card.back_text.split('\n') %}
           {% for line in back_text_lines %}
-          <p class="card-text">{{line}}</p>
+          <p class="card-text">{{line.replace('{Exhaust}', '➦')}}</p>
           {% endfor %}
           {% endif %}
         </div>
