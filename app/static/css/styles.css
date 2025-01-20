@@ -187,6 +187,10 @@ span.card-aspect-None {
   text-shadow: 0 0 0.25rem rgba(var(--black), 0.25);
 }
 
+#card-summary-text .card-text {
+  margin-bottom: 0.25rem;
+}
+
 /* Set list layout */
 ul#set-list {
   padding-left: 0rem;
