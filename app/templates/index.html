@@ -1,19 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row">
-  <div class="col p-0">
-    <p class="lead">
-      This site contains information about each card in the trading card game <strong>Star Wars
-        Unlimited</strong>. Select a set to browse its cards.
-    </p>
-    <ul id="set-list" hx-get="/set_list" hx-swap="innerHTML" hx-trigger="load">
-      <li>
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-      </li>
-    </ul>
+<div class="p-0 mb-4">
+  <p class="lead">
+    This site contains information about the trading card game <span class="fw-semibold">Star Wars Unlimited</span>.
+    Search for a specific card below, or browse all cards within a particular set.
+  </p>
+</div>
+<form class="row g-2 mb-4" role="search" action="/search">
+  <div class="col-12">
+    <h1 class="h3 m-0">Search for a card</h1>
   </div>
+  <div class="col-auto">
+    <input class="form-control me-2" type="search" placeholder="Card name/subtitle" aria-label="Search" id="name-input"
+      name="name" value="{{ request.query_params.get('name', '') }}">
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </div>
+  <div class="col-12">
+    <a href="/search">Advanced search</a>
+  </div>
+</form>
+<div class="p-0">
+  <h1 class="h3">Explore cards by set</h1>
+  <ul id="set-list" hx-get="/set_list" hx-swap="innerHTML" hx-trigger="load">
+    <li>
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </li>
+  </ul>
 </div>
 {% endblock %}
