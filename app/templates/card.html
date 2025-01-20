@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Card: {{card.id}} — {{ super() }}{% endblock %}
+{% block title %}
+{{card.name}}{% if card.subtitle is not none %}: {{card.subtitle}}{% endif %} — {{ super() }}
+{% endblock %}
 
 {% block content %}
 <div class="card rounded-4 border-2 p-3 swu-card card-aspect-{{card.aspects[0].aspect}}">
