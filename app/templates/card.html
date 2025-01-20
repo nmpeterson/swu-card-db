@@ -78,13 +78,13 @@
         <div id="card-summary-attributes" class="d-flex flex-column justify-content-start">
           <div>
             <span class="badge fw-semibold card-aspect-{{card.aspects[0].aspect}}">
-              {{card.card_type|upper}}
+              <a href="/search?card_type={{card.card_type}}">{{card.card_type|upper}}</a>
             </span>
             </span>
             {% if card.arenas[0].arena is not none %}
             {% for arena in card.arenas %}
             <span class="badge fw-semibold
-                                    {% if arena.arena == 'Ground' %}text-bg-light{% else %}text-bg-dark{% endif %}">
+              {% if arena.arena == 'Ground' %}text-bg-light{% else %}text-bg-dark{% endif %}">
               {{arena.arena|upper}}
             </span>
             {% endfor %}
@@ -127,8 +127,10 @@
         </div>
         <div id="card-summary-id" class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
           <span class="pe-2">{{card.id}}</span>
-          <img src="{{ https_url_for(request, 'static', path='/images/rarity/' + card.rarity + '.png') }}"
-            alt="{{card.rarity}} rarity" class="rarity-pip">
+          <a href="/search?rarity={{card.rarity}}">
+            <img src="{{ https_url_for(request, 'static', path='/images/rarity/' + card.rarity + '.png') }}"
+              alt="{{card.rarity}} rarity" class="rarity-pip">
+          </a>
         </div>
       </div>
     </div>
