@@ -6,8 +6,13 @@
 <form class="row g-3 mb-2" role="search">
   <div class="col-12">
     <label for="name-input" class="form-label">Card name/subtitle</label>
-    <input class="form-control me-2" type="search" aria-label="Search" id="name-input" name="name"
+    <input class="form-control" type="search" aria-label="Search" id="name-input" name="name"
       value="{{ request.query_params.get('name', '') }}">
+  </div>
+  <div class="col-12">
+    <label for="text-input" class="form-label">Card text (front/back)</label>
+    <input class="form-control" type="search" aria-label="Search" id="text-input" name="text"
+      value="{{ request.query_params.get('text', '') }}">
   </div>
   <div class="col-6 col-md-3">
     <label for="aspect-select" class="form-label">Aspect</label>

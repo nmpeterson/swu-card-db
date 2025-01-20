@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, create_engine
+from sqlalchemy import ForeignKey, create_engine, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import Mapped, mapped_column, relationship, sessionmaker
@@ -52,7 +52,21 @@ class SWUCard(Base):
 
     @hybrid_property
     def name_and_subtitle(self) -> str:
-        return self.name + " " + self.subtitle
+        return self.name + " " + (self.subtitle or "")
+
+    @name_and_subtitle.expression
+    @classmethod
+    def name_and_subtitle(cls):
+        return cls.name + func.coalesce(cls.subtitle, "")
+
+    @hybrid_property
+    def card_text(self) -> str:
+        return (self.front_text or "") + " " + (self.epic_action or "") + " " + (self.back_text or "")
+
+    @card_text.expression
+    @classmethod
+    def card_text(cls):
+        return func.coalesce(cls.front_text, "") + func.coalesce(cls.epic_action, "") + func.coalesce(cls.back_text, "")
 
 
 class SWUCardArena(Base):

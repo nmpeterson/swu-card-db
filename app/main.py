@@ -96,7 +96,6 @@ async def get_card_page(request: Request, card_id: str, db: Session = Depends(ge
     variants = (
         db.query(SWUCard)
         .filter(
-            # SWUCard.id != card.id,
             SWUCard.name == card.name,
             SWUCard.card_type == card.card_type,
             SWUCard.subtitle == card.subtitle,
@@ -128,9 +127,6 @@ async def get_cards(
     cards = db.query(SWUCard)
     if set_id := request.query_params.get("set_id"):
         cards = cards.filter(SWUCard.set_id == set_id)
-    if name := request.query_params.get("name"):
-        name_like = "%".join(name.strip().split())
-        cards = cards.filter(SWUCard.name_and_subtitle.icontains(name_like))
     if variant_type := request.query_params.get("variant_type"):
         cards = cards.filter(SWUCard.variant_type == variant_type)
     if card_type := request.query_params.get("card_type"):
@@ -139,6 +135,12 @@ async def get_cards(
         cards = cards.filter(SWUCard.rarity == rarity)
     if artist := request.query_params.get("artist"):
         cards = cards.filter(SWUCard.artist == artist)
+    if name := request.query_params.get("name"):
+        name_like = "%".join(name.strip().split())
+        cards = cards.filter(SWUCard.name_and_subtitle.icontains(name_like))
+    if text := request.query_params.get("text"):
+        text_like = "%".join(text.strip().split())
+        cards = cards.filter(SWUCard.card_text.icontains(text_like))
     if arena := request.query_params.get("arena"):
         cards = cards.join(SWUCardArena).filter(SWUCard.arenas.any(SWUCardArena.arena == arena))
     if aspect := request.query_params.get("aspect"):
