@@ -1,6 +1,7 @@
 from sqlalchemy import ForeignKey, create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Mapped, mapped_column, relationship
+from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import Mapped, mapped_column, relationship, sessionmaker
 
 DATABASE = "data/db.sqlite3"
 
@@ -48,6 +49,10 @@ class SWUCard(Base):
     aspects: Mapped[list["SWUCardAspect"]] = relationship(order_by="SWUCardAspect.sort_order")
     traits: Mapped[list["SWUCardTrait"]] = relationship()
     card_set: Mapped["SWUSet"] = relationship(back_populates="cards")
+
+    @hybrid_property
+    def name_and_subtitle(self) -> str:
+        return self.name + " " + self.subtitle
 
 
 class SWUCardArena(Base):
