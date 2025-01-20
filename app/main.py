@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import Session
 
 from .database import get_db, SWUSet, SWUCard, SWUCardArena, SWUCardAspect, SWUCardTrait
@@ -85,7 +86,11 @@ async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_
 
 @app.get("/cards/{card_id}", response_class=HTMLResponse)
 async def get_card_page(request: Request, card_id: str, db: Session = Depends(get_db)):
-    card = db.query(SWUCard).filter(SWUCard.id == card_id).first()
+    if card_id.lower() == "random":
+        card = db.query(SWUCard).order_by(func.random()).first()
+        card_id = card.id
+    else:
+        card = db.query(SWUCard).filter(SWUCard.id == card_id).first()
     if not card:
         raise HTTPException(status_code=404, detail=f"Card '{card_id}' not found")
     variants = (
