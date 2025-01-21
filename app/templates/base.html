@@ -10,6 +10,36 @@
   <link href="{{ https_url_for(request, 'static', path='/css/styles.css') }}" rel="stylesheet">
   <script src="{{ https_url_for(request, 'static', path='/js/bootstrap.5.3.3.bundle.min.js') }}"></script>
   <script src="{{ https_url_for(request, 'static', path='/js/htmx.2.0.4.min.js') }}"></script>
+  <link rel="apple-touch-icon" sizes="57x57"
+    href="{{ https_url_for(request, 'static', path='/images/favicon-57x57.png') }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="60x60"
+    href="{{ https_url_for(request, 'static', path='/images/favicon-60x60.png') }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="72x72"
+    href="{{ https_url_for(request, 'static', path='/images/favicon-72x72.png') }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="114x114"
+    href="{{ https_url_for(request, 'static', path='/images/favicon-114x114.png') }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="120x120"
+    href="{{ https_url_for(request, 'static', path='/images/favicon-120x120.png') }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="144x144"
+    href="{{ https_url_for(request, 'static', path='/images/favicon-144x144.png') }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="152x152"
+    href="{{ https_url_for(request, 'static', path='/images/favicon-152x152.png') }}" type="image/png" />
+  <link rel="apple-touch-icon" sizes="180x180"
+    href="{{ https_url_for(request, 'static', path='/images/favicon-180x180.png') }}" type="image/png" />
+  <link rel="icon" sizes="16x16" href="{{ https_url_for(request, 'static', path='/images/favicon-16x16.png') }}"
+    type="image/png" />
+  <link rel="icon" sizes="32x32" href="{{ https_url_for(request, 'static', path='/images/favicon-32x32.png') }}"
+    type="image/png" />
+  <link rel="icon" sizes="96x96" href="{{ https_url_for(request, 'static', path='/images/favicon-96x96.png') }}"
+    type="image/png" />
+  <link rel="icon" sizes="192x192" href="{{ https_url_for(request, 'static', path='/images/favicon-192x192.png') }}"
+    type="image/png" />
+  <link rel="icon" sizes="512x512" href="{{ https_url_for(request, 'static', path='/images/favicon-512x512.png') }}"
+    type="image/png" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <meta name="msapplication-TileImage"
+    content="{{ https_url_for(request, 'static', path='/images/favicon-512x512.png') }}" />
   {% endblock %}
 </head>
 
@@ -19,9 +49,8 @@
       <div id="header" class="container p-0">
         {% block header %}
         <a class="navbar-brand" href="/">
-          <img src="{{ https_url_for(request, 'static', path='/images/SWU_logo_white.png') }}"
-            alt="Star Wars Unlimited Logo" class="me-3 app-logo">
-          <span id="app-title" class="h3 fw-semibold align-middle">Card Database
+          <img src="{{ https_url_for(request, 'static', path='/images/logo.png') }}" alt="SWUcards.info logo"
+            class="me-3 app-logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler"
           aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,8 +106,8 @@
           <p>This is an unofficial fan site, and is not affiliated with Disney/Lucasfilm or
             Fantasy Flight Games. Star Wars characters, cards, logos, and art are property of Lucasfilm Ltd. and/or
             Fantasy Flight Publishing, Inc.
-            Website <a href="https://github.com/nmpeterson/swu-card-db" target="_blank">code</a> and design © 2025
-            Noel Peterson.
+            Website <a href="https://github.com/nmpeterson/swu-card-db" target="_blank">code</a> and design ©
+            {{current_year}} <a href="mailto:noel@swucards.info">Noel Peterson</a>.
           </p>
           <p>
             <a href="https://www.buymeacoffee.com/nmpeterson" target="_blank">Buy me a coffee ☕</a>

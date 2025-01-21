@@ -1,9 +1,10 @@
 import logging
 import urllib.parse
+from datetime import date
 from typing import Annotated, Any
 
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.sql.expression import func
@@ -19,12 +20,18 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_blocks=True)
 
 
+# Get current year for footer
+current_year = date.today().year
+templates.env.globals["current_year"] = current_year
+
+
+# Use HTTPS for URLs in Jinja2 templates
 def https_url_for(request: Request, name: str, **path_params: Any) -> str:
     http_url = request.url_for(name, **path_params)
     return str(http_url).replace("http://", "https://", 1)
 
 
-templates.env.globals["https_url_for"] = https_url_for
+templates.env.globals["https_url_for"] = https_url_for  # Use instead of url_for
 
 
 # Get common database query results ONCE for template context
@@ -65,18 +72,19 @@ session.close()
 templates.env.globals["all_sets"] = all_sets
 
 
-@app.get("/", response_class=HTMLResponse)
+# Define routes
+@app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def root(request: Request):
     return templates.TemplateResponse(request=request, name="index.html", context={})
 
 
-@app.get("/search", response_class=HTMLResponse)
+@app.get("/search", response_class=HTMLResponse, include_in_schema=False)
 async def search(request: Request, db: Session = Depends(get_db)):
     search_context = {"query_string": urllib.parse.urlencode(request.query_params), **advanced_search_options}
     return templates.TemplateResponse(request=request, name="search.html", context=search_context)
 
 
-@app.get("/sets/{set_id}", response_class=HTMLResponse)
+@app.get("/sets/{set_id}", response_class=HTMLResponse, include_in_schema=False)
 async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_db)):
     swu_set = db.query(SWUSet).filter(SWUSet.id == set_id).first()
     if not swu_set:
@@ -84,7 +92,7 @@ async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_
     return templates.TemplateResponse(request=request, name="set.html", context={"set": swu_set})
 
 
-@app.get("/cards/{card_id}", response_class=HTMLResponse)
+@app.get("/cards/{card_id}", response_class=HTMLResponse, include_in_schema=False)
 async def get_card_page(request: Request, card_id: str, db: Session = Depends(get_db)):
     if card_id.lower() == "random":
         card = db.query(SWUCard).order_by(func.random()).first()
@@ -153,6 +161,12 @@ async def get_cards(
     return cards
 
 
+@app.get("/favicon.ico", response_class=FileResponse, include_in_schema=False)
+async def get_favicon():
+    return FileResponse("app/static/images/favicon.ico")
+
+
+# Exception handlers
 @app.exception_handler(404)
 async def not_found_exception_handler(request: Request, exc: HTTPException):
     return templates.TemplateResponse(request=request, name="404.html", context={})
