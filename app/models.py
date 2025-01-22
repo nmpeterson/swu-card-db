@@ -21,6 +21,10 @@ class TraitModel(BaseModel):
     trait: str | None
 
 
+class KeywordModel(BaseModel):
+    keyword: str | None
+
+
 class CardListModel(BaseModel):
     """Minimal subset of card properties for creating lists."""
 
@@ -49,3 +53,4 @@ class CardModel(CardListModel):
     artist: str
     arenas: list[ArenaModel]
     traits: list[TraitModel]
+    keywords: list[KeywordModel]

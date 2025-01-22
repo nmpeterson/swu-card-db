@@ -4,12 +4,12 @@
 
 {% block content %}
 <form class="row g-3 mb-2" role="search">
-  <div class="col-12">
+  <div class="col-12 col-md-6">
     <label for="name-input" class="form-label">Card name/subtitle</label>
     <input class="form-control" type="search" aria-label="Search" id="name-input" name="name"
       value="{{ request.query_params.get('name', '') }}">
   </div>
-  <div class="col-12">
+  <div class="col-12 col-md-6">
     <label for="text-input" class="form-label">Card text (front/back)</label>
     <input class="form-control" type="search" aria-label="Search" id="text-input" name="text"
       value="{{ request.query_params.get('text', '') }}">
@@ -54,6 +54,19 @@
     </select>
   </div>
   <div class="col-6 col-md-3">
+    <label for="keyword-select" class="form-label">Keyword</label>
+    <select class="form-select" aria-label="Keyword selector" id="keyword-select" name="keyword">
+      <option value=""></option>
+      {% for keyword in keyword_options %}
+      {% if keyword == request.query_params.get('keyword') %}
+      <option value="{{keyword}}" selected>{{keyword}}</option>
+      {% else %}
+      <option value="{{keyword}}">{{keyword}}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-6 col-md-3">
     <label for="arena-select" class="form-label">Arena</label>
     <select class="form-select" aria-label="Arena selector" id="arena-select" name="arena">
       <option value=""></option>
@@ -80,19 +93,6 @@
     </select>
   </div>
   <div class="col-6 col-md-3">
-    <label for="artist-select" class="form-label">Artist</label>
-    <select class="form-select" aria-label="Rarity selector" id="artist-select" name="artist">
-      <option value=""></option>
-      {% for artist in artist_options %}
-      {% if artist == request.query_params.get('artist') %}
-      <option value="{{artist}}" selected>{{artist}}</option>
-      {% else %}
-      <option value="{{artist}}">{{artist}}</option>
-      {% endif %}
-      {% endfor %}
-    </select>
-  </div>
-  <div class="col-6 col-md-3">
     <label for="rarity-select" class="form-label">Rarity</label>
     <select class="form-select" aria-label="Rarity selector" id="rarity-select" name="rarity">
       <option value=""></option>
@@ -114,6 +114,19 @@
       <option value="{{variant_type}}" selected>{{variant_type}}</option>
       {% else %}
       <option value="{{variant_type}}">{{variant_type}}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-6 col-md-3">
+    <label for="artist-select" class="form-label">Artist</label>
+    <select class="form-select" aria-label="Rarity selector" id="artist-select" name="artist">
+      <option value=""></option>
+      {% for artist in artist_options %}
+      {% if artist == request.query_params.get('artist') %}
+      <option value="{{artist}}" selected>{{artist}}</option>
+      {% else %}
+      <option value="{{artist}}">{{artist}}</option>
       {% endif %}
       {% endfor %}
     </select>

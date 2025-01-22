@@ -48,6 +48,7 @@ class SWUCard(Base):
     arenas: Mapped[list["SWUCardArena"]] = relationship()
     aspects: Mapped[list["SWUCardAspect"]] = relationship(order_by="SWUCardAspect.sort_order")
     traits: Mapped[list["SWUCardTrait"]] = relationship()
+    keywords: Mapped[list["SWUCardKeyword"]] = relationship()
     card_set: Mapped["SWUSet"] = relationship(back_populates="cards")
 
     @hybrid_property
@@ -91,3 +92,10 @@ class SWUCardTrait(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     card_id: Mapped[str] = mapped_column(ForeignKey("cards.id"))
     trait: Mapped[str | None] = mapped_column()
+
+
+class SWUCardKeyword(Base):
+    __tablename__ = "card_keywords"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    card_id: Mapped[str] = mapped_column(ForeignKey("cards.id"))
+    keyword: Mapped[str | None] = mapped_column()

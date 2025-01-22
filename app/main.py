@@ -10,7 +10,7 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import Session
 
-from .database import get_db, SWUSet, SWUCard, SWUCardArena, SWUCardAspect, SWUCardTrait
+from .database import get_db, SWUSet, SWUCard, SWUCardArena, SWUCardAspect, SWUCardTrait, SWUCardKeyword
 from .models import SetModel, CardListModel
 
 logging.basicConfig(level=logging.DEBUG)
@@ -55,6 +55,11 @@ advanced_search_options = {
     ],
     "trait_options": [
         t.trait for t in db.query(SWUCardTrait.trait).distinct().order_by(SWUCardTrait.trait).all() if t.trait
+    ],
+    "keyword_options": [
+        k.keyword
+        for k in db.query(SWUCardKeyword.keyword).distinct().order_by(SWUCardKeyword.keyword).all()
+        if k.keyword
     ],
     "card_type_options": [
         c.card_type for c in db.query(SWUCard.card_type).distinct().order_by(SWUCard.card_type).all()
@@ -155,6 +160,8 @@ async def get_cards(
         cards = cards.join(SWUCardAspect).filter(SWUCard.aspects.any(SWUCardAspect.aspect == aspect))
     if trait := request.query_params.get("trait"):
         cards = cards.join(SWUCardTrait).filter(SWUCard.traits.any(SWUCardTrait.trait == trait))
+    if keyword := request.query_params.get("keyword"):
+        cards = cards.join(SWUCardKeyword).filter(SWUCard.keywords.any(SWUCardKeyword.keyword == keyword))
     cards = cards.join(SWUCard.card_set).order_by(SWUSet.number, SWUCard.id).all()
     if hx_request:
         return templates.TemplateResponse(request=request, name="card_list.html", context={"cards": cards})
