@@ -24,6 +24,21 @@ ASPECT_COLORS = {
     "Heroism": "white",
 }
 
+KEYWORDS = {
+    "AMBUSH",
+    "GRIT",
+    "OVERWHELM",
+    "RAID",
+    "RESTORE",
+    "SABOTEUR",
+    "SENTINEL",
+    "SHIELDED",
+    "BOUNTY",
+    "SMUGGLE",
+    "COORDINATE",
+    "EXPLOIT",
+}
+
 
 def main():
     # Load card data
@@ -43,10 +58,13 @@ def main():
     aspect_rows = []
     trait_rows = []
     arena_rows = []
+    keyword_rows = []
     for card in all_cards:
         card_id = f"{card['Set']}-{card['Number']}"
         if card_id in corrections:
             card.update(corrections[card_id])
+        front_text, front_keywords = clean_card_text(card.get("FrontText"))
+        back_text, back_keywords = clean_card_text(card.get("BackText"))
         card_rows.append(
             (
                 card_id,
@@ -61,10 +79,10 @@ def main():
                 card.get("Cost"),
                 card.get("Power"),
                 card.get("HP"),
-                card.get("FrontText"),
+                front_text,  # card.get("FrontText"),
                 card.get("DoubleSided", False),
                 card.get("EpicAction"),
-                card.get("BackText"),
+                back_text,  # card.get("BackText"),
                 card["Artist"],
             )
         )
@@ -74,6 +92,10 @@ def main():
             trait_rows.append((card_id, trait))
         for arena in card.get("Arenas", [None]):
             arena_rows.append((card_id, arena))
+        for keyword in front_keywords | back_keywords:
+            keyword_rows.append((card_id, keyword))
+        if not keyword_rows:
+            keyword_rows.append(None)
     print("Parsed card data into rows for insertion into database")
 
     # Load set data
@@ -179,6 +201,20 @@ def main():
         cur.executemany("""INSERT INTO card_arenas ("card_id", "arena") VALUES(?,?)""", arena_rows)
         con.commit()
 
+        print(f"Creating card_keywords table ({len(keyword_rows):,} rows)")
+        cur.execute(
+            """
+            CREATE TABLE card_keywords (
+                "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+                "card_id" TEXT NOT NULL,
+                "keyword" TEXT,
+                FOREIGN KEY ("card_id") REFERENCES cards("id")
+            )
+            """
+        )
+        cur.executemany("""INSERT INTO card_keywords ("card_id", "keyword") VALUES(?,?)""", keyword_rows)
+        con.commit()
+
         print("Adding indices")
         cur.execute("""CREATE INDEX set_id_index ON sets (id)""")
         cur.execute("""CREATE INDEX set_search_index ON cards (number, name)""")
@@ -190,7 +226,24 @@ def main():
         cur.execute("""CREATE INDEX trait_search_index ON card_traits (trait)""")
         cur.execute("""CREATE INDEX arena_card_id_index ON card_arenas (card_id)""")
         cur.execute("""CREATE INDEX arena_search_index ON card_arenas (arena)""")
+        cur.execute("""CREATE INDEX keyword_card_id_index ON card_keywords (card_id)""")
+        cur.execute("""CREATE INDEX keyword_search_index ON card_keywords (keyword)""")
         con.commit()
+
+
+def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
+    keywords = set()
+    if not text:
+        return text, keywords
+    text = text.replace("{", "").replace("}", "")
+    lines = [line.strip() for line in text.split("\n")]
+    for i in range(len(lines)):
+        first_word = lines[i].split()[0]
+        if (first_word_upper := first_word.upper()) in KEYWORDS:
+            lines[i] = lines[i].replace(first_word, first_word_upper)
+            keywords.add(first_word_upper)
+    text = "\n".join(lines)
+    return text, keywords
 
 
 if __name__ == "__main__":
