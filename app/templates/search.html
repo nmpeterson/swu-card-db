@@ -3,7 +3,7 @@
 {% block title %}Advanced Search — {{ super() }}{% endblock %}
 
 {% block content %}
-<form class="row g-3 mb-2" role="search">
+<form class="row g-3 mb-2" role="search" id="card-search-form">
   <div class="col-12 col-md-6">
     <label for="name-input" class="form-label">Card name/subtitle</label>
     <input class="form-control" type="search" aria-label="Search" id="name-input" name="name"
@@ -132,14 +132,15 @@
     </select>
   </div>
   <div class="col-12">
-    <button class="btn btn-primary w-100" type="submit">Search</button>
+    <button class="btn btn-primary w-100" type="submit" hx-get="/card_list" hx-include="#card-search-form"
+      hx-trigger="load, submit" hx-target="#card-list" hx-swap="innerHTML">Search</button>
   </div>
 </form>
 {% if query_string|length %}
 <div class="row pt-3 mx-0">
   <div class="col p-0">
     <h1 class="h3">Search Results</h1>
-    <ul id="card-list" hx-get="/card_list?{{query_string}}" hx-swap="innerHTML" hx-trigger="load">
+    <ul id="card-list">
       <li>
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
