@@ -170,7 +170,7 @@ async def get_cards(
 
 @app.get("/favicon.ico", response_class=FileResponse, include_in_schema=False)
 async def get_favicon():
-    return FileResponse("app/static/images/favicon.ico")
+    return FileResponse("app/static/images/swucards/favicon.ico")
 
 
 # Exception handlers
