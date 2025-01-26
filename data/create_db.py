@@ -1,6 +1,7 @@
 from collections import Counter
 import json
 import os
+import re
 import sqlite3
 
 DATA_DIR = os.path.dirname(__file__)
@@ -79,10 +80,10 @@ def main():
                 card.get("Cost"),
                 card.get("Power"),
                 card.get("HP"),
-                front_text,  # card.get("FrontText"),
+                front_text,
                 card.get("DoubleSided", False),
                 card.get("EpicAction"),
-                back_text,  # card.get("BackText"),
+                back_text,
                 card["Artist"],
             )
         )
@@ -92,7 +93,10 @@ def main():
             trait_rows.append((card_id, trait))
         for arena in card.get("Arenas", [None]):
             arena_rows.append((card_id, arena))
-        for keyword in front_keywords | back_keywords:
+        keywords = front_keywords | back_keywords
+        if not keywords:
+            keywords.add(None)
+        for keyword in keywords:
             keyword_rows.append((card_id, keyword))
         if not keyword_rows:
             keyword_rows.append(None)
@@ -237,12 +241,53 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
         return text, keywords
     text = text.replace("{", "").replace("}", "")
     lines = [line.strip() for line in text.split("\n")]
+    KW_GRP = "|".join(KEYWORDS)
     for i in range(len(lines)):
-        first_word = lines[i].split()[0]
-        if (first_word_upper := first_word.upper()) in KEYWORDS:
-            lines[i] = lines[i].replace(first_word, first_word_upper)
-            keywords.add(first_word_upper)
+        # Find lines starting with a keyword (and an optional 2nd)
+        if match := re.match(rf"({KW_GRP}) ?[0-9]*(?:, ({KW_GRP}))?", lines[i], re.IGNORECASE):
+            kw = match.group(1).upper()
+            if kw != match.group(1):
+                lines[i] = lines[i].replace(match.group(1), kw, count=1)
+            keywords.add(kw)
+            if match.group(2):
+                kw2 = match.group(2).upper()
+                if kw2 != match.group(2):
+                    lines[i] = lines[i].replace(match.group(2), kw2, count=1)
+                keywords.add(kw2)
+
+        # Find lines with "gain(s) {keyword}" (but not "unless he/she/it gains {keyword}")
+        if match := re.search(
+            rf"(?<!unless he)(?<!unless she)(?<!unless it) gains?:?,? \"?({KW_GRP}) ?[0-9]*(?: and ({KW_GRP}))?",
+            lines[i],
+            re.IGNORECASE,
+        ):
+            kw = match.group(1).upper()
+            if kw != match.group(1):
+                lines[i] = lines[i].replace(match.group(1), kw, count=1)
+            keywords.add(kw)
+            if match.group(2):
+                kw2 = match.group(2).upper()
+                if kw2 != match.group(2):
+                    lines[i] = lines[i].replace(match.group(2), kw2, count=1)
+                keywords.add(kw2)
+
+        # Find lines with "COORDINATE - {2nd keyword}"
+        if match := re.search(rf"COORDINATE - ({KW_GRP})", lines[i], re.IGNORECASE):
+            kw2 = match.group(1).upper()
+            if kw2 != match.group(1):
+                lines[i] = lines[i].replace(match.group(1), kw2, count=1)
+            keywords.add(kw2)
+
+        # Find lines with "give it {keyword}"
+        if match := re.search(rf"give it ({KW_GRP})", lines[i], re.IGNORECASE):
+            kw = match.group(1).upper()
+            if kw != match.group(1):
+                lines[i] = lines[i].replace(match.group(1), kw, count=1)
+            keywords.add(kw)
+
     text = "\n".join(lines)
+    if keywords:
+        print(keywords, text)
     return text, keywords
 
 
