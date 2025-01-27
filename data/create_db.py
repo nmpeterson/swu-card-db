@@ -244,7 +244,7 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
     KW_GRP = "|".join(KEYWORDS)
     for i in range(len(lines)):
         # Find lines starting with a keyword (and an optional 2nd)
-        if match := re.match(rf"({KW_GRP}) ?[0-9]*(?:, ({KW_GRP}))?", lines[i], re.IGNORECASE):
+        if match := re.match(rf"({KW_GRP})(?: \d+)?(?:, ({KW_GRP}))?", lines[i], re.IGNORECASE):
             kw = match.group(1).upper()
             if kw != match.group(1):
                 lines[i] = lines[i].replace(match.group(1), kw, count=1)
@@ -257,7 +257,7 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
 
         # Find lines with "gain(s) {keyword}" (but not "unless he/she/it gains {keyword}")
         if match := re.search(
-            rf"(?<!unless he)(?<!unless she)(?<!unless it) gains?:?,? \"?({KW_GRP}) ?[0-9]*(?: and ({KW_GRP}))?",
+            rf"(?<!unless he)(?<!unless she)(?<!unless it) gains?:?,? \"?({KW_GRP})(?: \d+)?(?: and ({KW_GRP}))?",
             lines[i],
             re.IGNORECASE,
         ):
@@ -270,6 +270,7 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
                 if kw2 != match.group(2):
                     lines[i] = lines[i].replace(match.group(2), kw2, count=1)
                 keywords.add(kw2)
+        # ? 2nd "Sentinel" in SHD-103 not getting replaced?
 
         # Find lines with "COORDINATE - {2nd keyword}"
         if match := re.search(rf"COORDINATE - ({KW_GRP})", lines[i], re.IGNORECASE):
@@ -285,9 +286,34 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
                 lines[i] = lines[i].replace(match.group(1), kw, count=1)
             keywords.add(kw)
 
+        # Find lines with "give each/a(n) {qualifier?} unit {keyword}"
+        if match := re.search(rf"give (?:each|a|an) (?:[^.]* )?unit ({KW_GRP})", lines[i], re.IGNORECASE):
+            kw = match.group(1).upper()
+            if kw != match.group(1):
+                lines[i] = lines[i].replace(match.group(1), kw, count=1)
+            keywords.add(kw)
+
+        # Find lines with "has a bounty" or "with a bounty"
+        if match := re.search("(?:has|with) a (bounty)", lines[i], re.IGNORECASE):
+            kw = match.group(1).upper()
+            if kw != match.group(1):
+                lines[i] = lines[i].replace(match.group(1), kw, count=1)
+            keywords.add(kw)
+
+        # Find lines with "collect ... bounties"
+        if match := re.search("collect [^.]+ (bounties)", lines[i], re.IGNORECASE):
+            kw = "BOUNTY"
+            lines[i] = lines[i].replace(match.group(1), "BOUNTIES", count=1)
+            keywords.add(kw)
+
+        # Find lines with "using smuggle"
+        if match := re.search("using (smuggle)", lines[i], re.IGNORECASE):
+            kw = match.group(1).upper()
+            if kw != match.group(1):
+                lines[i] = lines[i].replace(match.group(1), kw, count=1)
+            keywords.add(kw)
+
     text = "\n".join(lines)
-    if keywords:
-        print(keywords, text)
     return text, keywords
 
 
