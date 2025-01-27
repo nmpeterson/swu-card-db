@@ -1,9 +1,8 @@
 import re
 
 from sqlalchemy import ForeignKey, create_engine, func
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
-from sqlalchemy.orm import Mapped, mapped_column, relationship, sessionmaker
+from sqlalchemy.orm import Mapped, declarative_base, mapped_column, relationship, sessionmaker
 
 DATABASE = "data/db.sqlite3"
 
@@ -165,7 +164,7 @@ class SWUCard(Base):
                 flags=re.IGNORECASE,
             )
             line = re.sub(
-                rf"({'|'.join(self._all_traits)})((?: ground| space)? (?:unit|card))",
+                rf"({'|'.join(self._all_traits)})((?: ground| space)? (?:unit|card|event))",
                 lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={x.group(1).upper()}', classes='trait')}{x.group(2)}",
                 line,
                 flags=re.IGNORECASE,
@@ -173,6 +172,12 @@ class SWUCard(Base):
             line = re.sub(
                 rf"(attached unit is (?:a |an )?)({'|'.join(self._all_traits)})",
                 lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={x.group(2).upper()}', classes='trait')}",
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                rf"gains the ({'|'.join(self._all_traits)}) trait",
+                lambda x: f"gains the {self._link(x.group(1).upper(), f'/search?trait={x.group(1).upper()}', classes='trait')} trait",
                 line,
                 flags=re.IGNORECASE,
             )
@@ -200,7 +205,9 @@ class SWUCard(Base):
                 r"C=(\d+)", lambda x: f"""<span class="badge cost">{x.group(1)}</span>""", line, flags=re.IGNORECASE
             )
             line = re.sub(
-                r"(costs?|pay) (\d+)", lambda x: f"""{x.group(1)} <span class="badge cost">{x.group(2)}</span>""", line
+                r"(costs?|pays?) (\d+)",
+                lambda x: f"""{x.group(1)} <span class="badge cost">{x.group(2)}</span>""",
+                line,
             )
             line = re.sub(
                 r"([+-]?\d+)/([+-]?\d+)",
