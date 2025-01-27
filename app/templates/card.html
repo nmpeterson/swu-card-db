@@ -109,23 +109,17 @@
         </div>
         <div id="card-summary-text" class="pt-3 pb-3">
           {% if card.front_text is not none and card.front_text|length %}
-          <h5 class="fw-lighter">Card Text</h5>
-          {% set front_text_lines = card.front_text.split('\n') %}
-          {% for line in front_text_lines %}
-          <p class="card-text">{{line.replace('{Exhaust}', '➦')}}</p>
-          {% endfor %}
+          {% if card.back_text is not none %}<h5 class="fw-lighter">Front Text</h5>{% endif %}
+          {{card.front_text_html|safe}}
           {% endif %}
           {% if card.epic_action is not none and card.epic_action|length %}
-          <div class="alert alert-warning">
-            <p class="card-text">{{card.epic_action}}</p>
+          <div class="alert alert-warning p-2 mb-1">
+            {{card.epic_action_html|safe}}
           </div>
           {% endif %}
-          {% if card.back_text is not none and card.back_text|length %}
-          <h5 class="fw-lighter">Back Text</h5>
-          {% set back_text_lines = card.back_text.split('\n') %}
-          {% for line in back_text_lines %}
-          <p class="card-text">{{line.replace('{Exhaust}', '➦')}}</p>
-          {% endfor %}
+          {% if card.back_text is not none and card.back_text_html|length %}
+          <h5 class="fw-lighter mt-3">Back Text</h5>
+          {{card.back_text_html|safe}}
           {% endif %}
         </div>
         <div id="card-summary-artist" class="text-body-tertiary fw-lighter">

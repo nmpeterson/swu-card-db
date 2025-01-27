@@ -1,3 +1,5 @@
+import re
+
 from sqlalchemy import ForeignKey, create_engine, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -51,6 +53,17 @@ class SWUCard(Base):
     keywords: Mapped[list["SWUCardKeyword"]] = relationship()
     card_set: Mapped["SWUSet"] = relationship(back_populates="cards")
 
+    @property
+    def _all_traits(self) -> list[str]:
+        session = get_db()
+        db = session.__next__()
+        all_traits = [
+            t.trait for t in db.query(SWUCardTrait.trait).distinct().order_by(SWUCardTrait.trait).all() if t.trait
+        ]
+        del db
+        session.close()
+        return all_traits
+
     @hybrid_property
     def name_and_subtitle(self) -> str:
         return self.name + " " + (self.subtitle or "")
@@ -68,6 +81,155 @@ class SWUCard(Base):
     @classmethod
     def card_text(cls):
         return func.coalesce(cls.front_text, "") + func.coalesce(cls.epic_action, "") + func.coalesce(cls.back_text, "")
+
+    @hybrid_property
+    def front_text_html(self) -> str:
+        return self._htmlify_card_text(self.front_text or "")
+
+    @hybrid_property
+    def back_text_html(self) -> str:
+        return self._htmlify_card_text(self.back_text or "")
+
+    @hybrid_property
+    def epic_action_html(self) -> str:
+        return self._htmlify_card_text(self.epic_action or "")
+
+    @staticmethod
+    def _bold(text: str) -> str:
+        return f"<b>{text}</b>"
+
+    @staticmethod
+    def _italic(text: str) -> str:
+        return f"<i>{text}</i>"
+
+    @staticmethod
+    def _image(src: str, alt: str, classes: str = "") -> str:
+        return f'<img src="{src}" alt="{alt}" class="{classes}">'
+
+    @staticmethod
+    def _link(text: str, href: str, classes: str = "") -> str:
+        return f'<a href="{href}" class="{classes}">{text}</a>'
+
+    def _htmlify_card_text(self, text: str) -> str:
+        lines = text.strip().split("\n")
+        for i, line in enumerate(lines):
+            # Initialize flags
+            full_sentinel = False
+            conditional_sentinel = False
+
+            # Punctuation cleanup
+            line = re.sub(r'"(.+)"', lambda x: f"“{x.group(1)}”", line)
+            line = re.sub(r" - ", " — ", line)
+            line = re.sub(r"'", "’", line)
+
+            # Bold and italicize text
+            line = re.sub(r"(Epic Action:)", lambda x: self._bold(x.group(1)), line)
+            line = re.sub(r"(Action(?: \[.+\])?:)", lambda x: self._bold(x.group(1)), line)
+            line = re.sub(r"(When [^.]+:)", lambda x: self._bold(x.group(1)), line)
+            line = re.sub(r"(On [A-Za-z ]+:)", lambda x: self._bold(x.group(1)), line)
+            line = re.sub(r"(\(.+\))", lambda x: self._italic(x.group(1)), line)
+
+            # Add keyword links, flag SENTINEL lines
+            if None not in (keywords := [k.keyword for k in self.keywords]):
+                for keyword in keywords:
+                    if keyword == "SENTINEL":
+                        if line.startswith(keyword) or line.startswith(f"Attached unit gains {keyword}"):
+                            full_sentinel = True
+                        elif re.search(rf"(?:this|attached) unit [^.]*gains [^.]*{keyword}", line, re.IGNORECASE):
+                            conditional_sentinel = True
+                    line = re.sub(
+                        rf"({keyword})( \d+)?( \[.+\])?",
+                        lambda x: self._link(
+                            x.group(1) + (x.group(2) or ""), f"/search?keyword={x.group(1)}", classes="keyword"
+                        )
+                        + (x.group(3) or ""),
+                        line,
+                    )
+                    line = re.sub(
+                        r"BOUNTIES", self._link("BOUNTIES", "/search?keyword=BOUNTY", classes="keyword"), line
+                    )
+
+            # Add trait links
+            trait_grp = "|".join(self._all_traits)
+            line = re.sub(
+                rf"({trait_grp})?(?:, )?({trait_grp})(,? and |,? or )({trait_grp})",
+                lambda x: (
+                    self._link(x.group(1).upper(), f"/search?trait={x.group(1).upper()}", classes="trait") + ", "
+                    if x.group(1)
+                    else ""
+                )
+                + self._link(x.group(2).upper(), f"/search?trait={x.group(2).upper()}", classes="trait")
+                + x.group(3)
+                + self._link(x.group(4).upper(), f"/search?trait={x.group(4).upper()}", classes="trait"),
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                rf"({'|'.join(self._all_traits)})((?: ground| space)? (?:unit|card))",
+                lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={x.group(1).upper()}', classes='trait')}{x.group(2)}",
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                rf"(attached unit is (?:a |an )?)({'|'.join(self._all_traits)})",
+                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={x.group(2).upper()}', classes='trait')}",
+                line,
+                flags=re.IGNORECASE,
+            )
+            # ? SHD-463: "Search the top 7 cards of your deck for a Vehicle and play it"
+
+            # Replace text with appropriate symbols/images
+            line = re.sub(
+                r"(\[.*)Exhaust(.*\])",
+                lambda x: f'{x.group(1)}<span class="exhaust" aria-description="Exhaust">➦</span>{x.group(2)}',
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                r"(Aggression|Command|Cunning|Heroism|Vigilance|Villainy)",
+                lambda x: self._link(
+                    self._image(f"/static/images/aspects/{x.group(1)}-small.png", alt=x.group(1), classes="aspect-img"),
+                    f"/search?aspect={x.group(1)}",
+                ),
+                line,
+                flags=re.IGNORECASE,
+            )
+
+            # Add badges for cost and buffs/debuffs
+            line = re.sub(
+                r"C=(\d+)", lambda x: f"""<span class="badge cost">{x.group(1)}</span>""", line, flags=re.IGNORECASE
+            )
+            line = re.sub(
+                r"(costs?|pay) (\d+)", lambda x: f"""{x.group(1)} <span class="badge cost">{x.group(2)}</span>""", line
+            )
+            line = re.sub(
+                r"([+-]?\d+)/([+-]?\d+)",
+                lambda x: f'<span class="badge power">{x.group(1)}</span>/<span class="badge hp">{x.group(2)}</span>',
+                line,
+            )
+            line = re.sub(
+                r"(\d+)( or (:?less|more)(?: remaining)? HP)",
+                lambda x: f'<span class="badge hp">{x.group(1)}</span>{x.group(2)}',
+                line,
+            )
+            line = re.sub(
+                r"(\d+)( or (:?less|more) power)",
+                lambda x: f'<span class="badge power">{x.group(1)}</span>{x.group(2)}',
+                line,
+            )
+
+            # Wrap each line in a <p> tag
+            line = f'<p class="card-text">{line}</p>'
+
+            # Add sentinel decoration
+            if full_sentinel:
+                line = f'<div class="alert alert-danger p-2 mb-1">{line}</div>'
+            elif conditional_sentinel:
+                line = f'<div class="alert alert-danger p-2 mb-1 text-body" style="background: none;">{line}</div>'
+
+            lines[i] = line
+
+        return "\n".join(line for line in lines if line)
 
 
 class SWUCardArena(Base):
