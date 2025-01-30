@@ -78,14 +78,14 @@
         <div id="card-summary-attributes" class="d-flex flex-column justify-content-start">
           <div>
             <span class="badge fw-semibold card-aspect-{{card.aspects[0].aspect}}">
-              <a href="/search?card_type={{card.card_type|upper}}">{{card.card_type|upper}}</a>
+              <a href="/search?card_type={{card.card_type}}">{{card.card_type|upper}}</a>
             </span>
             </span>
             {% if card.arenas[0].arena is not none %}
             {% for arena in card.arenas %}
             <span class="badge fw-semibold arena-{{arena.arena}}
               {% if arena.arena == 'Ground' %}text-bg-light{% else %}text-bg-dark{% endif %}">
-              <a href="/search?arena={{arena.arena|upper}}">{{arena.arena|upper}}</a>
+              <a href="/search?arena={{arena.arena}}">{{arena.arena|upper}}</a>
             </span>
             {% endfor %}
             {% endif %}
