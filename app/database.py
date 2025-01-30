@@ -102,12 +102,16 @@ class SWUCard(Base):
         return f"<i>{text}</i>"
 
     @staticmethod
-    def _image(src: str, alt: str, classes: str = "") -> str:
-        return f'<img src="{src}" alt="{alt}" class="{classes}">'
+    def _span(text: str, classes: str, aria_desc: str | None = None) -> str:
+        return f'<span class="{classes}" {f'aria-description="{aria_desc}"' if aria_desc else ""}>{text}</span>'
 
     @staticmethod
-    def _link(text: str, href: str, classes: str = "") -> str:
-        return f'<a href="{href}" class="{classes}">{text}</a>'
+    def _image(src: str, alt: str, classes: str | None = None) -> str:
+        return f'<img src="{src}" alt="{alt}" {f'class="{classes}"' if classes else ""}>'
+
+    @staticmethod
+    def _link(text: str, href: str, classes: str | None = None) -> str:
+        return f'<a href="{href}" {f'class="{classes}"' if classes else ""}>{text}</a>'
 
     def _htmlify_card_text(self, text: str) -> str:
         lines = text.strip().split("\n")
@@ -121,12 +125,16 @@ class SWUCard(Base):
             line = re.sub(r" - ", " — ", line)
             line = re.sub(r"'", "’", line)
 
-            # Bold and italicize text
-            line = re.sub(r"(Epic Action:)", lambda x: self._bold(x.group(1)), line)
-            line = re.sub(r"(Action(?: \[.+\])?:)", lambda x: self._bold(x.group(1)), line)
-            line = re.sub(r"(When [^.]+:)", lambda x: self._bold(x.group(1)), line)
-            line = re.sub(r"(On [A-Za-z ]+:)", lambda x: self._bold(x.group(1)), line)
-            line = re.sub(r"(\(.+\))", lambda x: self._italic(x.group(1)), line)
+            # Bold action/trigger text
+            line = re.sub(r"Epic Action:", lambda x: self._bold(x.group(0)), line)
+            line = re.sub(r"Action(?: \[.+\])?:", lambda x: self._bold(x.group(0)), line)
+            line = re.sub(r"When [^.]+:", lambda x: self._bold(x.group(0)), line)
+            line = re.sub(r"On [^.]+:", lambda x: self._bold(x.group(0)), line)
+
+            # Italicize reminder text on Normal variants, hide it on others
+            line = re.sub(
+                r"(\(.+\))", lambda x: self._italic(x.group(1)) if self.variant_type == "Normal" else "", line
+            )
 
             # Add keyword links, flag SENTINEL lines
             if None not in (keywords := [k.keyword for k in self.keywords]):
@@ -138,10 +146,10 @@ class SWUCard(Base):
                             conditional_sentinel = True
                     line = re.sub(
                         rf"({keyword})( \d+)?( \[.+\])?",
-                        lambda x: self._link(
-                            x.group(1) + (x.group(2) or ""), f"/search?keyword={x.group(1)}", classes="keyword"
-                        )
-                        + (x.group(3) or ""),
+                        lambda x: self._span(
+                            f"{self._link(x.group(1) + (x.group(2) or ''), f'/search?keyword={x.group(1)}')}{x.group(3) or ''}",
+                            classes="keyword",
+                        ),
                         line,
                     )
                     line = re.sub(
@@ -186,7 +194,8 @@ class SWUCard(Base):
             # Replace text with appropriate symbols/images
             line = re.sub(
                 r"(\[.*)Exhaust(.*\])",
-                lambda x: f'{x.group(1)}<span class="exhaust" aria-description="Exhaust">➦</span>{x.group(2)}',
+                # lambda x: f"{x.group(1)}{self._span('➦', 'exhaust', aria_desc='Exhaust')}{x.group(2)}",
+                lambda x: f"{x.group(1)}{self._image('/static/images/icons/exhaust.svg', 'Exhaust', classes='exhaust')}{x.group(2)}",
                 line,
                 flags=re.IGNORECASE,
             )
@@ -201,27 +210,25 @@ class SWUCard(Base):
             )
 
             # Add badges for cost and buffs/debuffs
-            line = re.sub(
-                r"C=(\d+)", lambda x: f"""<span class="badge cost">{x.group(1)}</span>""", line, flags=re.IGNORECASE
-            )
+            line = re.sub(r"C=(\d+)", lambda x: self._span(x.group(1), classes="badge cost"), line, flags=re.IGNORECASE)
             line = re.sub(
                 r"(costs?|pays?) (\d+)",
-                lambda x: f"""{x.group(1)} <span class="badge cost">{x.group(2)}</span>""",
+                lambda x: f"{x.group(1)} {self._span(x.group(2), classes='badge cost')}",
                 line,
             )
             line = re.sub(
                 r"([+-]?\d+)/([+-]?\d+)",
-                lambda x: f'<span class="badge power">{x.group(1)}</span>/<span class="badge hp">{x.group(2)}</span>',
+                lambda x: f"{self._span(x.group(1), classes='badge power')}/{self._span(x.group(2), classes='badge hp')}",
                 line,
             )
             line = re.sub(
                 r"(\d+)( or (:?less|more)(?: remaining)? HP)",
-                lambda x: f'<span class="badge hp">{x.group(1)}</span>{x.group(2)}',
+                lambda x: f"{self._span(x.group(1), classes='badge hp')}{x.group(2)}",
                 line,
             )
             line = re.sub(
                 r"(\d+)( or (:?less|more) power)",
-                lambda x: f'<span class="badge power">{x.group(1)}</span>{x.group(2)}',
+                lambda x: f"{self._span(x.group(1), classes='badge power')}{x.group(2)}",
                 line,
             )
 
