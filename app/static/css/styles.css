@@ -47,6 +47,13 @@ li.selected {
   margin-bottom: 0.25rem;
 }
 
+/* Form layout */
+#card-search-form .form-select,
+#card-search-form .form-control,
+#card-search-form .form-control:focus {
+  color: rgba(var(--aspect-color-cunning));
+}
+
 /* Card layout */
 div.card-aspect-Vigilance {
   border-color: rgb(var(--aspect-color-vigilance));
