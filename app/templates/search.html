@@ -106,19 +106,6 @@
     </select>
   </div>
   <div class="col-6 col-md-3">
-    <label for="variant-type-select" class="form-label">Variant type</label>
-    <select class="form-select" aria-label="Variant type selector" id="variant-type-select" name="variant_type">
-      <option value=""></option>
-      {% for variant_type in variant_type_options %}
-      {% if variant_type == request.query_params.get('variant_type', 'Normal') %}
-      <option value="{{variant_type}}" selected>{{variant_type}}</option>
-      {% else %}
-      <option value="{{variant_type}}">{{variant_type}}</option>
-      {% endif %}
-      {% endfor %}
-    </select>
-  </div>
-  <div class="col-6 col-md-3">
     <label for="artist-select" class="form-label">Artist</label>
     <select class="form-select" aria-label="Rarity selector" id="artist-select" name="artist">
       <option value=""></option>
@@ -127,6 +114,19 @@
       <option value="{{artist}}" selected>{{artist}}</option>
       {% else %}
       <option value="{{artist}}">{{artist}}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-6 col-md-3">
+    <label for="variant-type-select" class="form-label">Variant type</label>
+    <select class="form-select" aria-label="Variant type selector" id="variant-type-select" name="variant_type">
+      <option value=""></option>
+      {% for variant_type in variant_type_options %}
+      {% if variant_type == request.query_params.get('variant_type', 'Normal') %}
+      <option value="{{variant_type}}" selected>{{variant_type}}</option>
+      {% else %}
+      <option value="{{variant_type}}">{{variant_type}}</option>
       {% endif %}
       {% endfor %}
     </select>
