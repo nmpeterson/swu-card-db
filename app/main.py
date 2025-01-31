@@ -2,6 +2,7 @@ import logging
 import urllib.parse
 from datetime import date
 from typing import Annotated, Any
+from urllib.parse import quote_plus
 
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.responses import HTMLResponse, FileResponse
@@ -19,6 +20,8 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_blocks=True)
 
+# Add quote_plus filter to Jinja2 templates
+templates.env.filters["quote_plus"] = quote_plus
 
 # Get current year for footer
 current_year = date.today().year

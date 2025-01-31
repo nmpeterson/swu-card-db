@@ -1,4 +1,5 @@
 import re
+from urllib.parse import quote_plus
 
 from sqlalchemy import ForeignKey, create_engine, func
 from sqlalchemy.ext.hybrid import hybrid_property
@@ -147,13 +148,15 @@ class SWUCard(Base):
                     line = re.sub(
                         rf"({keyword})( \d+)?( \[.+\])?",
                         lambda x: self._span(
-                            f"{self._link(x.group(1) + (x.group(2) or ''), f'/search?keyword={x.group(1)}')}{x.group(3) or ''}",
+                            f"{self._link(x.group(1) + (x.group(2) or ''), f'/search?keyword={x.group(1)}&variant_type=Normal')}{x.group(3) or ''}",
                             classes="keyword",
                         ),
                         line,
                     )
                     line = re.sub(
-                        r"BOUNTIES", self._link("BOUNTIES", "/search?keyword=BOUNTY", classes="keyword"), line
+                        r"BOUNTIES",
+                        self._link("BOUNTIES", "/search?keyword=BOUNTY&variant_type=Normal", classes="keyword"),
+                        line,
                     )
 
             # Add trait links
@@ -161,31 +164,44 @@ class SWUCard(Base):
             line = re.sub(
                 rf"({trait_grp})?(?:, )?({trait_grp})(,? and |,? or )({trait_grp})",
                 lambda x: (
-                    self._link(x.group(1).upper(), f"/search?trait={x.group(1).upper()}", classes="trait") + ", "
+                    self._link(
+                        x.group(1).upper(),
+                        f"/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal",
+                        classes="trait",
+                    )
+                    + ", "
                     if x.group(1)
                     else ""
                 )
-                + self._link(x.group(2).upper(), f"/search?trait={x.group(2).upper()}", classes="trait")
+                + self._link(
+                    x.group(2).upper(),
+                    f"/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal",
+                    classes="trait",
+                )
                 + x.group(3)
-                + self._link(x.group(4).upper(), f"/search?trait={x.group(4).upper()}", classes="trait"),
+                + self._link(
+                    x.group(4).upper(),
+                    f"/search?trait={quote_plus(x.group(4).upper())}&variant_type=Normal",
+                    classes="trait",
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 rf"({'|'.join(self._all_traits)})((?: ground| space)? (?:unit|card|event))",
-                lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={x.group(1).upper()}', classes='trait')}{x.group(2)}",
+                lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')}{x.group(2)}",
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 rf"(attached unit is (?:a |an )?)({'|'.join(self._all_traits)})",
-                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={x.group(2).upper()}', classes='trait')}",
+                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}",
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 rf"gains the ({'|'.join(self._all_traits)}) trait",
-                lambda x: f"gains the {self._link(x.group(1).upper(), f'/search?trait={x.group(1).upper()}', classes='trait')} trait",
+                lambda x: f"gains the {self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')} trait",
                 line,
                 flags=re.IGNORECASE,
             )
@@ -194,7 +210,6 @@ class SWUCard(Base):
             # Replace text with appropriate symbols/images
             line = re.sub(
                 r"(\[.*)Exhaust(.*\])",
-                # lambda x: f"{x.group(1)}{self._span('➦', 'exhaust', aria_desc='Exhaust')}{x.group(2)}",
                 lambda x: f"{x.group(1)}{self._image('/static/images/icons/exhaust.svg', 'Exhaust', classes='exhaust')}{x.group(2)}",
                 line,
                 flags=re.IGNORECASE,
@@ -203,7 +218,7 @@ class SWUCard(Base):
                 r"(Aggression|Command|Cunning|Heroism|Vigilance|Villainy)",
                 lambda x: self._link(
                     self._image(f"/static/images/aspects/{x.group(1)}-small.png", alt=x.group(1), classes="aspect-img"),
-                    f"/search?aspect={x.group(1)}",
+                    f"/search?aspect={x.group(1)}&variant_type=Normal",
                 ),
                 line,
                 flags=re.IGNORECASE,

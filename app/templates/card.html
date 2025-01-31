@@ -54,7 +54,7 @@
           <div class="d-flex justify-content-end">
             {% for aspect in card.aspects %}
             {% if aspect.aspect is not none %}
-            <a href="/search?aspect={{aspect.aspect}}">
+            <a href="/search?aspect={{aspect.aspect}}&variant_type=Normal">
               <img class="aspect-img"
                 src="{{ https_url_for(request, 'static', path='/images/aspects/'+aspect.aspect+'.png') }}"
                 alt="{{aspect.aspect}}">
@@ -78,13 +78,13 @@
         <div id="card-summary-attributes" class="d-flex flex-column justify-content-start">
           <div>
             <span class="badge fw-semibold card-aspect-{{card.aspects[0].aspect}}">
-              <a href="/search?card_type={{card.card_type}}">{{card.card_type|upper}}</a>
+              <a href="/search?card_type={{card.card_type}}&variant_type=Normal">{{card.card_type|upper}}</a>
             </span>
             {% if card.arenas[0].arena is not none %}
             {% for arena in card.arenas %}
             <span class="badge fw-semibold arena-{{arena.arena}}
               {% if arena.arena == 'Ground' %}text-bg-light{% else %}text-bg-dark{% endif %}">
-              <a href="/search?arena={{arena.arena}}">{{arena.arena|upper}}</a>
+              <a href="/search?arena={{arena.arena}}&variant_type=Normal">{{arena.arena|upper}}</a>
             </span>
             {% endfor %}
             {% endif %}
@@ -93,7 +93,7 @@
           <div>
             {% for trait in card.traits %}
             <span class="badge fw-normal text-bg-secondary trait">
-              <a href="/search?trait={{trait.trait}}">{{trait.trait}}</a>
+              <a href="/search?trait={{trait.trait|quote_plus}}&variant_type=Normal">{{trait.trait}}</a>
             </span>
             {% endfor %}
           </div>
@@ -122,11 +122,11 @@
           {% endif %}
         </div>
         <div id="card-summary-artist" class="text-body-tertiary fw-lighter">
-          Artist: <a href="/search?artist={{card.artist}}">{{card.artist}}</a>
+          Artist: <a href="/search?artist={{card.artist|quote_plus}}">{{card.artist}}</a>
         </div>
         <div id="card-summary-id" class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
           <span class="pe-2">{{card.id}}</span>
-          <a href="/search?rarity={{card.rarity}}">
+          <a href="/search?rarity={{card.rarity}}&variant_type=Normal">
             <img src="{{ https_url_for(request, 'static', path='/images/rarity/' + card.rarity + '.png') }}"
               alt="{{card.rarity}} rarity" class="rarity-pip">
           </a>
