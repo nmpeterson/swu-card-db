@@ -1,7 +1,7 @@
 import logging
 import urllib.parse
 from datetime import date
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 from urllib.parse import quote_plus
 
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
@@ -12,11 +12,20 @@ from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import Session
 
 from .database import get_db, SWUSet, SWUCard, SWUCardArena, SWUCardAspect, SWUCardTrait, SWUCardKeyword
-from .models import SetModel, CardListModel
+from .models import SetModel, CardModel
 
 logging.basicConfig(level=logging.DEBUG)
 
-app = FastAPI()
+app = FastAPI(
+    title="SWUcards.info APIs",
+    version="preview",
+    contact={
+        "name": "Noel Peterson",
+        "url": "https://www.swucards.info",
+        "email": "noel@swucards.info",
+    },
+    redoc_url=None,
+)
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_blocks=True)
 
@@ -83,17 +92,20 @@ templates.env.globals["all_sets"] = all_sets
 # Define routes
 @app.get("/", response_class=HTMLResponse, include_in_schema=False)
 async def root(request: Request):
+    """Return the home page at /"""
     return templates.TemplateResponse(request=request, name="index.html", context={})
 
 
 @app.get("/search", response_class=HTMLResponse, include_in_schema=False)
 async def search(request: Request, db: Session = Depends(get_db)):
+    """Return the search page (form and results) at /search"""
     search_context = {"query_string": urllib.parse.urlencode(request.query_params), **advanced_search_options}
     return templates.TemplateResponse(request=request, name="search.html", context=search_context)
 
 
 @app.get("/sets/{set_id}", response_class=HTMLResponse, include_in_schema=False)
 async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_db)):
+    """Return the set page for the given set_id at /sets/{set_id}"""
     swu_set = db.query(SWUSet).filter(SWUSet.id == set_id).first()
     if not swu_set:
         raise HTTPException(status_code=404, detail=f"Set '{set_id}' not found")
@@ -102,6 +114,7 @@ async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_
 
 @app.get("/cards/{card_id}", response_class=HTMLResponse, include_in_schema=False)
 async def get_card_page(request: Request, card_id: str, db: Session = Depends(get_db)):
+    """Return the card page for the given card_id at /cards/{card_id} or a random card at /cards/random"""
     if card_id.lower() == "random":
         card = db.query(SWUCard).order_by(func.random()).first()
         card_id = card.id
@@ -127,43 +140,60 @@ async def get_card_page(request: Request, card_id: str, db: Session = Depends(ge
 async def get_sets(
     request: Request,
     db: Session = Depends(get_db),
-    hx_request: Annotated[str | None, Header()] = None,
+    hx_request: Annotated[str | None, Header(include_in_schema=False)] = None,
 ):
+    """Return an array of all SWU sets in the database at /set_list.
+    If hx-request header is present, return the set_list.html template.
+    """
     if hx_request:
         return templates.TemplateResponse(request=request, name="set_list.html")
     return all_sets
 
 
-@app.get("/card_list", response_model=list[CardListModel])
+@app.get("/card_list", response_model=list[CardModel])
 async def get_cards(
     request: Request,
     db: Session = Depends(get_db),
-    hx_request: Annotated[str | None, Header()] = None,
+    hx_request: Annotated[str | None, Header(include_in_schema=False)] = None,
+    name: str | None = None,
+    text: str | None = None,
+    aspect: Literal[*(a["aspect"] for a in advanced_search_options["aspect_options"])] | None = None,
+    card_type: Literal[*advanced_search_options["card_type_options"]] | None = None,
+    trait: Literal[*advanced_search_options["trait_options"]] | None = None,
+    keyword: Literal[*advanced_search_options["keyword_options"]] | None = None,
+    arena: Literal[*advanced_search_options["arena_options"]] | None = None,
+    set_id: Literal[*(s["id"] for s in advanced_search_options["set_options"])] | None = None,
+    rarity: Literal[*advanced_search_options["rarity_options"]] | None = None,
+    artist: Literal[*advanced_search_options["artist_options"]] | None = None,
+    variant_type: Literal[*advanced_search_options["variant_type_options"]] | None = None,
 ):
+    """Return an array of all SWU cards matching the query parameters at /card_list.
+    If hx-request header is present, return the card_list.html template.
+    """
     cards = db.query(SWUCard)
-    if set_id := request.query_params.get("set_id"):
+    if set_id:
         cards = cards.filter(SWUCard.set_id == set_id)
-    if variant_type := request.query_params.get("variant_type"):
+    if variant_type:
         cards = cards.filter(SWUCard.variant_type == variant_type)
-    if card_type := request.query_params.get("card_type"):
+    if card_type:
         cards = cards.filter(SWUCard.card_type == card_type)
-    if rarity := request.query_params.get("rarity"):
+    if rarity:
         cards = cards.filter(SWUCard.rarity == rarity)
-    if artist := request.query_params.get("artist"):
+    if artist:
         cards = cards.filter(SWUCard.artist == artist)
-    if name := request.query_params.get("name"):
+    if name:
         name_like = "%".join(name.strip().split())
         cards = cards.filter(SWUCard.name_and_subtitle.icontains(name_like))
-    if text := request.query_params.get("text"):
+    if text:
         text_like = "%".join(text.strip().split())
         cards = cards.filter(SWUCard.card_text.icontains(text_like))
-    if arena := request.query_params.get("arena"):
+    if arena:
         cards = cards.join(SWUCardArena).filter(SWUCard.arenas.any(SWUCardArena.arena == arena))
-    if aspect := request.query_params.get("aspect"):
+    if aspect:
         cards = cards.join(SWUCardAspect).filter(SWUCard.aspects.any(SWUCardAspect.aspect == aspect))
-    if trait := request.query_params.get("trait"):
+    if trait:
         cards = cards.join(SWUCardTrait).filter(SWUCard.traits.any(SWUCardTrait.trait == trait))
-    if keyword := request.query_params.get("keyword"):
+    if keyword:
         cards = cards.join(SWUCardKeyword).filter(SWUCard.keywords.any(SWUCardKeyword.keyword == keyword))
     cards = cards.join(SWUCard.card_set).order_by(SWUSet.number, SWUCard.id).all()
     if hx_request:
@@ -173,10 +203,12 @@ async def get_cards(
 
 @app.get("/favicon.ico", response_class=FileResponse, include_in_schema=False)
 async def get_favicon():
+    """Return the favicon.ico file at /favicon.ico"""
     return FileResponse("app/static/images/swucards/favicon.ico")
 
 
 # Exception handlers
 @app.exception_handler(404)
 async def not_found_exception_handler(request: Request, exc: HTTPException):
+    """Return the 404 template for missing pages"""
     return templates.TemplateResponse(request=request, name="404.html", context={})
