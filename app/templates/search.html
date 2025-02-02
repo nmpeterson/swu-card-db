@@ -81,7 +81,7 @@
   </div>
   <div class="col-6 col-md-3">
     <label for="set-id-select" class="form-label">Set</label>
-    <select class="form-select" aria-label="Set selector" id="set-select" name="set_id">
+    <select class="form-select" aria-label="Set selector" id="set-id-select" name="set_id">
       <option value=""></option>
       {% for swu_set in set_options %}
       {% if swu_set.id == request.query_params.get('set_id') %}
