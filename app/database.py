@@ -160,9 +160,9 @@ class SWUCard(Base):
                     )
 
             # Add trait links
-            trait_grp = "|".join(self._all_traits)
+            TRAIT_GRP = "|".join(self._all_traits)
             line = re.sub(
-                rf"({trait_grp})?(?:, )?({trait_grp})(,? and |,? or )({trait_grp})",
+                rf"({TRAIT_GRP})?(?:, )?({TRAIT_GRP})(,? and |,? or )({TRAIT_GRP})",
                 lambda x: (
                     self._link(
                         x.group(1).upper(),
@@ -188,24 +188,35 @@ class SWUCard(Base):
                 flags=re.IGNORECASE,
             )
             line = re.sub(
-                rf"({'|'.join(self._all_traits)})((?: ground| space)? (?:unit|card|event))",
+                rf"({TRAIT_GRP})((?: ground| space)? (?:unit|card|event))",
                 lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')}{x.group(2)}",
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
-                rf"(attached unit is (?:a |an )?)({'|'.join(self._all_traits)})",
+                rf"(attached unit is (?:a |an )?)({TRAIT_GRP})",
                 lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}",
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
-                rf"gains the ({'|'.join(self._all_traits)}) trait",
+                rf"(if it’s (?:a |an )?)({TRAIT_GRP})",
+                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}",
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                rf"(search [^.]+ deck for [^.]+ )({TRAIT_GRP})",
+                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}",
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                rf"gains the ({TRAIT_GRP}) trait",
                 lambda x: f"gains the {self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')} trait",
                 line,
                 flags=re.IGNORECASE,
             )
-            # ? SHD-463: "Search the top 7 cards of your deck for a Vehicle and play it"
 
             # Replace text with appropriate symbols/images
             line = re.sub(
