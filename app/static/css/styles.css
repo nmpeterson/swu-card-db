@@ -48,10 +48,19 @@ li.selected {
 }
 
 /* Form layout */
-#card-search-form .form-select,
-#card-search-form .form-control,
-#card-search-form .form-control:focus {
-  color: rgba(var(--aspect-color-cunning));
+#card-search-form {
+
+  & .form-select,
+  .form-control,
+  .form-control:focus {
+    color: rgb(var(--aspect-color-cunning));
+  }
+
+  & .form-select:focus,
+  .form-control:focus {
+    border-color: rgb(var(--aspect-color-cunning));
+    box-shadow: 0 0 0 0.25rem rgba(var(--aspect-color-cunning), 0.25);
+  }
 }
 
 /* Card layout */
@@ -89,17 +98,17 @@ div.card-aspect-Heroism {
   position: relative;
   width: 100%;
   padding-top: 100%;
-}
 
-.carousel-inner .carousel-item {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
+  & .carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
 }
 
 .carousel-control-prev,
@@ -116,10 +125,11 @@ div.card-aspect-Heroism {
 
 #card-summary-title {
   grid-column: span 2;
-}
 
-#card-summary-text {
-  grid-column: span 3;
+  & .aspect-img {
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 #card-summary-artist {
@@ -130,81 +140,86 @@ div.card-aspect-Heroism {
   justify-content: right;
 }
 
-#card-summary-title .aspect-img {
-  width: 3rem;
-  height: 3rem;
+#card-summary-attributes {
+  & .card-aspect-Vigilance {
+    background-color: rgb(var(--aspect-color-vigilance));
+
+    & a {
+      color: rgb(var(--white));
+    }
+  }
+
+  & .card-aspect-Command {
+    background-color: rgb(var(--aspect-color-command));
+
+    & a {
+      color: rgb(var(--white));
+    }
+  }
+
+  & .card-aspect-Aggression {
+    background-color: rgb(var(--aspect-color-aggression));
+
+    & a {
+      color: rgb(var(--white));
+    }
+  }
+
+  & .card-aspect-Cunning {
+    background-color: rgb(var(--aspect-color-cunning));
+
+    & a {
+      color: rgb(var(--black));
+    }
+  }
+
+  & .card-aspect-Villainy {
+    background-color: rgb(var(--aspect-color-villainy));
+
+    & a {
+      color: rgb(var(--white));
+    }
+  }
+
+  & .card-aspect-Heroism {
+    background-color: rgb(var(--aspect-color-heroism));
+
+    & a {
+      color: rgb(var(--black));
+    }
+  }
+
+  & .card-aspect-None {
+    background-color: rgb(var(--bs-secondary-rgb));
+
+    & a {
+      color: rgb(var(--black));
+    }
+  }
+
+  & .arena-Ground a {
+    color: rgb(var(--black));
+  }
+
+  & .arena-Space a {
+    color: rgb(var(--white));
+  }
+
+  & .trait {
+    font-style: italic;
+
+    & a {
+      color: rgba(var(--white), 0.9);
+    }
+  }
 }
 
-#card-summary-attributes .card-aspect-Vigilance {
-  background-color: rgb(var(--aspect-color-vigilance));
-}
-
-#card-summary-attributes .card-aspect-Vigilance a {
+#card-summary-cost .badge,
+#card-summary-power .badge,
+#card-summary-hp .badge {
+  font-weight: 900;
   color: rgb(var(--white));
-}
-
-#card-summary-attributes .card-aspect-Command {
-  background-color: rgb(var(--aspect-color-command));
-}
-
-#card-summary-attributes .card-aspect-Command a {
-  color: rgb(var(--white));
-}
-
-#card-summary-attributes .card-aspect-Aggression {
-  background-color: rgb(var(--aspect-color-aggression));
-}
-
-#card-summary-attributes .card-aspect-Aggression a {
-  color: rgb(var(--white));
-}
-
-#card-summary-attributes .card-aspect-Cunning {
-  background-color: rgb(var(--aspect-color-cunning));
-}
-
-#card-summary-attributes .card-aspect-Cunning a {
-  color: rgb(var(--black));
-}
-
-#card-summary-attributes .card-aspect-Villainy {
-  background-color: rgb(var(--aspect-color-villainy));
-}
-
-#card-summary-attributes .card-aspect-Villainy a {
-  color: rgb(var(--white));
-}
-
-#card-summary-attributes .card-aspect-Heroism {
-  background-color: rgb(var(--aspect-color-heroism));
-}
-
-#card-summary-attributes .card-aspect-Heroism a {
-  color: rgb(var(--black));
-}
-
-#card-summary-attributes .card-aspect-None {
-  background-color: rgb(var(--bs-secondary-rgb));
-}
-
-#card-summary-attributes .card-aspect-None a {
-  color: rgb(var(--black));
-}
-
-#card-summary-attributes .arena-Ground a {
-  color: rgb(var(--black));
-}
-
-#card-summary-attributes .arena-Space a {
-  color: rgb(var(--white));
-}
-
-#card-summary-attributes .trait {
-  font-style: italic;
-}
-
-#card-summary-attributes .trait a {
-  color: rgba(var(--white), 0.9);
+  text-shadow: 0 0 0.25rem rgba(var(--black), 0.75);
 }
 
 #card-summary-cost .badge {
@@ -219,50 +234,46 @@ div.card-aspect-Heroism {
   background-color: rgb(var(--aspect-color-aggression));
 }
 
-#card-summary-cost .badge,
-#card-summary-power .badge,
-#card-summary-hp .badge {
-  font-weight: 900;
-  color: rgb(var(--white));
-  text-shadow: 0 0 0.25rem rgba(var(--black), 0.75);
-}
+#card-summary-text {
+  grid-column: span 3;
 
-#card-summary-text .card-text {
-  margin-bottom: 0.25rem;
-}
+  & .card-text {
+    margin-bottom: 0.25rem;
+  }
 
-#card-summary-text .aspect-img,
-#card-summary-text .exhaust {
-  width: 1.25rem;
-  height: 1.25rem;
-}
+  & .aspect-img,
+  .exhaust {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
 
-#card-summary-text .badge {
-  padding: 0.25rem;
-  font-weight: 900;
-  color: rgb(var(--white));
-  text-shadow: 0 0 0.15rem rgba(var(--black), 1);
-  border-radius: 0.25rem;
-}
+  & .badge {
+    padding: 0.25rem;
+    font-weight: 900;
+    color: rgb(var(--white));
+    text-shadow: 0 0 0.15rem rgba(var(--black), 1);
+    border-radius: 0.25rem;
 
-#card-summary-text .badge.cost {
-  background-color: rgb(var(--aspect-color-cunning));
-}
+    &.cost {
+      background-color: rgb(var(--aspect-color-cunning));
+    }
 
-#card-summary-text .badge.power {
-  background-color: rgb(var(--aspect-color-aggression));
-}
+    &.power {
+      background-color: rgb(var(--aspect-color-aggression));
+    }
 
-#card-summary-text .badge.hp {
-  background-color: rgb(var(--aspect-color-vigilance));
-}
+    &.hp {
+      background-color: rgb(var(--aspect-color-vigilance));
+    }
+  }
 
-#card-summary-text .trait {
-  font-style: italic;
-}
+  & .trait {
+    font-style: italic;
+  }
 
-#card-summary-text .keyword {
-  font-weight: bold;
+  & .keyword {
+    font-weight: bold;
+  }
 }
 
 /* Set list layout */
@@ -277,14 +288,14 @@ ul#card-list {
 
 .card-list-item {
   padding: 0.25rem 0rem;
-}
 
-.card-list-item .badge {
-  padding: 0.25rem;
-  /* Replicate classes text-bg-dark, opacity-50, fw-semibold */
-  color: rgba(var(--white), 0.5) !important;
-  background-color: rgba(var(--bs-dark-rgb), 0.5) !important;
-  font-weight: 600;
+  & .badge {
+    padding: 0.25rem;
+    /* Replicate classes text-bg-dark, opacity-50, fw-semibold */
+    color: rgba(var(--white), 0.5) !important;
+    background-color: rgba(var(--bs-dark-rgb), 0.5) !important;
+    font-weight: 600;
+  }
 }
 
 
@@ -292,10 +303,10 @@ ul#card-list {
 .aspect-pips {
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: rgba(var(--white), 0.5);
-}
 
-.aspect-pips>span {
-  vertical-align: middle;
+  &>span {
+    vertical-align: middle;
+  }
 }
 
 .aspect-pip-Vigilance,
