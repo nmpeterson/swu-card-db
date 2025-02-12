@@ -11,10 +11,10 @@
     <div id="card-image" class="col-lg-5 carousel slide">
       <div class="carousel-inner">
         <div class="carousel-item active" aria-description="Front of card image"
-          style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'.png')}});">
+          style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'.webp')}});">
         </div>
         <div class="carousel-item" aria-description="Back of card image"
-          style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'-back.png')}});">
+          style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'-back.webp')}});">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#card-image" data-bs-slide="prev">
@@ -30,7 +30,7 @@
     <div id="card-image" class="col-lg-5 carousel slide">
       <div class="carousel-inner">
         <div class="carousel-item active"
-          style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'.png') }});">
+          style="background-image:url({{ https_url_for(request, 'static', path='/images/cards/'+card.set_id+'/'+card.number+'.webp') }});">
         </div>
       </div>
     </div>
