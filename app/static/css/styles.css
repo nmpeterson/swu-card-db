@@ -48,19 +48,16 @@ li.selected {
 }
 
 /* Form layout */
-#card-search-form {
+.form-select,
+.form-control,
+.form-control:focus {
+  color: rgb(var(--aspect-color-cunning));
+}
 
-  & .form-select,
-  .form-control,
-  .form-control:focus {
-    color: rgb(var(--aspect-color-cunning));
-  }
-
-  & .form-select:focus,
-  .form-control:focus {
-    border-color: rgb(var(--aspect-color-cunning));
-    box-shadow: 0 0 0 0.25rem rgba(var(--aspect-color-cunning), 0.25);
-  }
+.form-select:focus,
+.form-control:focus {
+  border-color: rgb(var(--aspect-color-cunning));
+  box-shadow: 0 0 0 0.25rem rgba(var(--aspect-color-cunning), 0.25);
 }
 
 /* Card layout */
