@@ -207,6 +207,12 @@ async def get_favicon():
     return FileResponse("app/static/images/swucards/favicon.ico")
 
 
+@app.get("/robots.txt", response_class=FileResponse, include_in_schema=False)
+async def get_robots():
+    """Return the robots.txt file at /robots.txt"""
+    return FileResponse("app/static/robots.txt")
+
+
 # Exception handlers
 @app.exception_handler(404)
 async def not_found_exception_handler(request: Request, exc: HTTPException):
