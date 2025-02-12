@@ -1,13 +1,16 @@
 import json
 import os
+from io import BytesIO
+
 import requests
+from PIL import Image
 
 
 OVERWRITE = False  # Set to True to overwrite existing images
 DATA_DIR = os.path.dirname(__file__)
 IMG_DIR = os.path.abspath(os.path.join(DATA_DIR, "../app/static/images"))
-CARD_IMG_URL = "https://swudb.com/cards/{set_id}/{number}.png"
-CARD_BACK_IMG_URL = "https://swudb.com/cards/{set_id}/{number}-portrait.png"
+CARD_IMG_URL = "https://swudb.com/images/cards/{set_id}/{number}.png"
+CARD_BACK_IMG_URL = "https://swudb.com/images/cards/{set_id}/{number}-portrait.png"
 
 
 def main():
@@ -23,18 +26,18 @@ def main():
         number = card["Number"]
         double_sided = card.get("DoubleSided", False)
         url = CARD_IMG_URL.format(set_id=set_id, number=number)
-        fetch_images = {url: f"{IMG_DIR}/cards/{set_id}/{number}.png"}
+        fetch_images = {url: f"{IMG_DIR}/cards/{set_id}/{number}.webp"}
         if double_sided:
             url_back = CARD_BACK_IMG_URL.format(set_id=set_id, number=number)
-            fetch_images[url_back] = f"{IMG_DIR}/cards/{set_id}/{number}-back.png"
+            fetch_images[url_back] = f"{IMG_DIR}/cards/{set_id}/{number}-back.webp"
         for url, path in fetch_images.items():
             if OVERWRITE or not os.path.exists(path):
                 if not os.path.exists(os.path.dirname(path)):
                     os.makedirs(os.path.dirname(path))
                 print(f"Fetching {url} -> {path}")
                 response = requests.get(url)
-                with open(path, "wb") as f:
-                    f.write(response.content)
+                im = Image.open(BytesIO(response.content))
+                im.save(path, "webp")
 
 
 if __name__ == "__main__":
