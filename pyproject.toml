@@ -6,13 +6,15 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.115.6",
+    "gunicorn>=23.0.0",
     "jinja2>=3.1.5",
     "sqlalchemy>=2.0.36",
-    "uvicorn>=0.34.0",
+    "uvicorn-worker>=0.3.0",
 ]
 
 [dependency-groups]
 dev = [
     "pillow>=11.1.0",
     "requests>=2.32.3",
+    "uvicorn>=0.34.0",
 ]

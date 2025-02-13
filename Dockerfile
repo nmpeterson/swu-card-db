@@ -18,4 +18,4 @@ ENV PATH="/build/.venv/bin:$PATH"
 
 # Run the application
 EXPOSE 8080
-ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "4"]
+ENTRYPOINT ["gunicorn", "app.main:app", "-b", "0.0.0.0:8080", "-w", "4", "-k", "uvicorn_worker.UvicornWorker"]
