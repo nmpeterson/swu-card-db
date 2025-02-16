@@ -136,7 +136,7 @@
       hx-trigger="load, submit" hx-target="#card-list" hx-swap="innerHTML">Search</button>
   </div>
 </form>
-{% if query_string|length %}
+{% if has_query_params %}
 <div class="row pt-3 mx-0">
   <div class="col p-0">
     <h1 class="h3">Search Results</h1>

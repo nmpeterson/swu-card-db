@@ -1,5 +1,4 @@
 import logging
-import urllib.parse
 from datetime import date
 from typing import Annotated, Any, Literal
 from urllib.parse import quote_plus
@@ -99,7 +98,7 @@ async def root(request: Request):
 @app.get("/search", response_class=HTMLResponse, include_in_schema=False)
 async def search(request: Request, db: Session = Depends(get_db)):
     """Return the search page (form and results) at /search"""
-    search_context = {"query_string": urllib.parse.urlencode(request.query_params), **advanced_search_options}
+    search_context = {"has_query_params": len(request.query_params) > 0, **advanced_search_options}
     return templates.TemplateResponse(request=request, name="search.html", context=search_context)
 
 
