@@ -18,8 +18,7 @@
     {% if card.subtitle is not none %}
     <span class="align-middle fw-lighter">— {{card.subtitle}}</span>
     {% endif %}
-    <img src="{{ https_url_for(request, 'static', path='/images/rarity/' + card.rarity + '.png') }}"
-      alt="{{card.rarity}} rarity" class="rarity-pip ms-1">
+    <img src="/images/rarity/{{card.rarity}}.png" alt="{{card.rarity}} rarity" class="rarity-pip ms-1">
     {% if card.variant_type != 'Normal' %}
     <span class="badge">
       {{card.variant_type}}

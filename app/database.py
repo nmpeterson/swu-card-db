@@ -221,14 +221,14 @@ class SWUCard(Base):
             # Replace text with appropriate symbols/images
             line = re.sub(
                 r"(\[.*)Exhaust(.*\])",
-                lambda x: f"{x.group(1)}{self._image('/static/images/icons/exhaust.svg', 'Exhaust', classes='exhaust')}{x.group(2)}",
+                lambda x: f"{x.group(1)}{self._image('/images/icons/exhaust.svg', 'Exhaust', classes='exhaust')}{x.group(2)}",
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 r"(Aggression|Command|Cunning|Heroism|Vigilance|Villainy)",
                 lambda x: self._link(
-                    self._image(f"/static/images/aspects/{x.group(1)}-small.png", alt=x.group(1), classes="aspect-img"),
+                    self._image(f"/images/aspects/{x.group(1)}-small.png", alt=x.group(1), classes="aspect-img"),
                     f"/search?aspect={x.group(1)}&variant_type=Normal",
                 ),
                 line,

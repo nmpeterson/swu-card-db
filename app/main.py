@@ -1,6 +1,6 @@
 import logging
 from datetime import date
-from typing import Annotated, Any, Literal
+from typing import Annotated, Literal
 from urllib.parse import quote_plus
 
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
@@ -25,7 +25,8 @@ app = FastAPI(
     },
     redoc_url=None,
 )
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/images", StaticFiles(directory="app/static/images"), name="images")
+app.mount("/css", StaticFiles(directory="app/static/css"), name="css")
 templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_blocks=True)
 
 # Add quote_plus filter to Jinja2 templates
@@ -34,15 +35,6 @@ templates.env.filters["quote_plus"] = quote_plus
 # Get current year for footer
 current_year = date.today().year
 templates.env.globals["current_year"] = current_year
-
-
-# Use HTTPS for URLs in Jinja2 templates
-def https_url_for(request: Request, name: str, **path_params: Any) -> str:
-    http_url = request.url_for(name, **path_params)
-    return str(http_url).replace("http://", "https://", 1)
-
-
-templates.env.globals["https_url_for"] = https_url_for  # Use instead of url_for
 
 
 # Get common database query results ONCE for template context
