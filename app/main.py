@@ -4,7 +4,7 @@ from typing import Annotated, Any, Literal
 from urllib.parse import quote_plus
 
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
-from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.sql.expression import func
@@ -89,20 +89,20 @@ templates.env.globals["all_sets"] = all_sets
 
 
 # Define routes
-@app.get("/", response_class=HTMLResponse, include_in_schema=False)
+@app.get("/", include_in_schema=False)
 async def root(request: Request):
     """Return the home page at /"""
     return templates.TemplateResponse(request=request, name="index.html", context={})
 
 
-@app.get("/search", response_class=HTMLResponse, include_in_schema=False)
+@app.get("/search", include_in_schema=False)
 async def search(request: Request, db: Session = Depends(get_db)):
     """Return the search page (form and results) at /search"""
     search_context = {"has_query_params": len(request.query_params) > 0, **advanced_search_options}
     return templates.TemplateResponse(request=request, name="search.html", context=search_context)
 
 
-@app.get("/sets/{set_id}", response_class=HTMLResponse, include_in_schema=False)
+@app.get("/sets/{set_id}", include_in_schema=False)
 async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_db)):
     """Return the set page for the given set_id at /sets/{set_id}"""
     swu_set = db.query(SWUSet).filter(SWUSet.id == set_id).first()
@@ -111,7 +111,7 @@ async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_
     return templates.TemplateResponse(request=request, name="set.html", context={"set": swu_set})
 
 
-@app.get("/cards/{card_id}", response_class=HTMLResponse, include_in_schema=False)
+@app.get("/cards/{card_id}", include_in_schema=False)
 async def get_card_page(request: Request, card_id: str, db: Session = Depends(get_db)):
     """Return the card page for the given card_id at /cards/{card_id} or a random card at /cards/random"""
     if card_id.lower() == "random":
@@ -200,13 +200,13 @@ async def get_cards(
     return cards
 
 
-@app.get("/favicon.ico", response_class=FileResponse, include_in_schema=False)
+@app.get("/favicon.ico", include_in_schema=False)
 async def get_favicon():
     """Return the favicon.ico file at /favicon.ico"""
     return FileResponse("app/static/images/swucards/favicon.ico")
 
 
-@app.get("/robots.txt", response_class=FileResponse, include_in_schema=False)
+@app.get("/robots.txt", include_in_schema=False)
 async def get_robots():
     """Return the robots.txt file at /robots.txt"""
     return FileResponse("app/static/robots.txt")
