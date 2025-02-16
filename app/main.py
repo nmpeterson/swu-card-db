@@ -116,7 +116,7 @@ async def get_card_page(request: Request, card_id: str, db: Session = Depends(ge
     """Return the card page for the given card_id at /cards/{card_id} or a random card at /cards/random"""
     if card_id.lower() == "random":
         card = db.query(SWUCard).order_by(func.random()).first()
-        return RedirectResponse(f"/cards/{card.id}")
+        return RedirectResponse(f"/cards/{card.id}", status_code=303)
     else:
         card = db.query(SWUCard).filter(SWUCard.id == card_id).first()
     if not card:
