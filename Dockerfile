@@ -1,11 +1,9 @@
 # Get python image and install uv
-FROM unit:1.34.1-python3.13
+FROM python:3.13-slim
 COPY --from=ghcr.io/astral-sh/uv:0.5.30 /uv /uvx /bin/
-COPY ./config/config.json /docker-entrypoint.d/config.json
 
 # Install the project into /build
 RUN mkdir /build
-RUN chown -R unit:unit /build
 WORKDIR /build
 COPY . .
 
