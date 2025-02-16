@@ -4,7 +4,7 @@ from typing import Annotated, Any, Literal
 from urllib.parse import quote_plus
 
 from fastapi import FastAPI, HTTPException, Request, Depends, Header
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.sql.expression import func
@@ -116,7 +116,7 @@ async def get_card_page(request: Request, card_id: str, db: Session = Depends(ge
     """Return the card page for the given card_id at /cards/{card_id} or a random card at /cards/random"""
     if card_id.lower() == "random":
         card = db.query(SWUCard).order_by(func.random()).first()
-        card_id = card.id
+        return RedirectResponse(f"/cards/{card.id}")
     else:
         card = db.query(SWUCard).filter(SWUCard.id == card_id).first()
     if not card:
