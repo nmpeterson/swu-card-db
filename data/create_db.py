@@ -109,7 +109,7 @@ def main():
     # Load set data
     sets = json.load(open(os.path.join(DATA_DIR, "sets.json"), "rb"))
     print(f"Loaded {len(sets):,} sets' data into memory")
-    set_rows = [(s["id"], s["number"], s["name"]) for s in sets]
+    set_rows = [(s["id"], s["number"], s["rotation"], s["name"]) for s in sets]
     print("Parsed set data into rows for insertion into database")
 
     db = os.path.join(DATA_DIR, "db.sqlite3")
@@ -126,11 +126,12 @@ def main():
             CREATE TABLE sets (
                 "id" TEXT PRIMARY KEY,
                 "number" INTEGER NOT NULL,
+                "rotation" TEXT,
                 "name" TEXT NOT NULL
             )
             """
         )
-        cur.executemany("""INSERT INTO sets VALUES(?,?,?)""", set_rows)
+        cur.executemany("""INSERT INTO sets VALUES(?,?,?,?)""", set_rows)
         con.commit()
 
         print(f"Creating cards table ({len(card_rows):,} rows)")

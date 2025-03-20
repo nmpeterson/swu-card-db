@@ -24,6 +24,7 @@ class SWUSet(Base):
     __tablename__ = "sets"
     id: Mapped[str] = mapped_column(primary_key=True)
     number: Mapped[int] = mapped_column()
+    rotation: Mapped[str | None] = mapped_column()
     name: Mapped[str] = mapped_column()
     cards: Mapped[list["SWUCard"]] = relationship(back_populates="card_set", order_by="SWUCard.id")
 

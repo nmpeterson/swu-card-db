@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class SetModel(BaseModel):
     id: str
     name: str
+    rotation: str | None
     number: int
 
 
