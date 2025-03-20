@@ -34,10 +34,19 @@ def main():
             if OVERWRITE or not os.path.exists(path):
                 if not os.path.exists(os.path.dirname(path)):
                     os.makedirs(os.path.dirname(path))
-                print(f"Fetching {url} -> {path}")
-                response = requests.get(url)
-                im = Image.open(BytesIO(response.content))
-                im.save(path, "webp")
+                try:
+                    print(f"Fetching {url} -> {path}")
+                    response = requests.get(url)
+                    if response.status_code == 404 and url.endswith("-portrait.png"):
+                        url = url.replace("-portrait.png", "-back.png")
+                        print(f"Fetching {url} -> {path}")
+                        response = requests.get(url)
+                    response.raise_for_status()
+                except requests.exceptions.HTTPError as e:
+                    print(f"Failed to fetch {url}: {e}")
+                else:
+                    im = Image.open(BytesIO(response.content))
+                    im.save(path, "webp")
 
 
 if __name__ == "__main__":

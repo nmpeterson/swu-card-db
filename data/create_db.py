@@ -38,6 +38,7 @@ KEYWORDS = {
     "SMUGGLE",
     "COORDINATE",
     "EXPLOIT",
+    "PILOTING",
 }
 
 
@@ -87,7 +88,10 @@ def main():
                 card["Artist"],
             )
         )
+        if card.get("Aspects") == []:
+            del card["Aspects"]
         for aspect, n in Counter(card.get("Aspects", [None])).items():
+            aspect = None if aspect == "" else aspect
             aspect_rows.append((card_id, aspect, ASPECT_COLORS.get(aspect), ASPECT_SORT_ORDER[aspect], int(n > 1)))
         for trait in card.get("Traits", [None]):
             trait_rows.append((card_id, trait))
