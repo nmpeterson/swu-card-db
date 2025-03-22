@@ -131,6 +131,19 @@
       {% endfor %}
     </select>
   </div>
+  <div class="col-6 col-md-3">
+    <label for="rotation-select" class="form-label">Rotation</label>
+    <select class="form-select" aria-label="Rotation selector" id="rotation-select" name="rotation">
+      <option value=""></option>
+      {% for rotation in rotation_options %}
+      {% if rotation == request.query_params.get('rotation') %}
+      <option value="{{rotation}}" selected>{{rotation}}</option>
+      {% else %}
+      <option value="{{rotation}}">{{rotation}}</option>
+      {% endif %}
+      {% endfor %}
+    </select>
+  </div>
   <div class="col-12">
     <button class="btn btn-primary w-100" type="submit" hx-get="/card_list" hx-include="#card-search-form"
       hx-trigger="load, submit" hx-target="#card-list" hx-swap="innerHTML">Search</button>

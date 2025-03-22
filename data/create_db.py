@@ -3,6 +3,7 @@ import json
 import os
 import re
 import sqlite3
+from unidecode import unidecode
 
 DATA_DIR = os.path.dirname(__file__)
 
@@ -39,6 +40,16 @@ KEYWORDS = {
     "COORDINATE",
     "EXPLOIT",
     "PILOTING",
+}
+
+ARTIST_SEARCH_REMAP = {
+    # Remap artist name typos or alternate spellings (other than diacritics)
+    "Aitor Prieto Reyes": "Aitor Prieto",
+    "Anny Maulina": "Ann Maulina",
+    "Christian Papzoglakis": "Christian Papazoglakis",
+    "Gretel Nancy Lusky": "Gretel Lusky",
+    "Liana Anatolievich": "Liana Anatolevich",
+    "Roxana Karpatvogyi": "Roxana Karpatvolgyi",
 }
 
 
@@ -86,6 +97,7 @@ def main():
                 card.get("EpicAction"),
                 back_text,
                 card["Artist"],
+                unidecode(ARTIST_SEARCH_REMAP.get(card["Artist"], card["Artist"])),
             )
         )
         if card.get("Aspects") == []:
@@ -155,6 +167,7 @@ def main():
                 "epic_action" TEXT,
                 "back_text" TEXT,
                 "artist" TEXT NOT NULL,
+                "artist_search" TEXT NOT NULL,
                 FOREIGN KEY ("set_id") REFERENCES sets("id")
             )
             """

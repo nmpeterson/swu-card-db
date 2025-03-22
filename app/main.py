@@ -68,9 +68,14 @@ advanced_search_options = {
         c.card_type for c in db.query(SWUCard.card_type).distinct().order_by(SWUCard.card_type).all()
     ],
     "rarity_options": [c.rarity for c in db.query(SWUCard.rarity).distinct().order_by(SWUCard.rarity).all()],
-    "artist_options": [c.artist for c in db.query(SWUCard.artist).distinct().order_by(SWUCard.artist).all()],
+    "artist_options": [
+        c.artist_search for c in db.query(SWUCard.artist_search).distinct().order_by(SWUCard.artist_search).all()
+    ],
     "variant_type_options": [
         c.variant_type for c in db.query(SWUCard.variant_type).distinct().order_by(SWUCard.variant_type).all()
+    ],
+    "rotation_options": [
+        s.rotation for s in db.query(SWUSet.rotation).distinct().order_by(SWUSet.rotation).all() if s.rotation
     ],
 }
 
@@ -157,6 +162,7 @@ async def get_cards(
     rarity: Literal["", *advanced_search_options["rarity_options"]] | None = None,
     artist: Literal["", *advanced_search_options["artist_options"]] | None = None,
     variant_type: Literal["", *advanced_search_options["variant_type_options"]] | None = None,
+    rotation: Literal["", *advanced_search_options["rotation_options"]] | None = None,
 ):
     """Return an array of all SWU cards matching the query parameters at /card_list.
     If hx-request header is present, return the card_list.html template.
@@ -164,6 +170,8 @@ async def get_cards(
     cards = db.query(SWUCard)
     if set_id:
         cards = cards.filter(SWUCard.set_id == set_id)
+    if rotation:
+        cards = cards.filter(SWUSet.rotation == rotation)
     if variant_type:
         cards = cards.filter(SWUCard.variant_type == variant_type)
     if card_type:
@@ -171,7 +179,7 @@ async def get_cards(
     if rarity:
         cards = cards.filter(SWUCard.rarity == rarity)
     if artist:
-        cards = cards.filter(SWUCard.artist == artist)
+        cards = cards.filter(SWUCard.artist_search.icontains(artist))
     if name:
         name_like = "%".join(name.strip().split())
         cards = cards.filter(SWUCard.name_and_subtitle.icontains(name_like))

@@ -48,6 +48,7 @@ class SWUCard(Base):
     epic_action: Mapped[str | None] = mapped_column()
     back_text: Mapped[str | None] = mapped_column()
     artist: Mapped[str] = mapped_column()
+    artist_search: Mapped[str] = mapped_column()
     arenas: Mapped[list["SWUCardArena"]] = relationship()
     aspects: Mapped[list["SWUCardAspect"]] = relationship(order_by="SWUCardAspect.sort_order")
     traits: Mapped[list["SWUCardTrait"]] = relationship()
