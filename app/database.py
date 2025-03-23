@@ -33,7 +33,7 @@ class SWUCard(Base):
     __tablename__ = "cards"
     id: Mapped[str] = mapped_column(primary_key=True)
     set_id: Mapped[str] = mapped_column(ForeignKey("sets.id"))
-    number: Mapped[str] = mapped_column()
+    number: Mapped[int] = mapped_column()
     name: Mapped[str] = mapped_column()
     subtitle: Mapped[str | None] = mapped_column()
     unique: Mapped[bool] = mapped_column()

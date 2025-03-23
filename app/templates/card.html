@@ -11,10 +11,10 @@
     <div id="card-image" class="col-lg-5 carousel slide">
       <div class="carousel-inner">
         <div class="carousel-item active" aria-description="Front of card image"
-          style="background-image:url('/images/cards/{{card.set_id}}/{{card.number}}.webp');">
+          style="background-image:url('/images/cards/{{card.set_id}}/{{card.id[4:]}}.webp');">
         </div>
         <div class="carousel-item" aria-description="Back of card image"
-          style="background-image:url('/images/cards/{{card.set_id}}/{{card.number}}-back.webp');">
+          style="background-image:url('/images/cards/{{card.set_id}}/{{card.id[4:]}}-back.webp');">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#card-image" data-bs-slide="prev">
@@ -30,7 +30,7 @@
     <div id="card-image" class="col-lg-5 carousel slide">
       <div class="carousel-inner">
         <div class="carousel-item active"
-          style="background-image:url('/images/cards/{{card.set_id}}/{{card.number}}.webp');">
+          style="background-image:url('/images/cards/{{card.set_id}}/{{card.id[4:]}}.webp');">
         </div>
       </div>
     </div>
@@ -118,7 +118,7 @@
           {% endif %}
         </div>
         <div id="card-summary-artist" class="text-body-tertiary fw-lighter">
-          Artist: <a href="/search?artist={{card.artist_search|quote_plus}}">{{card.artist}}</a>
+          Artist: <a href="/search?artist={{card.artist_search|quote_plus}}&variant_type=">{{card.artist}}</a>
         </div>
         <div id="card-summary-id" class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
           <span class="pe-2">{{card.id}}</span>

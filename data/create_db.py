@@ -47,9 +47,11 @@ ARTIST_SEARCH_REMAP = {
     "Aitor Prieto Reyes": "Aitor Prieto",
     "Anny Maulina": "Ann Maulina",
     "Christian Papzoglakis": "Christian Papazoglakis",
+    "Frank Cannels": "Francois Cannels",
     "Gretel Nancy Lusky": "Gretel Lusky",
     "Liana Anatolievich": "Liana Anatolevich",
     "Roxana Karpatvogyi": "Roxana Karpatvolgyi",
+    "Sandra Chewlińska": "Sandra Chlewińska",
 }
 
 
@@ -82,7 +84,7 @@ def main():
             (
                 card_id,
                 card["Set"],
-                card["Number"],
+                int(card["Number"]),
                 card["Name"],
                 card.get("Subtitle"),
                 card.get("Unique", False),
@@ -152,7 +154,7 @@ def main():
             CREATE TABLE cards (
                 "id" TEXT PRIMARY KEY,
                 "set_id" TEXT NOT NULL,
-                "number" TEXT NOT NULL,
+                "number" INTEGER NOT NULL,
                 "name" TEXT NOT NULL,
                 "subtitle" TEXT,
                 "unique" INTEGER NOT NULL,

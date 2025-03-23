@@ -29,7 +29,7 @@ class KeywordModel(BaseModel):
 class CardModel(BaseModel):
     id: str
     set_id: str
-    number: str
+    number: int
     name: str
     subtitle: str | None
     unique: bool

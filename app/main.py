@@ -126,7 +126,7 @@ async def get_card_page(request: Request, card_id: str, db: Session = Depends(ge
             SWUCard.subtitle == card.subtitle,
         )
         .join(SWUCard.card_set)
-        .order_by(SWUSet.number, SWUCard.id)
+        .order_by(SWUSet.number, SWUCard.number)
         .all()
     )
     return templates.TemplateResponse(request=request, name="card.html", context={"card": card, "variants": variants})
@@ -194,7 +194,7 @@ async def get_cards(
         cards = cards.join(SWUCardTrait).filter(SWUCard.traits.any(SWUCardTrait.trait == trait))
     if keyword:
         cards = cards.join(SWUCardKeyword).filter(SWUCard.keywords.any(SWUCardKeyword.keyword == keyword))
-    cards = cards.join(SWUCard.card_set).order_by(SWUSet.number, SWUCard.id).all()
+    cards = cards.join(SWUCard.card_set).order_by(SWUSet.number, SWUCard.number).all()
     if hx_request:
         return templates.TemplateResponse(request=request, name="card_list.html", context={"cards": cards})
     return cards
