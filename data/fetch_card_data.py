@@ -10,7 +10,7 @@ FULL_SETS = [
     "TWI",
 ]
 PARTIAL_SETS = {
-    "JTL": [*range(1, 263)],
+    "JTL": [*range(1, 525), *range(997, 1051)],  # Ignore foils and prestige serialized
 }
 DROP_PROPERTIES = [
     "FrontArt",
