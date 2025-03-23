@@ -86,12 +86,13 @@ class SWUCard(Base):
 
     @hybrid_property
     def front_text_html(self) -> str:
-        return self._htmlify_card_text(self.front_text or "")
+        is_pilot = any(t.trait == "PILOT" for t in self.traits)
+        return self._htmlify_card_text(self.front_text or "", is_pilot=is_pilot)
 
     @hybrid_property
     def back_text_html(self) -> str:
-        is_pilot_leader = self.card_type == "Leader" and any(t.trait == "PILOT" for t in self.traits)
-        return self._htmlify_card_text(self.back_text or "", is_pilot_leader=is_pilot_leader)
+        is_pilot = any(t.trait == "PILOT" for t in self.traits)
+        return self._htmlify_card_text(self.back_text or "", is_pilot=is_pilot)
 
     @hybrid_property
     def epic_action_html(self) -> str:
@@ -117,7 +118,7 @@ class SWUCard(Base):
     def _link(text: str, href: str, classes: str | None = None) -> str:
         return f'<a href="{href}" {f'class="{classes}"' if classes else ""}>{text}</a>'
 
-    def _htmlify_card_text(self, text: str, is_pilot_leader: bool = False) -> str:
+    def _htmlify_card_text(self, text: str, is_pilot: bool = False) -> str:
         # Initalize multi-line flags
         pilot_text_start_line = None
 
@@ -168,9 +169,9 @@ class SWUCard(Base):
                         line,
                     )
 
-            # Check for pilot leader text
-            if is_pilot_leader and re.search(r"^attached unit is a leader unit", line, re.IGNORECASE):
-                pilot_text_start_line = i
+            # Check for pilot upgrade text
+            if is_pilot and (re.search(r"(attached unit|this upgrade)", line, re.IGNORECASE)):
+                pilot_text_start_line = i if pilot_text_start_line is None else pilot_text_start_line
 
             # Add trait links
             TRAIT_GRP = "|".join(self._all_traits)
@@ -227,6 +228,12 @@ class SWUCard(Base):
             line = re.sub(
                 rf"gains the ({TRAIT_GRP}) trait",
                 lambda x: f"gains the {self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')} trait",
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                r"(unit without a )(pilot)( on it)",
+                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}{x.group(3)}",
                 line,
                 flags=re.IGNORECASE,
             )
