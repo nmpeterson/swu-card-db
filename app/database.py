@@ -90,7 +90,8 @@ class SWUCard(Base):
 
     @hybrid_property
     def back_text_html(self) -> str:
-        return self._htmlify_card_text(self.back_text or "")
+        is_pilot_leader = self.card_type == "Leader" and any(t.trait == "PILOT" for t in self.traits)
+        return self._htmlify_card_text(self.back_text or "", is_pilot_leader=is_pilot_leader)
 
     @hybrid_property
     def epic_action_html(self) -> str:
@@ -116,9 +117,9 @@ class SWUCard(Base):
     def _link(text: str, href: str, classes: str | None = None) -> str:
         return f'<a href="{href}" {f'class="{classes}"' if classes else ""}>{text}</a>'
 
-    def _htmlify_card_text(self, text: str) -> str:
+    def _htmlify_card_text(self, text: str, is_pilot_leader: bool = False) -> str:
         # Initalize multi-line flags
-        piloting = None
+        pilot_text_start_line = None
 
         lines = text.strip().split("\n")
         for i, line in enumerate(lines):
@@ -152,7 +153,7 @@ class SWUCard(Base):
                             conditional_sentinel = True
                     elif keyword == "PILOTING":
                         if line.startswith(keyword):
-                            piloting = i
+                            pilot_text_start_line = i
                     line = re.sub(
                         rf"({keyword})( \d+)?( \[.+\])?",
                         lambda x: self._span(
@@ -166,6 +167,10 @@ class SWUCard(Base):
                         self._link("BOUNTIES", "/search?keyword=BOUNTY&variant_type=Normal", classes="keyword"),
                         line,
                     )
+
+            # Check for pilot leader text
+            if is_pilot_leader and re.search(r"^attached unit is a leader unit", line, re.IGNORECASE):
+                pilot_text_start_line = i
 
             # Add trait links
             TRAIT_GRP = "|".join(self._all_traits)
@@ -276,14 +281,13 @@ class SWUCard(Base):
                 line = f'<div class="alert alert-danger p-2 mb-1 text-body" style="background: none;">{line}</div>'
 
             # Add PILOTING decoration
-            if i == piloting:
+            if i == pilot_text_start_line:
                 line = f'<div class="alert alert-info p-2 mb-1">{line}'
-            # TODO: Add to cards like Wedge (JTL-008) too
 
             lines[i] = line
 
         formatted_text = "\n".join(line for line in lines if line)
-        if piloting is not None:
+        if pilot_text_start_line is not None:
             formatted_text += "</div>"
         return formatted_text
 
