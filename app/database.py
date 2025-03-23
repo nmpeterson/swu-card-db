@@ -282,7 +282,7 @@ class SWUCard(Base):
 
             # Add PILOTING decoration
             if i == pilot_text_start_line:
-                line = f'<div class="alert alert-info p-2 mb-1">{line}'
+                line = f'<div class="alert alert-light p-2 mb-1">{line}'
 
             lines[i] = line
 
