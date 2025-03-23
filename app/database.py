@@ -117,6 +117,9 @@ class SWUCard(Base):
         return f'<a href="{href}" {f'class="{classes}"' if classes else ""}>{text}</a>'
 
     def _htmlify_card_text(self, text: str) -> str:
+        # Initalize multi-line flags
+        piloting = None
+
         lines = text.strip().split("\n")
         for i, line in enumerate(lines):
             # Initialize flags
@@ -139,7 +142,7 @@ class SWUCard(Base):
                 r"(\(.+\))", lambda x: self._italic(x.group(1)) if self.variant_type == "Normal" else "", line
             )
 
-            # Add keyword links, flag SENTINEL lines
+            # Add keyword links, flag SENTINEL/PILOTING lines
             if None not in (keywords := [k.keyword for k in self.keywords]):
                 for keyword in keywords:
                     if keyword == "SENTINEL":
@@ -147,6 +150,9 @@ class SWUCard(Base):
                             full_sentinel = True
                         elif re.search(rf"(?:this|attached) unit [^.]*gains [^.]*{keyword}", line, re.IGNORECASE):
                             conditional_sentinel = True
+                    elif keyword == "PILOTING":
+                        if line.startswith(keyword):
+                            piloting = i
                     line = re.sub(
                         rf"({keyword})( \d+)?( \[.+\])?",
                         lambda x: self._span(
@@ -269,9 +275,17 @@ class SWUCard(Base):
             elif conditional_sentinel:
                 line = f'<div class="alert alert-danger p-2 mb-1 text-body" style="background: none;">{line}</div>'
 
+            # Add PILOTING decoration
+            if i == piloting:
+                line = f'<div class="alert alert-info p-2 mb-1">{line}'
+            # TODO: Add to cards like Wedge (JTL-008) too
+
             lines[i] = line
 
-        return "\n".join(line for line in lines if line)
+        formatted_text = "\n".join(line for line in lines if line)
+        if piloting is not None:
+            formatted_text += "</div>"
+        return formatted_text
 
 
 class SWUCardArena(Base):
