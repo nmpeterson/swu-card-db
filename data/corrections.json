@@ -293,44 +293,450 @@
   "TWI-511": {
     "Artist": "Eslam Aboshady"
   },
+  "JTL-001": {
+    "Power": "4 / +3",
+    "HP": "6 / +4"
+  },
+  "JTL-003": {
+    "Power": "5 / +5",
+    "HP": "7 / +5"
+  },
+  "JTL-006": {
+    "Power": "5 / +5",
+    "HP": "6 / +5"
+  },
+  "JTL-008": {
+    "Power": "3 / +3",
+    "HP": "6 / +4"
+  },
+  "JTL-009": {
+    "Power": "4 / +4",
+    "HP": "7 / +4"
+  },
+  "JTL-011": {
+    "Power": "2 / +3",
+    "HP": "5 / +3"
+  },
+  "JTL-012": {
+    "Power": "5 / +4",
+    "HP": "6 / +5"
+  },
+  "JTL-013": {
+    "Power": "4 / +2",
+    "HP": "6 / +1"
+  },
+  "JTL-015": {
+    "Power": "3 / +3",
+    "HP": "5 / +5"
+  },
+  "JTL-017": {
+    "Power": "3 / +3",
+    "HP": "7 / +4"
+  },
   "JTL-018": {
-    "Artist": "Sebastián Guidobono"
+    "Artist": "Sebastián Guidobono",
+    "Power": "2 / +3",
+    "HP": "5 / +3"
+  },
+  "JTL-034": {
+    "Power": "2 / +2",
+    "HP": "3 / +3"
+  },
+  "JTL-035": {
+    "Power": "2 / +2",
+    "HP": "5 / +2"
   },
   "JTL-036": {
-    "Artist": "Sandra Chewlińska"
+    "Artist": "Sandra Chewlińska",
+    "Power": "4 / +3",
+    "HP": "3 / +3"
+  },
+  "JTL-045": {
+    "Power": "2 / +2",
+    "HP": "3 / +3"
+  },
+  "JTL-046": {
+    "Power": "3 / +2",
+    "HP": "2 / +2"
+  },
+  "JTL-048": {
+    "Power": "3 / +1",
+    "HP": "4 / +3"
+  },
+  "JTL-049": {
+    "Power": "3 / +3",
+    "HP": "3 / +3"
+  },
+  "JTL-057": {
+    "Power": "1 / +1",
+    "HP": "3 / +3"
+  },
+  "JTL-058": {
+    "Power": "1 / +1",
+    "HP": "2 / +2"
   },
   "JTL-061": {
     "Artist": "Eslam Aboshady"
   },
+  "JTL-066": {
+    "Power": "2 / +1",
+    "HP": "5 / +2"
+  },
   "JTL-077": {
     "Artist": "Eslam Aboshady"
+  },
+  "JTL-083": {
+    "Power": "2 / +0",
+    "HP": "2 / +0"
+  },
+  "JTL-084": {
+    "Power": "3 / +1",
+    "HP": "2 / +1"
+  },
+  "JTL-086": {
+    "Power": "4 / +1",
+    "HP": "3 / +1"
+  },
+  "JTL-093": {
+    "Power": "1 / +1",
+    "HP": "2 / +2"
+  },
+  "JTL-094": {
+    "Power": "3 / +3",
+    "HP": "2 / +2"
+  },
+  "JTL-098": {
+    "Power": "2 / +2",
+    "HP": "5 / +2"
+  },
+  "JTL-100": {
+    "Power": "3 / +2",
+    "HP": "3 / +3"
+  },
+  "JTL-103": {
+    "Power": "5 / +3",
+    "HP": "6 / +3"
+  },
+  "JTL-108": {
+    "Power": "2 / +2",
+    "HP": "2 / +2"
+  },
+  "JTL-109": {
+    "Power": "2 / +2",
+    "HP": "3 / +2"
+  },
+  "JTL-139": {
+    "Power": "5 / +1",
+    "HP": "4 / +2"
+  },
+  "JTL-141": {
+    "Power": "4 / +0",
+    "HP": "5 / +3"
+  },
+  "JTL-142": {
+    "Power": "7 / +3",
+    "HP": "7 / +3"
+  },
+  "JTL-145": {
+    "Power": "1 / +1",
+    "HP": "4 / +2"
+  },
+  "JTL-148": {
+    "Power": "3 / +2",
+    "HP": "2 / +2"
+  },
+  "JTL-150": {
+    "Power": "3 / +2",
+    "HP": "4 / +1"
   },
   "JTL-154": {
     "Artist": "Sebastián Guidobono"
   },
+  "JTL-159": {
+    "Power": "3 / +3",
+    "HP": "1 / +1"
+  },
+  "JTL-187": {
+    "Power": "4 / +2",
+    "HP": "4 / +2"
+  },
+  "JTL-189": {
+    "Power": "5 / +2",
+    "HP": "4 / +3"
+  },
+  "JTL-196": {
+    "Power": "2 / +2",
+    "HP": "1 / +1"
+  },
+  "JTL-197": {
+    "Power": "2 / +2",
+    "HP": "3 / +3"
+  },
+  "JTL-203": {
+    "Power": "4 / +2",
+    "HP": "5 / +3"
+  },
+  "JTL-210": {
+    "Power": "5 / +3",
+    "HP": "6 / +1"
+  },
+  "JTL-211": {
+    "Power": "1 / +1",
+    "HP": "1 / +1"
+  },
+  "JTL-213": {
+    "Power": "2 / -2",
+    "HP": "2 / -2"
+  },
+  "JTL-215": {
+    "Power": "3 / +1",
+    "HP": "4 / +2"
+  },
+  "JTL-236": {
+    "Power": "1 / +1",
+    "HP": "2 / +2"
+  },
+  "JTL-245": {
+    "Power": "1 / +1",
+    "HP": "4 / +1"
+  },
+  "JTL-246": {
+    "Power": "1 / +1",
+    "HP": "3 / +3"
+  },
   "JTL-253": {
     "Artist": "Eslam Aboshady"
   },
+  "JTL-255": {
+    "Power": "1 / +1",
+    "HP": "1 / +1"
+  },
+  "JTL-263": {
+    "Power": "4 / +3",
+    "HP": "6 / +4"
+  },
+  "JTL-265": {
+    "Power": "5 / +5",
+    "HP": "7 / +5"
+  },
+  "JTL-268": {
+    "Power": "5 / +5",
+    "HP": "6 / +5"
+  },
+  "JTL-270": {
+    "Power": "3 / +3",
+    "HP": "6 / +4"
+  },
+  "JTL-271": {
+    "Power": "4 / +4",
+    "HP": "7 / +4"
+  },
+  "JTL-273": {
+    "Power": "2 / +3",
+    "HP": "5 / +3"
+  },
+  "JTL-274": {
+    "Power": "5 / +4",
+    "HP": "6 / +5"
+  },
+  "JTL-275": {
+    "Power": "4 / +2",
+    "HP": "6 / +1"
+  },
+  "JTL-277": {
+    "Power": "3 / +3",
+    "HP": "5 / +5"
+  },
+  "JTL-279": {
+    "Power": "3 / +3",
+    "HP": "7 / +4"
+  },
+  "JTL-280": {
+    "Artist": "Sebastián Guidobono",
+    "Power": "2 / +3",
+    "HP": "5 / +3"
+  },
+  "JTL-296": {
+    "Power": "2 / +2",
+    "HP": "3 / +3"
+  },
+  "JTL-297": {
+    "Power": "2 / +2",
+    "HP": "5 / +2"
+  },
   "JTL-298": {
-    "Artist": "Sandra Chewlińska"
+    "Artist": "Sandra Chewlińska",
+    "Power": "4 / +3",
+    "HP": "3 / +3"
+  },
+  "JTL-307": {
+    "Power": "2 / +2",
+    "HP": "3 / +3"
+  },
+  "JTL-308": {
+    "Power": "3 / +2",
+    "HP": "2 / +2"
+  },
+  "JTL-310": {
+    "Power": "3 / +1",
+    "HP": "4 / +3"
+  },
+  "JTL-311": {
+    "Power": "3 / +3",
+    "HP": "3 / +3"
+  },
+  "JTL-319": {
+    "Power": "1 / +1",
+    "HP": "3 / +3"
+  },
+  "JTL-320": {
+    "Power": "1 / +1",
+    "HP": "2 / +2"
   },
   "JTL-323": {
     "Artist": "Eslam Aboshady"
   },
+  "JTL-328": {
+    "Power": "2 / +1",
+    "HP": "5 / +2"
+  },
   "JTL-339": {
     "Artist": "Eslam Aboshady"
+  },
+  "JTL-346": {
+    "Power": "3 / +1",
+    "HP": "2 / +1"
+  },
+  "JTL-348": {
+    "Power": "4 / +1",
+    "HP": "3 / +1"
+  },
+  "JTL-355": {
+    "Power": "1 / +1",
+    "HP": "2 / +2"
+  },
+  "JTL-356": {
+    "Power": "3 / +3",
+    "HP": "2 / +2"
+  },
+  "JTL-360": {
+    "Power": "2 / +2",
+    "HP": "5 / +2"
+  },
+  "JTL-362": {
+    "Power": "3 / +2",
+    "HP": "3 / +3"
+  },
+  "JTL-365": {
+    "Power": "5 / +3",
+    "HP": "6 / +3"
+  },
+  "JTL-370": {
+    "Power": "2 / +2",
+    "HP": "2 / +2"
+  },
+  "JTL-371": {
+    "Power": "2 / +2",
+    "HP": "3 / +2"
+  },
+  "JTL-401": {
+    "Power": "5 / +1",
+    "HP": "4 / +2"
+  },
+  "JTL-403": {
+    "Power": "4 / +0",
+    "HP": "5 / +3"
+  },
+  "JTL-404": {
+    "Power": "7 / +3",
+    "HP": "7 / +3"
+  },
+  "JTL-407": {
+    "Power": "1 / +1",
+    "HP": "4 / +2"
+  },
+  "JTL-410": {
+    "Power": "3 / +2",
+    "HP": "2 / +2"
+  },
+  "JTL-412": {
+    "Power": "3 / +2",
+    "HP": "4 / +1"
+  },
+  "JTL-416": {
+    "Artist": "Sebastián Guidobono"
+  },
+  "JTL-421": {
+    "Power": "3 / +3",
+    "HP": "1 / +1"
+  },
+  "JTL-449": {
+    "Power": "4 / +2",
+    "HP": "4 / +2"
+  },
+  "JTL-451": {
+    "Power": "5 / +2",
+    "HP": "4 / +3"
+  },
+  "JTL-458": {
+    "Power": "2 / +2",
+    "HP": "1 / +1"
+  },
+  "JTL-459": {
+    "Power": "2 / +2",
+    "HP": "3 / +3"
+  },
+  "JTL-465": {
+    "Power": "4 / +2",
+    "HP": "5 / +3"
+  },
+  "JTL-472": {
+    "Power": "5 / +3",
+    "HP": "6 / +1"
+  },
+  "JTL-473": {
+    "Power": "1 / +1",
+    "HP": "1 / +1"
+  },
+  "JTL-475": {
+    "Power": "2 / -2",
+    "HP": "2 / -2"
+  },
+  "JTL-477": {
+    "Power": "3 / +1",
+    "HP": "4 / +2"
+  },
+  "JTL-498": {
+    "Power": "1 / +1",
+    "HP": "2 / +2"
+  },
+  "JTL-507": {
+    "Power": "1 / +1",
+    "HP": "4 / +1"
+  },
+  "JTL-508": {
+    "Power": "1 / +1",
+    "HP": "3 / +3"
   },
   "JTL-515": {
     "Artist": "Eslam Aboshady"
   },
+  "JTL-517": {
+    "Power": "1 / +1",
+    "HP": "1 / +1"
+  },
   "JTL-997": {
-    "Artist": "Gabriel Gomez Almenzar"
+    "Artist": "Gabriel Gomez Almenzar",
+    "Power": "4 / +3",
+    "HP": "6 / +4"
   },
   "JTL-998": {
     "Artist": "Reno"
   },
   "JTL-999": {
-    "Artist": "Reno"
+    "Artist": "Reno",
+    "Power": "5 / +5",
+    "HP": "7 / +5"
   },
   "JTL-1000": {
     "Artist": "Reno"
@@ -339,43 +745,61 @@
     "Artist": "Ario Murti"
   },
   "JTL-1002": {
-    "Artist": "David Nash"
+    "Artist": "David Nash",
+    "Power": "5 / +5",
+    "HP": "6 / +5"
   },
   "JTL-1003": {
     "Artist": "Afif Khaled"
   },
   "JTL-1004": {
-    "Artist": "Sandra Chewlińska"
+    "Artist": "Sandra Chewlińska",
+    "Power": "3 / +3",
+    "HP": "6 / +4"
   },
   "JTL-1005": {
-    "Artist": "JB Casacop"
+    "Artist": "JB Casacop",
+    "Power": "4 / +4",
+    "HP": "7 / +4"
   },
   "JTL-1006": {
     "Artist": "Gabriel Gomez Almenzar"
   },
   "JTL-1007": {
-    "Artist": "Guillaume Ospital"
+    "Artist": "Guillaume Ospital",
+    "Power": "2 / +3",
+    "HP": "5 / +3"
   },
   "JTL-1008": {
-    "Artist": "Ario Murti"
+    "Artist": "Ario Murti",
+    "Power": "5 / +4",
+    "HP": "6 / +5"
   },
   "JTL-1009": {
-    "Artist": "Eric Hibbeler"
+    "Artist": "Eric Hibbeler",
+    "Power": "4 / +2",
+    "HP": "6 / +1"
   },
   "JTL-1010": {
     "Artist": "Aitor Prieto"
   },
   "JTL-1011": {
-    "Artist": "Borja Pindado"
+    "Artist": "Borja Pindado",
+    "Power": "3 / +3",
+    "HP": "5 / +5"
   },
   "JTL-1012": {
     "Artist": "Marc Escachx"
   },
   "JTL-1013": {
-    "Artist": "Reno"
+    "Artist": "Reno",
+    "Power": "3 / +3",
+    "HP": "7 / +4"
   },
   "JTL-1014": {
-    "Artist": "Sandra Chewlińska"
+    "Artist": "Sandra Chewlińska",
+    "Power": "2 / +3",
+    "HP": "5 / +3"
   },
   "JTL-1015": {
     "Artist": "Vincent Dutrait"
