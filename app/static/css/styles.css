@@ -129,8 +129,8 @@ div.card-aspect-Heroism {
   }
 }
 
-#card-summary-artist {
-  grid-column: span 2;
+#card-summary-footer {
+  grid-column: span 3;
 }
 
 #card-summary-id {
@@ -217,6 +217,11 @@ div.card-aspect-Heroism {
   font-weight: 900;
   color: rgb(var(--white));
   text-shadow: 0 0 0.25rem rgba(var(--black), 0.75);
+  /* line-height: 2rem; */
+
+  & hr {
+    margin: 0.5rem 0rem;
+  }
 }
 
 #card-summary-cost .badge {

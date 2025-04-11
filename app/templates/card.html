@@ -67,7 +67,7 @@
         <div id="card-summary-power" class="d-flex justify-content-start">
           {% if card.power is not none %}
           <span class="badge fs-3 mt-auto w-100" aria-description="Power">
-            {% if card.card_type == "Upgrade" %}+{% endif %}{{card.power}}
+            {% if card.card_type == "Upgrade" %}+{% endif %}{{card.power|replace("/","<hr>")|safe}}
           </span>
           {% endif %}
         </div>
@@ -98,7 +98,7 @@
         <div id="card-summary-hp" class="d-flex justify-content-end">
           {% if card.hp is not none %}
           <span class="badge fs-3 mt-auto" aria-description="HP">
-            {% if card.card_type == "Upgrade" %}+{% endif %}{{card.hp}}
+            {% if card.card_type == "Upgrade" %}+{% endif %}{{card.hp|replace("/","<hr>")|safe}}
           </span>
           {% endif %}
         </div>
@@ -117,14 +117,16 @@
           {{card.back_text_html|safe}}
           {% endif %}
         </div>
-        <div id="card-summary-artist" class="text-body-tertiary fw-lighter">
-          Artist: <a href="/search?artist={{card.artist_search|quote_plus}}&variant_type=">{{card.artist}}</a>
-        </div>
-        <div id="card-summary-id" class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
-          <span class="pe-2">{{card.id}}</span>
-          <a href="/search?rarity={{card.rarity}}&variant_type=Normal">
-            <img src="/images/rarity/{{card.rarity}}.png" alt="{{card.rarity}} rarity" class="rarity-pip">
-          </a>
+        <div id="card-summary-footer" class="d-flex justify-content-between">
+          <div id="card-summary-artist" class="text-body-tertiary fw-lighter">
+            Artist: <a href="/search?artist={{card.artist_search|quote_plus}}&variant_type=">{{card.artist}}</a>
+          </div>
+          <div id="card-summary-id" class="text-body-tertiary fw-lighter d-flex align-items-center justify-content-end">
+            <span class="pe-2">{{card.id}}</span>
+            <a href="/search?rarity={{card.rarity}}&variant_type=Normal">
+              <img src="/images/rarity/{{card.rarity}}.png" alt="{{card.rarity}} rarity" class="rarity-pip">
+            </a>
+          </div>
         </div>
       </div>
     </div>
