@@ -170,8 +170,12 @@ class SWUCard(Base):
                     )
 
             # Check for pilot upgrade text
-            if is_pilot and (re.search(r"(attached unit|this upgrade)", line, re.IGNORECASE)):
-                pilot_text_start_line = i if pilot_text_start_line is None else pilot_text_start_line
+            if (
+                is_pilot
+                and pilot_text_start_line is None
+                and re.search(r"(attached unit|this upgrade)", line, re.IGNORECASE)
+            ):
+                pilot_text_start_line = i
 
             # Add trait links
             TRAIT_GRP = "|".join(self._all_traits)
