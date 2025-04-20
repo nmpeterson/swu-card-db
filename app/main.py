@@ -7,6 +7,7 @@ from fastapi import FastAPI, HTTPException, Request, Depends, Header
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from sqlalchemy import desc
 from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import Session
 
@@ -41,7 +42,7 @@ templates.env.globals["current_year"] = current_year
 session = get_db()
 db = session.__next__()
 
-all_sets = db.query(SWUSet).order_by(SWUSet.number).all()
+all_sets = db.query(SWUSet).order_by(desc(SWUSet.number)).all()
 
 advanced_search_options = {
     "set_options": [{"id": s.id, "name": s.name} for s in all_sets],
