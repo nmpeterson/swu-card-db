@@ -14,3 +14,6 @@ wheels/
  
 # Development SSL certs
 certs/
+
+# Original assets
+assets/
