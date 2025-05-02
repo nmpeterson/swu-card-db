@@ -52,6 +52,7 @@ ARTIST_SEARCH_REMAP = {
     "Liana Anatolievich": "Liana Anatolevich",
     "Roxana Karpatvogyi": "Roxana Karpatvolgyi",
     "Sandra Chewlińska": "Sandra Chlewińska",
+    "Amélie Hutt": "Axel Hutt",
 }
 
 
