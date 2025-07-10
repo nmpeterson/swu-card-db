@@ -22,5 +22,11 @@
         "number": 4,
         "rotation": "A",
         "name": "Jump to Lightspeed"
+    },
+    {
+        "id": "LOF",
+        "number": 5,
+        "rotation": "A",
+        "name": "Legends of the Force"
     }
 ]
