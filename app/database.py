@@ -144,6 +144,11 @@ class SWUCard(Base):
                 r"(\(.+\))", lambda x: self._italic(x.group(1)) if self.variant_type == "Normal" else "", line
             )
 
+            # Bold and uppercase "keyword"/"keywords" in text
+            line = re.sub(
+                r"keywords?", lambda x: self._span(x.group(0).upper(), classes="keyword"), line, re.IGNORECASE
+            )
+
             # Add keyword links, flag SENTINEL/PILOTING lines
             if None not in (keywords := [k.keyword for k in self.keywords]):
                 for keyword in keywords:
