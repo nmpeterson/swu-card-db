@@ -40,11 +40,13 @@ KEYWORDS = {
     "COORDINATE",
     "EXPLOIT",
     "PILOTING",
+    "HIDDEN",
 }
 
 ARTIST_SEARCH_REMAP = {
     # Remap artist name typos or alternate spellings (other than diacritics)
     "Aitor Prieto Reyes": "Aitor Prieto",
+    "Amélie Hutt": "Axel Hutt",
     "Anny Maulina": "Ann Maulina",
     "Christian Papzoglakis": "Christian Papazoglakis",
     "Frank Cannels": "Francois Cannels",
@@ -52,7 +54,6 @@ ARTIST_SEARCH_REMAP = {
     "Liana Anatolievich": "Liana Anatolevich",
     "Roxana Karpatvogyi": "Roxana Karpatvolgyi",
     "Sandra Chewlińska": "Sandra Chlewińska",
-    "Amélie Hutt": "Axel Hutt",
 }
 
 
