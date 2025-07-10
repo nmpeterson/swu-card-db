@@ -114,7 +114,8 @@ async def get_card_page(request: Request, card_id: str, db: Session = Depends(ge
     """Return the card page for the given card_id at /cards/{card_id} or a random card at /cards/random"""
     if card_id.lower() == "random":
         card = db.query(SWUCard).order_by(func.random()).first()
-        return RedirectResponse(f"/cards/{card.id}", status_code=303)
+        if card:
+            return RedirectResponse(f"/cards/{card.id}", status_code=303)
     else:
         card = db.query(SWUCard).filter(SWUCard.id == card_id).first()
     if not card:
@@ -154,16 +155,16 @@ async def get_cards(
     hx_request: Annotated[str | None, Header(include_in_schema=False)] = None,
     name: str | None = None,
     text: str | None = None,
-    aspect: Literal["", *(a["aspect"] for a in advanced_search_options["aspect_options"])] | None = None, # type: ignore
-    card_type: Literal["", *advanced_search_options["card_type_options"]] | None = None, # type: ignore
-    trait: Literal["", *advanced_search_options["trait_options"]] | None = None, # type: ignore
-    keyword: Literal["", *advanced_search_options["keyword_options"]] | None = None, # type: ignore
-    arena: Literal["", *advanced_search_options["arena_options"]] | None = None, # type: ignore
-    set_id: Literal["", *(s["id"] for s in advanced_search_options["set_options"])] | None = None, # type: ignore
-    rarity: Literal["", *advanced_search_options["rarity_options"]] | None = None, # type: ignore
-    artist: Literal["", *advanced_search_options["artist_options"]] | None = None, # type: ignore
-    variant_type: Literal["", *advanced_search_options["variant_type_options"]] | None = None, # type: ignore
-    rotation: Literal["", *advanced_search_options["rotation_options"]] | None = None, # type: ignore
+    aspect: Literal["", *(a["aspect"] for a in advanced_search_options["aspect_options"])] | None = None,  # type: ignore
+    card_type: Literal["", *advanced_search_options["card_type_options"]] | None = None,  # type: ignore
+    trait: Literal["", *advanced_search_options["trait_options"]] | None = None,  # type: ignore
+    keyword: Literal["", *advanced_search_options["keyword_options"]] | None = None,  # type: ignore
+    arena: Literal["", *advanced_search_options["arena_options"]] | None = None,  # type: ignore
+    set_id: Literal["", *(s["id"] for s in advanced_search_options["set_options"])] | None = None,  # type: ignore
+    rarity: Literal["", *advanced_search_options["rarity_options"]] | None = None,  # type: ignore
+    artist: Literal["", *advanced_search_options["artist_options"]] | None = None,  # type: ignore
+    variant_type: Literal["", *advanced_search_options["variant_type_options"]] | None = None,  # type: ignore
+    rotation: Literal["", *advanced_search_options["rotation_options"]] | None = None,  # type: ignore
 ):
     """Return an array of all SWU cards matching the query parameters at /card_list.
     If hx-request header is present, return the card_list.html template.
