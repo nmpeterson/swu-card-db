@@ -276,6 +276,11 @@ div.card-aspect-Heroism {
   & .keyword {
     font-weight: bold;
   }
+
+  & .reminder {
+    font-style: italic;
+    font-weight: normal;
+  }
 }
 
 /* Set list layout */

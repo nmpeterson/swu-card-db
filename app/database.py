@@ -141,12 +141,14 @@ class SWUCard(Base):
 
             # Italicize reminder text on Normal variants, hide it on others
             line = re.sub(
-                r"(\(.+\))", lambda x: self._italic(x.group(1)) if self.variant_type == "Normal" else "", line
+                r"(\(.+?\))",
+                lambda x: self._span(x.group(1), classes="reminder") if self.variant_type == "Normal" else "",
+                line,
             )
 
             # Bold and uppercase "keyword"/"keywords" in text
             line = re.sub(
-                r"keywords?", lambda x: self._span(x.group(0).upper(), classes="keyword"), line, re.IGNORECASE
+                r"keywords?", lambda x: self._span(x.group(0).upper(), classes="keyword"), line, flags=re.IGNORECASE
             )
 
             # Add keyword links, flag SENTINEL/PILOTING lines
@@ -155,7 +157,7 @@ class SWUCard(Base):
                     if keyword == "SENTINEL":
                         if line.startswith(keyword) or line.startswith(f"Attached unit gains {keyword}"):
                             full_sentinel = True
-                        elif re.search(rf"(?:this|attached) unit [^.]*gains [^.]*{keyword}", line, re.IGNORECASE):
+                        elif re.search(rf"(?:this|attached) unit [^.]*gains [^.]*{keyword}", line, flags=re.IGNORECASE):
                             conditional_sentinel = True
                     elif keyword == "PILOTING":
                         if line.startswith(keyword):
@@ -178,14 +180,14 @@ class SWUCard(Base):
             if (
                 is_pilot
                 and pilot_text_start_line is None
-                and re.search(r"(attached unit|this upgrade)", line, re.IGNORECASE)
+                and re.search(r"(attached unit|this upgrade)", line, flags=re.IGNORECASE)
             ):
                 pilot_text_start_line = i
 
             # Add trait links
             TRAIT_GRP = "|".join(self._all_traits)
             line = re.sub(
-                rf"({TRAIT_GRP})?(?:, )?({TRAIT_GRP})(,? and |,? or )({TRAIT_GRP})",
+                rf"({TRAIT_GRP})?(?:, )?({TRAIT_GRP})(,? and |,? or | non-)({TRAIT_GRP})",
                 lambda x: (
                     self._link(
                         x.group(1).upper(),
