@@ -67,20 +67,18 @@ class SWUCard(Base):
         return all_traits
 
     @hybrid_property
-    def name_and_subtitle(self) -> str:
+    def name_and_subtitle(self) -> str:  # type: ignore
         return self.name + " " + (self.subtitle or "")
 
     @name_and_subtitle.expression
-    @classmethod
     def name_and_subtitle(cls):
         return cls.name + func.coalesce(cls.subtitle, "")
 
     @hybrid_property
-    def card_text(self) -> str:
+    def card_text(self) -> str:  # type: ignore
         return (self.front_text or "") + " " + (self.epic_action or "") + " " + (self.back_text or "")
 
     @card_text.expression
-    @classmethod
     def card_text(cls):
         return func.coalesce(cls.front_text, "") + func.coalesce(cls.epic_action, "") + func.coalesce(cls.back_text, "")
 
@@ -138,6 +136,29 @@ class SWUCard(Base):
             line = re.sub(r"Action(?: \[.+\])?:", lambda x: self._bold(x.group(0)), line)
             line = re.sub(r"When [^.]+:", lambda x: self._bold(x.group(0)), line)
             line = re.sub(r"On [^.]+:", lambda x: self._bold(x.group(0)), line)
+
+            # Replace text with appropriate symbols/images
+            line = re.sub(
+                r"(\[.*)Exhaust(.*\])",
+                lambda x: f"{x.group(1)}{self._image('/images/icons/exhaust.svg', 'Exhaust', classes='exhaust')}{x.group(2)}",
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                r"(Aggression|Command|Cunning|Heroism|Vigilance|Villainy)",
+                lambda x: self._link(
+                    self._image(f"/images/aspects/{x.group(1)}-small.png", alt=x.group(1), classes="aspect-img"),
+                    f"/search?aspect={x.group(1)}&variant_type=Normal",
+                ),
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
+                r"(non-)?(unique)( \((?:non-)?unique\))",
+                lambda x: f"{x.group(1) if x.group(1) else ''}{self._span('✧', classes='unique', aria_desc='Unique')}{x.group(3)}",
+                line,
+                flags=re.IGNORECASE,
+            )
 
             # Italicize reminder text on Normal variants, hide it on others
             line = re.sub(
@@ -213,7 +234,7 @@ class SWUCard(Base):
                 flags=re.IGNORECASE,
             )
             line = re.sub(
-                rf"({TRAIT_GRP})((?: ground| space)? (?:unit|card|event))",
+                rf"({TRAIT_GRP})((?: ground| space| leader)? (?:unit|card|event))",
                 lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')}{x.group(2)}",
                 line,
                 flags=re.IGNORECASE,
@@ -245,23 +266,6 @@ class SWUCard(Base):
             line = re.sub(
                 r"(unit without a )(pilot)( on it)",
                 lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}{x.group(3)}",
-                line,
-                flags=re.IGNORECASE,
-            )
-
-            # Replace text with appropriate symbols/images
-            line = re.sub(
-                r"(\[.*)Exhaust(.*\])",
-                lambda x: f"{x.group(1)}{self._image('/images/icons/exhaust.svg', 'Exhaust', classes='exhaust')}{x.group(2)}",
-                line,
-                flags=re.IGNORECASE,
-            )
-            line = re.sub(
-                r"(Aggression|Command|Cunning|Heroism|Vigilance|Villainy)",
-                lambda x: self._link(
-                    self._image(f"/images/aspects/{x.group(1)}-small.png", alt=x.group(1), classes="aspect-img"),
-                    f"/search?aspect={x.group(1)}&variant_type=Normal",
-                ),
                 line,
                 flags=re.IGNORECASE,
             )
