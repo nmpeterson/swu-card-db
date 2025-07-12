@@ -183,10 +183,10 @@ async def get_cards(
     if artist:
         cards = cards.filter(SWUCard.artist_search.icontains(artist))
     if name:
-        name_like = "%".join(name.strip().split())
+        name_like = f"%{name.strip()}%"
         cards = cards.filter(SWUCard.name_and_subtitle.icontains(name_like))
     if text:
-        text_like = "%".join(text.strip().split())
+        text_like = f"%{text.strip()}%"
         cards = cards.filter(SWUCard.card_text.icontains(text_like))
     if arena:
         cards = cards.join(SWUCardArena).filter(SWUCard.arenas.any(SWUCardArena.arena == arena))
