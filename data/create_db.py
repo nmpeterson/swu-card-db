@@ -101,21 +101,21 @@ def main():
                 card.get("EpicAction"),
                 back_text,
                 card["Artist"],
-                unidecode(ARTIST_SEARCH_REMAP.get(card["Artist"], card["Artist"])),
+                unidecode(ARTIST_SEARCH_REMAP.get(card["Artist"], card["Artist"])),  # type: ignore
             )
         )
         if card.get("Aspects") == []:
             del card["Aspects"]
         for aspect, n in Counter(card.get("Aspects", [None])).items():
             aspect = None if aspect == "" else aspect
-            aspect_rows.append((card_id, aspect, ASPECT_COLORS.get(aspect), ASPECT_SORT_ORDER[aspect], int(n > 1)))
+            aspect_rows.append((card_id, aspect, ASPECT_COLORS.get(aspect), ASPECT_SORT_ORDER[aspect], int(n > 1)))  # type: ignore
         for trait in card.get("Traits", [None]):
             trait_rows.append((card_id, trait))
         for arena in card.get("Arenas", [None]):
             arena_rows.append((card_id, arena))
         keywords = front_keywords | back_keywords
         if not keywords:
-            keywords.add(None)
+            keywords.add(None)  # type: ignore
         for keyword in keywords:
             keyword_rows.append((card_id, keyword))
         if not keyword_rows:
