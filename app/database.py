@@ -273,6 +273,12 @@ class SWUCard(Base):
             # Add badges for cost and buffs/debuffs
             line = re.sub(r"C=(\d+)", lambda x: self._span(x.group(1), classes="badge cost"), line, flags=re.IGNORECASE)
             line = re.sub(
+                r"Action \[(\d+)",
+                lambda x: f"Action [{self._span(x.group(1), classes='badge cost')}",
+                line,
+                flags=re.IGNORECASE,
+            )
+            line = re.sub(
                 r"(costs?|pays?) (\d+)",
                 lambda x: f"{x.group(1)} {self._span(x.group(2), classes='badge cost')}",
                 line,
