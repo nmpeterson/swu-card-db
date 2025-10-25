@@ -28,5 +28,11 @@
         "number": 5,
         "rotation": "A",
         "name": "Legends of the Force"
+    },
+    {
+        "id": "SEC",
+        "number": 6,
+        "rotation": "A",
+        "name": "Secrets of Power"
     }
 ]
