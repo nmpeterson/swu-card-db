@@ -6,7 +6,9 @@ import requests
 from PIL import Image
 
 
-OVERWRITE = False  # Set to True to overwrite existing images
+OVERWRITE = True  # Set to True to overwrite existing images
+UPDATE_SET_IDS = {"LOF", "SEC"}
+
 DATA_DIR = os.path.dirname(__file__)
 IMG_DIR = os.path.abspath(os.path.join(DATA_DIR, "../app/static/images"))
 CARD_IMG_URL = "https://swudb.com/images/cards/{set_id}/{number}.png"
@@ -23,6 +25,8 @@ def main():
     print("Fetching card images...")
     for card in all_cards:
         set_id = card["Set"]
+        if UPDATE_SET_IDS and set_id not in UPDATE_SET_IDS:
+            continue
         number = card["Number"]
         double_sided = card.get("DoubleSided", False)
         url = CARD_IMG_URL.format(set_id=set_id, number=number)
