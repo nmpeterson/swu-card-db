@@ -28,19 +28,20 @@ ASPECT_COLORS = {
 
 KEYWORDS = {
     "AMBUSH",
+    "BOUNTY",
+    "COORDINATE",
+    "EXPLOIT",
     "GRIT",
+    "HIDDEN",
     "OVERWHELM",
+    "PILOTING",
+    "PLOT",
     "RAID",
     "RESTORE",
     "SABOTEUR",
     "SENTINEL",
     "SHIELDED",
-    "BOUNTY",
     "SMUGGLE",
-    "COORDINATE",
-    "EXPLOIT",
-    "PILOTING",
-    "HIDDEN",
 }
 
 ARTIST_SEARCH_REMAP = {
