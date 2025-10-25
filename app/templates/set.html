@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="p-0 mb-2">
-  <img src="/images/sets/{{set.id}}_logo.png" alt="{{set.name}}" width="300">
+  <img src="/images/sets/{{set.id}}_logo.webp" alt="{{set.name}}" width="300">
 </div>
 <div class="p-0">
   <ul id="card-list" hx-get="/card_list?set_id={{set.id}}&variant_type=Normal" hx-swap="innerHTML" hx-trigger="load">
