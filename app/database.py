@@ -162,7 +162,7 @@ class SWUCard(Base):
 
             # Italicize reminder text on Normal variants, hide it on others
             line = re.sub(
-                r"(\(.+?\))",
+                r"( ?\(.+?\))",
                 lambda x: self._span(x.group(1), classes="reminder") if self.variant_type == "Normal" else "",
                 line,
             )
