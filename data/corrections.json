@@ -1009,7 +1009,7 @@
     "Artist": "Guillaume Ospital"
   },
   "LOF-1018": {
-    "Artist": "Benjamin Paulus Van Onzen"
+    "Artist": "Benjamin Paulus van Onzen"
   },
   "LOF-1019": {
     "Artist": "Ario Murti"
@@ -1160,5 +1160,11 @@
   },
   "LOF-1068": {
     "Artist": "Vincent Dutrait"
+  },
+  "SEC-037": {
+    "Artist": "Stephen Zavala"
+  },
+  "SEC-093": {
+    "Artist": "French Carlomango"
   }
 }
