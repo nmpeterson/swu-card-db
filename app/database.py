@@ -134,8 +134,8 @@ class SWUCard(Base):
             # Bold action/trigger text
             line = re.sub(r"Epic Action:", lambda x: self._bold(x.group(0)), line)
             line = re.sub(r"Action(?: \[.+\])?:", lambda x: self._bold(x.group(0)), line)
-            line = re.sub(r"When [^.]+:", lambda x: self._bold(x.group(0)), line)
-            line = re.sub(r"On [^.]+:", lambda x: self._bold(x.group(0)), line)
+            line = re.sub(r"When [^.:]+:", lambda x: self._bold(x.group(0)), line)
+            line = re.sub(r"On [^.:]+:", lambda x: self._bold(x.group(0)), line)
 
             # Replace text with appropriate symbols/images
             line = re.sub(
