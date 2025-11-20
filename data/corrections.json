@@ -452,9 +452,15 @@
   "JTL-154": {
     "Artist": "Sebastián Guidobono"
   },
+  "JTL-157": {
+    "Artist": "Space Gooose"
+  },
   "JTL-159": {
     "Power": "3 / +3",
     "HP": "1 / +1"
+  },
+  "JTL-184": {
+    "Artist": "Space Gooose"
   },
   "JTL-187": {
     "Power": "4 / +2",
@@ -491,6 +497,9 @@
   "JTL-215": {
     "Power": "3 / +1",
     "HP": "4 / +2"
+  },
+  "JTL-224": {
+    "Artist": "Space Gooose"
   },
   "JTL-236": {
     "Power": "1 / +1",
@@ -666,9 +675,15 @@
   "JTL-416": {
     "Artist": "Sebastián Guidobono"
   },
+  "JTL-419": {
+    "Artist": "Space Gooose"
+  },
   "JTL-421": {
     "Power": "3 / +3",
     "HP": "1 / +1"
+  },
+  "JTL-446": {
+    "Artist": "Space Gooose"
   },
   "JTL-449": {
     "Power": "4 / +2",
@@ -705,6 +720,9 @@
   "JTL-477": {
     "Power": "3 / +1",
     "HP": "4 / +2"
+  },
+  "JTL-486": {
+    "Artist": "Space Gooose"
   },
   "JTL-498": {
     "Power": "1 / +1",
@@ -921,11 +939,17 @@
   "LOF-117": {
     "Subtitle": "Commissioning an Army"
   },
+  "LOF-131": {
+    "Artist": "Space Gooose"
+  },
   "LOF-136": {
     "Artist": "Eslam Aboshady"
   },
   "LOF-140": {
     "Artist": "Eslam Aboshady"
+  },
+  "LOF-157": {
+    "Artist": "Space Gooose"
   },
   "LOF-192": {
     "Artist": "Eslam Aboshady"
@@ -954,11 +978,17 @@
   "LOF-381": {
     "Subtitle": "Commissioning an Army"
   },
+  "LOF-395": {
+    "Artist": "Space Gooose"
+  },
   "LOF-400": {
     "Artist": "Eslam Aboshady"
   },
   "LOF-404": {
     "Artist": "Eslam Aboshady"
+  },
+  "LOF-421": {
+    "Artist": "Space Gooose"
   },
   "LOF-456": {
     "Artist": "Eslam Aboshady"
@@ -1173,5 +1203,209 @@
   },
   "SEC-093": {
     "Artist": "French Carlomango"
+  },
+  "SEC-120": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SEC-200": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SEC-301": {
+    "Artist": "Stephen Zavala"
+  },
+  "SEC-357": {
+    "Artist": "French Carlomagno"
+  },
+  "SEC-384": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SEC-464": {
+    "Artist": "Eslam Aboshady"
+  },
+  "SEC-523": {
+    "Artist": "French Carlomagno"
+  },
+  "SEC-1021": {
+    "Artist": "EJ Dela Cruz"
+  },
+  "SEC-1022": {
+    "Artist": "Marc Escachx"
+  },
+  "SEC-1023": {
+    "Artist": "Marc Escachx"
+  },
+  "SEC-1024": {
+    "Artist": "David Buisan"
+  },
+  "SEC-1025": {
+    "Artist": "Gabriel Gómez Almenzar"
+  },
+  "SEC-1026": {
+    "Artist": "Gabriel Gómez Almenzar"
+  },
+  "SEC-1027": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1028": {
+    "Artist": "Vincent Dutrait"
+  },
+  "SEC-1029": {
+    "Artist": "Robynn Frauhn"
+  },
+  "SEC-1030": {
+    "Artist": "Gabriel Gómez Almenzar"
+  },
+  "SEC-1031": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1032": {
+    "Artist": "EJ Dela Cruz"
+  },
+  "SEC-1033": {
+    "Artist": "Afif Khaled"
+  },
+  "SEC-1034": {
+    "Artist": "Axel Hutt"
+  },
+  "SEC-1035": {
+    "Artist": "Marc Escachx"
+  },
+  "SEC-1036": {
+    "Artist": "Jessi Ochse"
+  },
+  "SEC-1037": {
+    "Artist": "Benjamin Paulus"
+  },
+  "SEC-1038": {
+    "Artist": "Milos Slavkovic"
+  },
+  "SEC-1039": {
+    "Artist": "Johnny Morrow"
+  },
+  "SEC-1040": {
+    "Artist": "Terry Wei"
+  },
+  "SEC-1041": {
+    "Artist": "JB Casacop"
+  },
+  "SEC-1042": {
+    "Artist": "Terry Wei"
+  },
+  "SEC-1043": {
+    "Artist": "Cole Marchetti"
+  },
+  "SEC-1044": {
+    "Artist": "Reno"
+  },
+  "SEC-1045": {
+    "Artist": "Vincent Dutrait"
+  },
+  "SEC-1046": {
+    "Artist": "Max Grecke"
+  },
+  "SEC-1047": {
+    "Artist": "Cole Marchetti"
+  },
+  "SEC-1048": {
+    "Artist": "Cole Marchetti"
+  },
+  "SEC-1049": {
+    "Artist": "JB Casacop"
+  },
+  "SEC-1050": {
+    "Artist": "Terry Wei"
+  },
+  "SEC-1051": {
+    "Artist": "JB Casacop"
+  },
+  "SEC-1052": {
+    "Artist": "Johnny Morrow"
+  },
+  "SEC-1053": {
+    "Artist": "Vincent Dutrait"
+  },
+  "SEC-1054": {
+    "Artist": "Johnny Morrow"
+  },
+  "SEC-1055": {
+    "Artist": "Reno"
+  },
+  "SEC-1056": {
+    "Artist": "Vincent Dutrait"
+  },
+  "SEC-1057": {
+    "Artist": "Reno"
+  },
+  "SEC-1058": {
+    "Artist": "Max Grecke"
+  },
+  "SEC-1059": {
+    "Artist": "Max Grecke"
+  },
+  "SEC-1060": {
+    "Artist": "Borja Pindado"
+  },
+  "SEC-1061": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1062": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1063": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1064": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1065": {
+    "Artist": "Kevin Sidharta"
+  },
+  "SEC-1066": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1067": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1068": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1069": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1070": {
+    "Artist": "Ivan Dedov"
+  },
+  "SEC-1071": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1072": {
+    "Artist": "Borja Pindado"
+  },
+  "SEC-1073": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1074": {
+    "Artist": "Ivan Dedov"
+  },
+  "SEC-1075": {
+    "Artist": "Johnny Morrow"
+  },
+  "SEC-1076": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1077": {
+    "Artist": "Ivan Dedov"
+  },
+  "SEC-1078": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1079": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1080": {
+    "Artist": "Envar Entertainment"
+  },
+  "SEC-1081": {
+    "Artist": "Envar Entertainment"
   }
 }
