@@ -9,11 +9,11 @@ FULL_SETS = [
     "SOR",
     "SHD",
     "TWI",
-    "SEC",
 ]
 PARTIAL_SETS = {
     "JTL": [*range(1, 525), *range(997, 1051)],  # Ignore foils and prestige serialized -- some hyperspace bases missing
     "LOF": [*range(1, 529), *range(1005, 1069)],  # Ignore foils and prestige serialized
+    "SEC": [*range(1, 529), *range(1021, 1082)],  # Ignore foils and prestige serialized
 }
 DROP_PROPERTIES = [
     "FrontArt",
