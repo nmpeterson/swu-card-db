@@ -6,8 +6,15 @@ import requests
 from PIL import Image
 
 
-OVERWRITE = True  # Set to True to overwrite existing images
-UPDATE_SET_IDS = {"LOF", "SEC"}
+OVERWRITE = False  # Set to True to overwrite existing images
+UPDATE_SET_IDS = {
+    "SOR",
+    "SHD",
+    "TWI",
+    "JTL",
+    "LOF",
+    "SEC",
+}
 
 DATA_DIR = os.path.dirname(__file__)
 IMG_DIR = os.path.abspath(os.path.join(DATA_DIR, "../app/static/images"))
