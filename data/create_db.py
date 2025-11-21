@@ -307,7 +307,7 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
             rf"(give (?:each|a|an) (?:[^.]+ )?unit )({KW_GRP})",  # "give each/a(n) {qualifier?} unit {keyword}"
             rf"(using )({KW_GRP})",  # "using {keyword}"
             rf"({NOT_UNLESS} has )({KW_GRP})",  # "has {keyword}" (but not "unless he/she/it has {keyword}")
-            rf"(units? with )({KW_GRP})",  # "unit(s) with {keyword}"
+            rf"((?:cards?|units?) with )({KW_GRP})",  # "card(s)/unit(s) with {keyword}"
             r"((?:has|with) a )(bounty)",  # "has/with a {bounty}"
         ]:
             if match := re.search(pattern, lines[i], re.IGNORECASE):
