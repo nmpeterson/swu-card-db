@@ -271,15 +271,27 @@ div.card-aspect-Heroism {
 
   & .trait {
     font-style: italic;
+    text-transform: uppercase;
   }
 
   & .keyword {
     font-weight: bold;
+    text-transform: uppercase;
   }
 
   & .reminder {
     font-style: italic;
     font-weight: normal;
+
+    &>.keyword {
+      font-weight: normal;
+      text-transform: none;
+    }
+
+    &>.trait {
+      font-style: normal;
+      text-transform: none;
+    }
   }
 
   & .unique {

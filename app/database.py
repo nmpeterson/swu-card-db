@@ -167,13 +167,27 @@ class SWUCard(Base):
                 line,
             )
 
-            # Bold and uppercase "keyword"/"keywords" in text
+            # Italicize and uppercase "trait"/"traits" in text (unless preceded by a specific trait)
+            not_specific_trait = "".join(f"(?<!{t} )" for t in self._all_traits)
             line = re.sub(
-                r"keywords?", lambda x: self._span(x.group(0).upper(), classes="keyword"), line, flags=re.IGNORECASE
+                rf"{not_specific_trait}traits?",
+                lambda x: self._span(x.group(0), classes="trait"),
+                line,
+                flags=re.IGNORECASE,
+            )
+
+            # Bold and uppercase "keyword"/"keywords" in text (unless preceded by a specific keyword)
+            keywords = [k.keyword for k in self.keywords if k.keyword]
+            not_specific_kw = "".join(f"(?<!{k} )" for k in keywords)
+            line = re.sub(
+                rf"{not_specific_kw}keywords?",
+                lambda x: self._span(x.group(0), classes="keyword"),
+                line,
+                flags=re.IGNORECASE,
             )
 
             # Add keyword links, flag SENTINEL/PILOTING lines
-            if None not in (keywords := [k.keyword for k in self.keywords]):
+            if keywords:
                 for keyword in keywords:
                     if keyword == "SENTINEL":
                         if line.startswith(keyword) or line.startswith(f"Attached unit gains {keyword}"):
@@ -258,8 +272,8 @@ class SWUCard(Base):
                 flags=re.IGNORECASE,
             )
             line = re.sub(
-                rf"gains the ({TRAIT_GRP}) trait",
-                lambda x: f"gains the {self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')} trait",
+                rf"({TRAIT_GRP}) trait",
+                lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')} trait",
                 line,
                 flags=re.IGNORECASE,
             )

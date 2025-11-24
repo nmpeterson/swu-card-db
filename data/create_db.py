@@ -300,7 +300,12 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
                 flags=re.IGNORECASE,
             )
 
-        # Find lines with common 2-part keyword patterns
+        # Find lines with "{keyword} keyword"
+        if match := re.search(pattern := rf"({KW_GRP})( keyword)", lines[i], re.IGNORECASE):
+            keywords.add(match.group(1).upper())
+            lines[i] = re.sub(pattern, lambda x: f"{x.group(1).upper()}{x.group(2)}", lines[i], flags=re.IGNORECASE)
+
+        # Find lines with common 2-part keyword patterns w/ keyword 2nd
         for pattern in [
             rf"(COORDINATE - )({KW_GRP})",  # "COORDINATE - {keyword}"
             rf"(give it )({KW_GRP})",  # "give it {keyword}"
@@ -308,6 +313,7 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
             rf"(using )({KW_GRP})",  # "using {keyword}"
             rf"({NOT_UNLESS} has )({KW_GRP})",  # "has {keyword}" (but not "unless he/she/it has {keyword}")
             rf"((?:cards?|units?) with )({KW_GRP})",  # "card(s)/unit(s) with {keyword}"
+            rf"(all abilities except for )({KW_GRP})",  # "abilities except for {keyword}"
             r"((?:has|with) a )(bounty)",  # "has/with a {bounty}"
         ]:
             if match := re.search(pattern, lines[i], re.IGNORECASE):
