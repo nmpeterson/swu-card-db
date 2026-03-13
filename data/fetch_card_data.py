@@ -9,11 +9,13 @@ FULL_SETS = [
     "SOR",
     "SHD",
     "TWI",
+    "IBH",
 ]
 PARTIAL_SETS = {
-    "JTL": [*range(1, 525), *range(997, 1051)],  # Ignore foils and prestige serialized -- some hyperspace bases missing
-    "LOF": [*range(1, 529), *range(1005, 1069)],  # Ignore foils and prestige serialized
+    "JTL": [*range(1, 525), *range(997, 1051)],  # Ignore foils and prestige serialized
+    "LOF": [*range(1, 529), *range(1005, 1069)],  # Ignore foils and prestige serialized -- hyperspace bases missing
     "SEC": [*range(1, 529), *range(1021, 1082)],  # Ignore foils and prestige serialized
+    "LAW": [*range(1, 529), *range(767, 824)],  # Ignore foils and prestige serialized -- hyperspace bases missing
 }
 DROP_PROPERTIES = [
     "FrontArt",
@@ -34,9 +36,10 @@ def main():
             response = requests.get(f"{SWU_API_URL}/cards/{set_id}")
             response.raise_for_status()
             resp_json = response.json()
-            for card in sorted(resp_json["data"], key=lambda x: x["Number"]):
+            for card in sorted(resp_json["data"], key=lambda x: x["Number"].zfill(3)):
                 # print(f"{card['Set']}-{card['Number']}: {card['Name']}")
-                all_cards.append(clean_card(card))
+                if not card["Number"].endswith("F"):  # Ignore foils
+                    all_cards.append(clean_card(card))
         except requests.exceptions.HTTPError as e:
             raise ValueError(f"Full set data not found for {set_id}") from e
     for set_id, card_numbers in PARTIAL_SETS.items():
@@ -71,6 +74,8 @@ def main():
 
 def clean_card(card: dict[str, Any]) -> dict[str, Any]:
     """Drop unwanted properties from card object"""
+    if "Number" in card:
+        card["Number"] = card["Number"].zfill(3)
     return {k: v for k, v in card.items() if k not in DROP_PROPERTIES}
 
 
