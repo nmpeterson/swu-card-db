@@ -30,9 +30,21 @@
         "name": "Legends of the Force"
     },
     {
-        "id": "SEC",
+        "id": "IBH",
         "number": 6,
+        "rotation": "",
+        "name": "Intro Battle: Hoth"
+    },
+    {
+        "id": "SEC",
+        "number": 7,
         "rotation": "A",
         "name": "Secrets of Power"
+    },
+    {
+        "id": "LAW",
+        "number": 8,
+        "rotation": "B",
+        "name": "A Lawless Time"
     }
 ]
