@@ -51,6 +51,7 @@ ARTIST_SEARCH_REMAP = {
     "Anny Maulina": "Ann Maulina",
     "Benjamin Paulus van Onzen": "Benjamin Paulus",
     "Christian Papzoglakis": "Christian Papazoglakis",
+    "David Nash": "David Auden Nash",
     "Frank Cannels": "Francois Cannels",
     "French Carlomago": "French Carlomagno",
     "French Carlomango": "French Carlomagno",
@@ -295,7 +296,9 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
                 keywords.add(match.group(5).upper())
             lines[i] = re.sub(
                 pattern,
-                lambda x: f"{x.group(1)}{x.group(2).upper()}{x.group(3) or ''}{f' and {x.group(5).upper()}' if x.group(4) else ''}",
+                lambda x: (
+                    f"{x.group(1)}{x.group(2).upper()}{x.group(3) or ''}{f' and {x.group(5).upper()}' if x.group(4) else ''}"
+                ),
                 lines[i],
                 flags=re.IGNORECASE,
             )
