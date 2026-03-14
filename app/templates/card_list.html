@@ -14,9 +14,9 @@
       {% endif %}
       {% endfor %}
     </span>
-    <span class="align-middle fw-normal">{% if card.unique is true %}✧{% endif %}{{card.name}}</span>
+    <span class="align-middle fw-normal">{% if card.unique is true %}✧{% endif %}{{card.display_name}}</span>
     {% if card.subtitle is not none %}
-    <span class="align-middle fw-lighter">— {{card.subtitle}}</span>
+    <span class="align-middle fw-lighter">— {{card.display_subtitle}}</span>
     {% endif %}
     <img src="/images/rarity/{{card.rarity}}.png" alt="{{card.rarity}} rarity" class="rarity-pip ms-1">
     {% if card.variant_type != 'Normal' %}

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{card.name}}{% if card.subtitle is not none %}: {{card.subtitle}}{% endif %} — {{ super() }}
+{{card.display_name}}{% if card.subtitle is not none %}: {{card.display_subtitle}}{% endif %} — {{ super() }}
 {% endblock %}
 
 {% block content %}
@@ -45,10 +45,10 @@
         <div id="card-summary-title" class="py-auto d-flex justify-content-between">
           <div class="my-auto">
             <h3 class="card-title text-white mb-1">
-              {% if card.unique is true %}✧{% endif %}{{card.name}}
+              {% if card.unique is true %}✧{% endif %}{{card.display_name}}
             </h3>
             {% if card.subtitle is not none %}
-            <h4 class="card-subtitle h5 fw-lighter text-body-secondary">{{card.subtitle}}</h4>
+            <h4 class="card-subtitle h5 fw-lighter text-body-secondary">{{card.display_subtitle}}</h4>
             {% endif %}
           </div>
           <div class="d-flex justify-content-end">
@@ -67,7 +67,8 @@
         <div id="card-summary-power" class="d-flex justify-content-start">
           {% if card.power is not none %}
           <span class="badge fs-3 mt-auto w-100" aria-description="Power">
-            {% if card.card_type == "Upgrade" %}+{% endif %}{{card.power|replace("/","<hr>")|safe}}
+            {% if card.card_type == "Upgrade" %}+{% endif %}{{card.power|replace("/","
+            <hr>")|safe}}
           </span>
           {% endif %}
         </div>
@@ -98,7 +99,8 @@
         <div id="card-summary-hp" class="d-flex justify-content-end">
           {% if card.hp is not none %}
           <span class="badge fs-3 mt-auto" aria-description="HP">
-            {% if card.card_type == "Upgrade" %}+{% endif %}{{card.hp|replace("/","<hr>")|safe}}
+            {% if card.card_type == "Upgrade" %}+{% endif %}{{card.hp|replace("/","
+            <hr>")|safe}}
           </span>
           {% endif %}
         </div>

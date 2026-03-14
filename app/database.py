@@ -75,6 +75,14 @@ class SWUCard(Base):
         return cls.name + func.coalesce(cls.subtitle, "")
 
     @hybrid_property
+    def display_name(self) -> str:
+        return self._clean_punctuation(self.name)
+
+    @hybrid_property
+    def display_subtitle(self) -> str | None:
+        return self._clean_punctuation(self.subtitle) if self.subtitle else self.subtitle
+
+    @hybrid_property
     def card_text(self) -> str:  # type: ignore
         return (self.front_text or "") + " " + (self.epic_action or "") + " " + (self.back_text or "")
 
@@ -116,6 +124,14 @@ class SWUCard(Base):
     def _link(text: str, href: str, classes: str | None = None) -> str:
         return f'<a href="{href}" {f'class="{classes}"' if classes else ""}>{text}</a>'
 
+    def _clean_punctuation(self, text: str) -> str:
+        text = re.sub(r'"(.+)"', lambda x: f"“{x.group(1)}”", text)
+        text = re.sub(r" - ", " — ", text)
+        text = re.sub(r"'", "’", text)
+        text = re.sub(r" (-|–)(\d+)/", lambda x: f" −{x.group(2)}/", text)
+        text = re.sub(r"/(-|–)(\d+)", lambda x: f"/−{x.group(2)}", text)
+        return text
+
     def _htmlify_card_text(self, text: str, is_pilot: bool = False) -> str:
         # Initalize multi-line flags
         pilot_text_start_line = None
@@ -127,9 +143,7 @@ class SWUCard(Base):
             conditional_sentinel = False
 
             # Punctuation cleanup
-            line = re.sub(r'"(.+)"', lambda x: f"“{x.group(1)}”", line)
-            line = re.sub(r" - ", " — ", line)
-            line = re.sub(r"'", "’", line)
+            line = self._clean_punctuation(line)
 
             # Bold action/trigger text
             line = re.sub(r"Epic Action:", lambda x: self._bold(x.group(0)), line)
@@ -140,7 +154,9 @@ class SWUCard(Base):
             # Replace text with appropriate symbols/images
             line = re.sub(
                 r"(\[.*)Exhaust(.*\])",
-                lambda x: f"{x.group(1)}{self._image('/images/icons/exhaust.svg', 'Exhaust', classes='exhaust')}{x.group(2)}",
+                lambda x: (
+                    f"{x.group(1)}{self._image('/images/icons/exhaust.svg', 'Exhaust', classes='exhaust')}{x.group(2)}"
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
@@ -155,7 +171,9 @@ class SWUCard(Base):
             )
             line = re.sub(
                 r"(non-)?(unique)( \((?:non-)?unique\))",
-                lambda x: f"{x.group(1) if x.group(1) else ''}{self._span('✧', classes='unique', aria_desc='Unique')}{x.group(3)}",
+                lambda x: (
+                    f"{x.group(1) if x.group(1) else ''}{self._span('✧', classes='unique', aria_desc='Unique')}{x.group(3)}"
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
@@ -224,62 +242,76 @@ class SWUCard(Base):
             line = re.sub(
                 rf"({TRAIT_GRP})?(?:, )?({TRAIT_GRP})(,? and |,? or | non-)({TRAIT_GRP})",
                 lambda x: (
-                    self._link(
-                        x.group(1).upper(),
-                        f"/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal",
+                    (
+                        self._link(
+                            x.group(1).upper(),
+                            f"/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal",
+                            classes="trait",
+                        )
+                        + ", "
+                        if x.group(1)
+                        else ""
+                    )
+                    + self._link(
+                        x.group(2).upper(),
+                        f"/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal",
                         classes="trait",
                     )
-                    + ", "
-                    if x.group(1)
-                    else ""
-                )
-                + self._link(
-                    x.group(2).upper(),
-                    f"/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal",
-                    classes="trait",
-                )
-                + x.group(3)
-                + self._link(
-                    x.group(4).upper(),
-                    f"/search?trait={quote_plus(x.group(4).upper())}&variant_type=Normal",
-                    classes="trait",
+                    + x.group(3)
+                    + self._link(
+                        x.group(4).upper(),
+                        f"/search?trait={quote_plus(x.group(4).upper())}&variant_type=Normal",
+                        classes="trait",
+                    )
                 ),
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 rf"({TRAIT_GRP})((?: ground| space| leader)? (?:unit|card|event))",
-                lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')}{x.group(2)}",
+                lambda x: (
+                    f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')}{x.group(2)}"
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 rf"(attached unit is (?:a |an )?)({TRAIT_GRP})",
-                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}",
+                lambda x: (
+                    f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}"
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 rf"(if it’s (?:a |an )?)({TRAIT_GRP})",
-                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}",
+                lambda x: (
+                    f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}"
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 rf"(search [^.]+ deck for [^.]+ )({TRAIT_GRP})",
-                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}",
+                lambda x: (
+                    f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}"
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 rf"({TRAIT_GRP}) trait",
-                lambda x: f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')} trait",
+                lambda x: (
+                    f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')} trait"
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
             line = re.sub(
                 r"(unit without a )(pilot)( on it)",
-                lambda x: f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}{x.group(3)}",
+                lambda x: (
+                    f"{x.group(1)}{self._link(x.group(2).upper(), f'/search?trait={quote_plus(x.group(2).upper())}&variant_type=Normal', classes='trait')}{x.group(3)}"
+                ),
                 line,
                 flags=re.IGNORECASE,
             )
@@ -298,17 +330,19 @@ class SWUCard(Base):
                 line,
             )
             line = re.sub(
-                r"([+-]?\d+)/([+-]?\d+)",
-                lambda x: f"{self._span(x.group(1), classes='badge power')}/{self._span(x.group(2), classes='badge hp')}",
+                r"([+-–−]?\d+)/([+-–−]?\d+)",
+                lambda x: (
+                    f"{self._span(x.group(1), classes='badge power')}/{self._span(x.group(2), classes='badge hp')}"
+                ),
                 line,
             )
             line = re.sub(
-                r"(\d+)( or (:?less|more)(?: remaining)? HP)",
+                r"(\d+)(( or (:?less|more)(?: remaining)?)? HP)",
                 lambda x: f"{self._span(x.group(1), classes='badge hp')}{x.group(2)}",
                 line,
             )
             line = re.sub(
-                r"(\d+)( or (:?less|more) power)",
+                r"(\d+)(( or (:?less|more))? power)",
                 lambda x: f"{self._span(x.group(1), classes='badge power')}{x.group(2)}",
                 line,
             )
