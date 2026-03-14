@@ -128,6 +128,7 @@ class SWUCard(Base):
         text = re.sub(r'"(.+)"', lambda x: f"“{x.group(1)}”", text)
         text = re.sub(r" - ", " — ", text)
         text = re.sub(r"'", "’", text)
+        text = re.sub(r"\.\.\.", "…", text)
         text = re.sub(r" (-|–)(\d+)/", lambda x: f" −{x.group(2)}/", text)
         text = re.sub(r"/(-|–)(\d+)", lambda x: f"/−{x.group(2)}", text)
         return text
