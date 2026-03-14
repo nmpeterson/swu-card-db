@@ -50,7 +50,7 @@ class SWUCard(Base):
     artist: Mapped[str] = mapped_column()
     artist_search: Mapped[str] = mapped_column()
     arenas: Mapped[list["SWUCardArena"]] = relationship()
-    aspects: Mapped[list["SWUCardAspect"]] = relationship(order_by="SWUCardAspect.sort_order")
+    aspects: Mapped[list["SWUCardAspect"]] = relationship()  # relationship(order_by="SWUCardAspect.sort_order")
     traits: Mapped[list["SWUCardTrait"]] = relationship()
     keywords: Mapped[list["SWUCardKeyword"]] = relationship()
     card_set: Mapped["SWUSet"] = relationship(back_populates="cards")
