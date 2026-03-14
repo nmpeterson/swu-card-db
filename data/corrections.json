@@ -1414,20 +1414,50 @@
   "LAW-014": {
     "Name": "Enfys Nest"
   },
-  "LAW_085": {
+  "LAW-032": {
+    "Subtitle": "Now It's My Turn"
+  },
+  "LAW-080": {
+    "Subtitle": "Profit or Be Destroyed"
+  },
+  "LAW-085": {
     "Artist": "Miki Montlló"
+  },
+  "LAW-094": {
+    "Subtitle": "Plays by His Own Rules"
   },
   "LAW-177": {
     "Artist": "Eslam Aboshady"
   },
+  "LAW-194": {
+    "Subtitle": "Digging for Answers"
+  },
+  "LAW-223": {
+    "Subtitle": "Now It's Worth It"
+  },
   "LAW-278": {
     "Name": "Enfys Nest"
+  },
+  "LAW-296": {
+    "Subtitle": "Now It's My Turn"
+  },
+  "LAW-344": {
+    "Subtitle": "Profit or Be Destroyed"
   },
   "LAW-349": {
     "Artist": "Miki Montlló"
   },
+  "LAW-358": {
+    "Subtitle": "Plays by His Own Rules"
+  },
   "LAW-441": {
     "Artist": "Eslam Aboshady"
+  },
+  "LAW-458": {
+    "Subtitle": "Digging for Answers"
+  },
+  "LAW-487": {
+    "Subtitle": "Now It's Worth It"
   },
   "LAW-767": {
     "Artist": "Gabriel Gómez Almenzar"
@@ -1545,6 +1575,7 @@
     "Artist": "Vincent Dutrait"
   },
   "LAW-806": {
+    "Subtitle": "Profit or Be Destroyed",
     "Artist": "Vincent Dutrait"
   },
   "LAW-807": {
@@ -1578,9 +1609,11 @@
     "Artist": "Vincent Dutrait"
   },
   "LAW-818": {
+    "Subtitle": "Now It's My Turn",
     "Artist": "Vincent Dutrait"
   },
   "LAW-819": {
+    "Subtitle": "Plays by His Own Rules",
     "Artist": "Vincent Dutrait"
   },
   "LAW-820": {
