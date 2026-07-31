@@ -1,0 +1,17 @@
+{
+    "listeners": {
+        "*:8080": {
+            "pass": "applications/swu-card-db"
+        }
+    },
+    "applications": {
+        "swu-card-db": {
+            "type": "python 3.13",
+            "processes": 4,
+            "path": "/build/",
+            "home": ".venv",
+            "module": "app.main",
+            "callable": "app"
+        }
+    }
+}

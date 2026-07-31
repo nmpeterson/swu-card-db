@@ -46,5 +46,11 @@
         "number": 8,
         "rotation": "B",
         "name": "A Lawless Time"
+    },
+    {
+        "id": "ASH",
+        "number": 9,
+        "rotation": "B",
+        "name": "Ashes of the Empire"
     }
 ]
