@@ -1,6 +1,7 @@
 import json
 import os
 from typing import Any
+
 import requests
 
 DATA_DIR = os.path.dirname(__file__)
@@ -13,9 +14,10 @@ FULL_SETS = [
 ]
 PARTIAL_SETS = {
     "JTL": [*range(1, 525), *range(997, 1051)],  # Ignore foils and prestige serialized
-    "LOF": [*range(1, 529), *range(1005, 1069)],  # Ignore foils and prestige serialized -- hyperspace bases missing
+    "LOF": [*range(1, 529), *range(1005, 1069)],  # Ignore foils and prestige serialized
     "SEC": [*range(1, 529), *range(1021, 1082)],  # Ignore foils and prestige serialized
-    "LAW": [*range(1, 529), *range(767, 824)],  # Ignore foils and prestige serialized -- hyperspace bases missing
+    "LAW": [*range(1, 529), *range(767, 824)],  # Ignore foils and prestige serialized
+    "ASH": [*range(1, 265)],
 }
 DROP_PROPERTIES = [
     "FrontArt",

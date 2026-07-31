@@ -3,16 +3,16 @@ from datetime import date
 from typing import Annotated, Literal
 from urllib.parse import quote_plus
 
-from fastapi import FastAPI, HTTPException, Request, Depends, Header
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy import desc
-from sqlalchemy.sql.expression import func
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.expression import func
 
-from .database import get_db, SWUSet, SWUCard, SWUCardArena, SWUCardAspect, SWUCardTrait, SWUCardKeyword
-from .models import SetModel, CardModel
+from .database import SWUCard, SWUCardArena, SWUCardAspect, SWUCardKeyword, SWUCardTrait, SWUSet, get_db
+from .models import CardModel, SetModel
 
 logging.basicConfig(level=logging.DEBUG)
 

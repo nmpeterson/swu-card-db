@@ -5,7 +5,6 @@ from io import BytesIO
 import requests
 from PIL import Image
 
-
 OVERWRITE = False  # Set to True to overwrite existing images
 UPDATE_SET_IDS = {
     "SOR",
@@ -16,6 +15,7 @@ UPDATE_SET_IDS = {
     "IBH",
     "SEC",
     "LAW",
+    "ASH",
 }
 
 DATA_DIR = os.path.dirname(__file__)
@@ -26,7 +26,8 @@ CARD_BACK_IMG_URL = "https://swudb.com/images/cards/{set_id}/{number}-portrait.p
 
 def main():
     try:
-        all_cards = json.load(open(os.path.join(DATA_DIR, "all_cards.json"), "rb"))
+        with open(os.path.join(DATA_DIR, "all_cards.json"), "rb") as f:
+            all_cards = json.load(f)
     except FileNotFoundError as e:
         raise RuntimeError("Could not find all_cards.json. Please run fetch_card_data.py to create it.") from e
     print(f"Loaded {len(all_cards):,} cards' data into memory")

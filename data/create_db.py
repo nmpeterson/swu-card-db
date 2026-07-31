@@ -1,8 +1,9 @@
-from collections import Counter
 import json
 import os
 import re
 import sqlite3
+from collections import Counter
+
 from unidecode import unidecode
 
 DATA_DIR = os.path.dirname(__file__)
@@ -42,6 +43,7 @@ KEYWORDS = {
     "SENTINEL",
     "SHIELDED",
     "SMUGGLE",
+    "SUPPORT",
 }
 
 ARTIST_SEARCH_REMAP = {
@@ -66,14 +68,16 @@ ARTIST_SEARCH_REMAP = {
 def main():
     # Load card data
     try:
-        all_cards = json.load(open(os.path.join(DATA_DIR, "all_cards.json"), "rb"))
+        with open(os.path.join(DATA_DIR, "all_cards.json"), "rb") as f:
+            all_cards = json.load(f)
     except FileNotFoundError as e:
         raise RuntimeError("Could not find all_cards.json. Please run fetch_card_data.py to create it.") from e
     print(f"Loaded {len(all_cards):,} cards' data into memory")
 
     # Load manual corrections
     try:
-        corrections = json.load(open(os.path.join(DATA_DIR, "corrections.json"), "rb"))
+        with open(os.path.join(DATA_DIR, "corrections.json"), "rb") as f:
+            corrections = json.load(f)
     except FileNotFoundError:
         corrections = {}
 
@@ -129,7 +133,8 @@ def main():
     print("Parsed card data into rows for insertion into database")
 
     # Load set data
-    sets = json.load(open(os.path.join(DATA_DIR, "sets.json"), "rb"))
+    with open(os.path.join(DATA_DIR, "sets.json"), "rb") as f:
+        sets = json.load(f)
     print(f"Loaded {len(sets):,} sets' data into memory")
     set_rows = [(s["id"], s["number"], s["rotation"], s["name"]) for s in sets]
     print("Parsed set data into rows for insertion into database")

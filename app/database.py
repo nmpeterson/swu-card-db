@@ -209,13 +209,12 @@ class SWUCard(Base):
             if keywords:
                 for keyword in keywords:
                     if keyword == "SENTINEL":
-                        if line.startswith(keyword) or line.startswith(f"Attached unit gains {keyword}"):
+                        if line.startswith((keyword, f"Attached unit gains {keyword}")):
                             full_sentinel = True
                         elif re.search(rf"(?:this|attached) unit [^.]*gains [^.]*{keyword}", line, flags=re.IGNORECASE):
                             conditional_sentinel = True
-                    elif keyword == "PILOTING":
-                        if line.startswith(keyword):
-                            pilot_text_start_line = i
+                    elif keyword == "PILOTING" and line.startswith(keyword):
+                        pilot_text_start_line = i
                     line = re.sub(
                         rf"({keyword})( \d+)?( \[.+\])?",
                         lambda x: self._span(
