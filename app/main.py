@@ -1,7 +1,8 @@
 import logging
-from datetime import date
+from datetime import datetime
 from typing import Annotated, Literal
 from urllib.parse import quote_plus
+from zoneinfo import ZoneInfo
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.responses import FileResponse, RedirectResponse
@@ -34,7 +35,7 @@ templates = Jinja2Templates(directory="app/templates", trim_blocks=True, lstrip_
 templates.env.filters["quote_plus"] = quote_plus
 
 # Get current year for footer
-current_year = date.today().year
+current_year = datetime.now(tz=ZoneInfo("America/Chicago")).year
 templates.env.globals["current_year"] = current_year
 
 
@@ -94,14 +95,14 @@ async def root(request: Request):
 
 
 @app.get("/search", include_in_schema=False)
-async def search(request: Request, db: Session = Depends(get_db)):
+async def search(request: Request, db: Annotated[Session, Depends(get_db)]):
     """Return the search page (form and results) at /search"""
     search_context = {"has_query_params": len(request.query_params) > 0, **advanced_search_options}
     return templates.TemplateResponse(request=request, name="search.html", context=search_context)
 
 
 @app.get("/sets/{set_id}", include_in_schema=False)
-async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_db)):
+async def get_set_page(request: Request, set_id: str, db: Annotated[Session, Depends(get_db)]):
     """Return the set page for the given set_id at /sets/{set_id}"""
     swu_set = db.query(SWUSet).filter(SWUSet.id == set_id).first()
     if not swu_set:
@@ -110,7 +111,7 @@ async def get_set_page(request: Request, set_id: str, db: Session = Depends(get_
 
 
 @app.get("/cards/{card_id}", include_in_schema=False)
-async def get_card_page(request: Request, card_id: str, db: Session = Depends(get_db)):
+async def get_card_page(request: Request, card_id: str, db: Annotated[Session, Depends(get_db)]):
     """Return the card page for the given card_id at /cards/{card_id} or a random card at /cards/random"""
     if card_id.lower() == "random":
         card = db.query(SWUCard).order_by(func.random()).first()
@@ -137,7 +138,7 @@ async def get_card_page(request: Request, card_id: str, db: Session = Depends(ge
 @app.get("/set_list", response_model=list[SetModel])
 async def get_sets(
     request: Request,
-    db: Session = Depends(get_db),
+    db: Annotated[Session, Depends(get_db)],
     hx_request: Annotated[str | None, Header(include_in_schema=False)] = None,
 ):
     """Return an array of all SWU sets in the database at /set_list.
@@ -151,7 +152,7 @@ async def get_sets(
 @app.get("/card_list", response_model=list[CardModel])
 async def get_cards(
     request: Request,
-    db: Session = Depends(get_db),
+    db: Annotated[Session, Depends(get_db)],
     hx_request: Annotated[str | None, Header(include_in_schema=False)] = None,
     name: str | None = None,
     text: str | None = None,
