@@ -17,7 +17,8 @@ PARTIAL_SETS = {
     "LOF": [*range(1, 529), *range(1005, 1069)],  # Ignore foils and prestige serialized
     "SEC": [*range(1, 529), *range(1021, 1082)],  # Ignore foils and prestige serialized
     "LAW": [*range(1, 529), *range(767, 824)],  # Ignore foils and prestige serialized
-    "ASH": [*range(1, 265)],
+    "ASH": [*range(1, 529), *range(767, 832)],  # Ignore foils and prestige serialized
+    "HMW": [*range(1, 544), *range(783, 849)],  # Ignore foils and prestige serialized
 }
 DROP_PROPERTIES = [
     "FrontArt",
@@ -38,7 +39,10 @@ def main():
             response = requests.get(f"{SWU_API_URL}/cards/{set_id}")
             response.raise_for_status()
             resp_json = response.json()
-            for card in sorted(resp_json["data"], key=lambda x: x["Number"].zfill(3)):
+            for card in sorted(
+                (c for c in resp_json["data"] if c["Number"].isdigit()),
+                key=lambda x: x["Number"].zfill(3),
+            ):
                 # print(f"{card['Set']}-{card['Number']}: {card['Name']}")
                 if not card["Number"].endswith("F"):  # Ignore foils
                     all_cards.append(clean_card(card))
@@ -51,7 +55,10 @@ def main():
             response = requests.get(f"{SWU_API_URL}/cards/{set_id}")
             response.raise_for_status()
             resp_json = response.json()
-            for card in sorted(resp_json["data"], key=lambda x: int(x["Number"])):
+            for card in sorted(
+                (c for c in resp_json["data"] if c["Number"].isdigit()),
+                key=lambda x: x["Number"].zfill(3),
+            ):
                 # print(f"{card['Set']}-{card['Number']}: {card['Name']}")
                 if (card_number := int(card["Number"])) in need_cards:
                     all_cards.append(clean_card(card))

@@ -52,5 +52,11 @@
         "number": 9,
         "rotation": "B",
         "name": "Ashes of the Empire"
+    },
+    {
+        "id": "HMW",
+        "number": 10,
+        "rotation": "B",
+        "name": "Homeworlds"
     }
 ]
