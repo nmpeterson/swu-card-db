@@ -1417,6 +1417,9 @@
   "LAW-032": {
     "Subtitle": "Now It's My Turn"
   },
+  "LAW-045": {
+    "Title": "Zeb Orrelios"
+  },
   "LAW-080": {
     "Subtitle": "Profit or Be Destroyed"
   },
@@ -1440,6 +1443,9 @@
   },
   "LAW-296": {
     "Subtitle": "Now It's My Turn"
+  },
+  "LAW-309": {
+    "Title": "Zeb Orrelios"
   },
   "LAW-344": {
     "Subtitle": "Profit or Be Destroyed"
@@ -1548,6 +1554,7 @@
     "Artist": "Vincent Dutrait"
   },
   "LAW-797": {
+    "Title": "Zeb Orrelios",
     "Artist": "Vincent Dutrait"
   },
   "LAW-798": {
