@@ -268,7 +268,7 @@ class SWUCard(Base):
                 flags=re.IGNORECASE,
             )
             line = re.sub(
-                rf"({TRAIT_GRP})((?: ground| space| leader)? (?:unit|card|event))",
+                rf"({TRAIT_GRP})((?: ground| space| leader)? (?:unit|card|event|upgrade))",
                 lambda x: (
                     f"{self._link(x.group(1).upper(), f'/search?trait={quote_plus(x.group(1).upper())}&variant_type=Normal', classes='trait')}{x.group(2)}"
                 ),
