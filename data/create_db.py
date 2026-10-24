@@ -32,6 +32,7 @@ KEYWORDS = {
     "BOUNTY",
     "COORDINATE",
     "EXPLOIT",
+    "FORTIFY",
     "GRIT",
     "HIDDEN",
     "OVERWHELM",
@@ -332,6 +333,11 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
         if match := re.search(pattern := r"(collect [^.]+ )(bounties)", lines[i], re.IGNORECASE):
             keywords.add("BOUNTY")
             lines[i] = re.sub(pattern, lambda x: f"{x.group(1)}{x.group(2).upper()}", lines[i], flags=re.IGNORECASE)
+
+        # Find lines with "fortification upgrade"
+        if match := re.search(pattern := r"(fortification)( upgrade)", lines[i], re.IGNORECASE):
+            keywords.add("FORTIFY")
+            lines[i] = re.sub(pattern, lambda x: f"{x.group(1).upper()}{x.group(2)}", lines[i], flags=re.IGNORECASE)
 
     text = "\n".join(lines)
     return text, keywords
