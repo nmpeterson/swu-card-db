@@ -16,6 +16,7 @@ UPDATE_SET_IDS = {
     "SEC",
     "LAW",
     "ASH",
+    "HMW",
 }
 
 DATA_DIR = os.path.dirname(__file__)
