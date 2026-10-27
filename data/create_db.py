@@ -334,6 +334,11 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
             keywords.add("BOUNTY")
             lines[i] = re.sub(pattern, lambda x: f"{x.group(1)}{x.group(2).upper()}", lines[i], flags=re.IGNORECASE)
 
+        # Find lines with "upgrades with fortify"
+        if match := re.search(pattern := r"(upgrades with )(fortify)", lines[i], re.IGNORECASE):
+            keywords.add("FORTIFY")
+            lines[i] = re.sub(pattern, lambda x: f"{x.group(1)}{x.group(2).upper()}", lines[i], flags=re.IGNORECASE)
+
     text = "\n".join(lines)
     return text, keywords
 
