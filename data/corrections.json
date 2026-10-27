@@ -23,18 +23,6 @@
   "SHD-021": {
     "Artist": "Rocío Espín"
   },
-  "SHD-038": {
-    "Artist": "Eslam Aboshady"
-  },
-  "SHD-056": {
-    "Artist": "Eslam Aboshady"
-  },
-  "SHD-119": {
-    "Artist": "Eslam Aboshady"
-  },
-  "SHD-174": {
-    "Artist": "Eslam Aboshady"
-  },
   "SHD-263": {
     "Artist": "Amélie Hutt"
   },
@@ -95,29 +83,11 @@
   "SHD-299": {
     "Artist": "Rocío Espín"
   },
-  "SHD-315": {
-    "Artist": "Eslam Aboshady"
-  },
-  "SHD-331": {
-    "Artist": "Eslam Aboshady"
-  },
-  "SHD-388": {
-    "Artist": "Eslam Aboshady"
-  },
-  "SHD-443": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-004": {
     "Artist": "Sandra Chlewińska"
   },
   "TWI-035": {
     "Artist": "David Buisán"
-  },
-  "TWI-045": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-077": {
-    "Artist": "Eslam Aboshady"
   },
   "TWI-091": {
     "Artist": "Ario Anindito"
@@ -125,32 +95,11 @@
   "TWI-117": {
     "Artist": "Ario Anindito"
   },
-  "TWI-122": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-124": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-131": {
     "Artist": "Ario Anindito"
   },
-  "TWI-133": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-140": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-158": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-159": {
     "Artist": "Sandra Chlewińska"
-  },
-  "TWI-177": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-186": {
-    "Artist": "Eslam Aboshady"
   },
   "TWI-197": {
     "Artist": "Ario Anindito"
@@ -158,23 +107,11 @@
   "TWI-219": {
     "Artist": "Sandra Chlewińska"
   },
-  "TWI-229": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-230": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-241": {
     "Artist": "Ario Anindito"
   },
-  "TWI-247": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-249": {
     "Artist": "Sandra Chlewińska"
-  },
-  "TWI-251": {
-    "Artist": "Eslam Aboshady"
   },
   "TWI-258": {
     "Artist": "Sebastián Guidobono"
@@ -236,41 +173,17 @@
   "TWI-308": {
     "Artist": "David Buisán"
   },
-  "TWI-318": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-350": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-363": {
     "Artist": "Ario Anindito"
   },
   "TWI-387": {
     "Artist": "Ario Anindito"
   },
-  "TWI-392": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-399": {
     "Artist": "Ario Anindito"
   },
-  "TWI-401": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-408": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-425": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-426": {
     "Artist": "Sandra Chlewińska"
-  },
-  "TWI-443": {
-    "Artist": "Eslam Aboshady"
-  },
-  "TWI-451": {
-    "Artist": "Eslam Aboshady"
   },
   "TWI-462": {
     "Artist": "Ario Anindito"
@@ -278,20 +191,11 @@
   "TWI-484": {
     "Artist": "Sandra Chlewińska"
   },
-  "TWI-493": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-502": {
     "Artist": "Ario Anindito"
   },
-  "TWI-508": {
-    "Artist": "Eslam Aboshady"
-  },
   "TWI-509": {
     "Artist": "Sandra Chlewińska"
-  },
-  "TWI-511": {
-    "Artist": "Eslam Aboshady"
   },
   "JTL-001": {
     "Power": "4 / +3",
@@ -375,15 +279,9 @@
     "Power": "1 / +1",
     "HP": "2 / +2"
   },
-  "JTL-061": {
-    "Artist": "Eslam Aboshady"
-  },
   "JTL-066": {
     "Power": "2 / +1",
     "HP": "5 / +2"
-  },
-  "JTL-077": {
-    "Artist": "Eslam Aboshady"
   },
   "JTL-083": {
     "Power": "2 / +0",
@@ -513,9 +411,6 @@
     "Power": "1 / +1",
     "HP": "3 / +3"
   },
-  "JTL-253": {
-    "Artist": "Eslam Aboshady"
-  },
   "JTL-255": {
     "Power": "1 / +1",
     "HP": "1 / +1"
@@ -602,15 +497,9 @@
     "Power": "1 / +1",
     "HP": "2 / +2"
   },
-  "JTL-323": {
-    "Artist": "Eslam Aboshady"
-  },
   "JTL-328": {
     "Power": "2 / +1",
     "HP": "5 / +2"
-  },
-  "JTL-339": {
-    "Artist": "Eslam Aboshady"
   },
   "JTL-346": {
     "Power": "3 / +1",
@@ -735,9 +624,6 @@
   "JTL-508": {
     "Power": "1 / +1",
     "HP": "3 / +3"
-  },
-  "JTL-515": {
-    "Artist": "Eslam Aboshady"
   },
   "JTL-517": {
     "Power": "1 / +1",
@@ -927,14 +813,8 @@
   "JTL-1050": {
     "Artist": "Reno"
   },
-  "LOF-062": {
-    "Artist": "Eslam Aboshady"
-  },
   "LOF-065": {
     "Subtitle": "No Money, No Parts, No Deal"
-  },
-  "LOF-085": {
-    "Artist": "Eslam Aboshady"
   },
   "LOF-117": {
     "Subtitle": "Commissioning an Army"
@@ -942,38 +822,11 @@
   "LOF-131": {
     "Artist": "Space Gooose"
   },
-  "LOF-136": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-140": {
-    "Artist": "Eslam Aboshady"
-  },
   "LOF-157": {
     "Artist": "Space Gooose"
   },
-  "LOF-192": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-201": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-215": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-255": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-262": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-326": {
-    "Artist": "Eslam Aboshady"
-  },
   "LOF-329": {
     "Subtitle": "No Money, No Parts, No Deal"
-  },
-  "LOF-349": {
-    "Artist": "Eslam Aboshady"
   },
   "LOF-381": {
     "Subtitle": "Commissioning an Army"
@@ -981,29 +834,8 @@
   "LOF-395": {
     "Artist": "Space Gooose"
   },
-  "LOF-400": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-404": {
-    "Artist": "Eslam Aboshady"
-  },
   "LOF-421": {
     "Artist": "Space Gooose"
-  },
-  "LOF-456": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-465": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-479": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-519": {
-    "Artist": "Eslam Aboshady"
-  },
-  "LOF-526": {
-    "Artist": "Eslam Aboshady"
   },
   "LOF-1005": {
     "Artist": "Borja Pindado"
@@ -1207,23 +1039,11 @@
   "SEC-093": {
     "Artist": "French Carlomango"
   },
-  "SEC-120": {
-    "Artist": "Eslam Aboshady"
-  },
-  "SEC-200": {
-    "Artist": "Eslam Aboshady"
-  },
   "SEC-301": {
     "Artist": "Stephen Zavala"
   },
   "SEC-357": {
     "Artist": "French Carlomagno"
-  },
-  "SEC-384": {
-    "Artist": "Eslam Aboshady"
-  },
-  "SEC-464": {
-    "Artist": "Eslam Aboshady"
   },
   "SEC-523": {
     "Artist": "French Carlomagno"
@@ -1429,9 +1249,6 @@
   "LAW-094": {
     "Subtitle": "Plays by His Own Rules"
   },
-  "LAW-177": {
-    "Artist": "Eslam Aboshady"
-  },
   "LAW-194": {
     "Subtitle": "Digging for Answers"
   },
@@ -1455,9 +1272,6 @@
   },
   "LAW-358": {
     "Subtitle": "Plays by His Own Rules"
-  },
-  "LAW-441": {
-    "Artist": "Eslam Aboshady"
   },
   "LAW-458": {
     "Subtitle": "Digging for Answers"
@@ -1637,12 +1451,6 @@
   },
   "ASH-056": {
     "Artist": "Guillaume Ospital"
-  },
-  "ASH-089": {
-    "Artist": "Eslam Aboshady"
-  },
-  "ASH-107": {
-    "Artist": "Eslam Aboshady"
   },
   "ASH-238": {
     "Artist": "Guillaume Ospital"
