@@ -321,7 +321,7 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
             rf"(give (?:each|a|an) (?:[^.]+ )?unit )({KW_GRP})",  # "give each/a(n) {qualifier?} unit {keyword}"
             rf"(using )({KW_GRP})",  # "using {keyword}"
             rf"({NOT_UNLESS} has )({KW_GRP})",  # "has {keyword}" (but not "unless he/she/it has {keyword}")
-            rf"((?:cards?|units?) with )({KW_GRP})",  # "card(s)/unit(s) with {keyword}"
+            rf"((?:cards?|units?|upgrades?) with )({KW_GRP})",  # "card(s)/unit(s)/upgrade(s) with {keyword}"
             rf"(all abilities except for )({KW_GRP})",  # "abilities except for {keyword}"
             r"((?:has|with) a )(bounty)",  # "has/with a {bounty}"
         ]:
@@ -334,10 +334,18 @@ def clean_card_text(text: str | None) -> tuple[str | None, set[str]]:
             keywords.add("BOUNTY")
             lines[i] = re.sub(pattern, lambda x: f"{x.group(1)}{x.group(2).upper()}", lines[i], flags=re.IGNORECASE)
 
-        # Find lines with "upgrades with fortify"
-        if match := re.search(pattern := r"(upgrades with )(fortify)", lines[i], re.IGNORECASE):
-            keywords.add("FORTIFY")
-            lines[i] = re.sub(pattern, lambda x: f"{x.group(1)}{x.group(2).upper()}", lines[i], flags=re.IGNORECASE)
+        # Find lines with "replace any raid it has or gains with restore"
+        if match := re.search(
+            pattern := r"(replace any )(raid)( it has or gains with )(restore)", lines[i], re.IGNORECASE
+        ):
+            keywords.add("RAID")
+            keywords.add("RESTORE")
+            lines[i] = re.sub(
+                pattern,
+                lambda x: f"{x.group(1)}{x.group(2).upper()}{x.group(3)}{x.group(4).upper()}",
+                lines[i],
+                flags=re.IGNORECASE,
+            )
 
     text = "\n".join(lines)
     return text, keywords
